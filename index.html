@@ -1,0 +1,1643 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Partha Maity — Sports Marketing</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&family=Playfair+Display:ital@1&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --black: #1A1A1A;
+      --dark: #F2F0EB;
+      --dark2: #E8E5DE;
+      --dark3: #DEDAD2;
+      --white: #1A1A1A;
+      --grey: #6B6B6B;
+      --grey2: #C8C3B8;
+      --accent: #8B7355;
+      --accent2: #A08B6A;
+      --bg: #F7F5F0;
+      --nav-bg: #F7F5F0;
+      --panel-bg: #FFFFFF;
+    }
+    html, body { height: 100%; margin: 0; padding: 0; }
+    body { background: var(--bg); color: var(--black); font-family: "DM Sans", sans-serif; font-weight: 300; line-height: 1.65; overflow: hidden; }
+    /* While mobile menu is open, stop scroll / taps from reaching the page behind */
+    body.nav-open .page {
+      pointer-events: none;
+      overflow: hidden !important;
+    }
+
+    /* ── NAV ── */
+    nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 310;
+      display: flex; justify-content: space-between; align-items: center;
+      gap: 0.75rem;
+      padding: 0 5vw;
+      min-height: 60px;
+      height: 60px;
+      box-sizing: border-box;
+      background: rgba(28,20,16,0.97); backdrop-filter: blur(14px);
+      border-bottom: 1px solid rgba(196,135,90,0.15);
+    }
+    .nav-brand {
+      font-family: "Bebas Neue", sans-serif; font-size: 1.25rem; letter-spacing: 0.12em;
+      color: #1A1A1A; text-decoration: none; cursor: pointer;
+      line-height: 1.05;
+      flex: 1 1 auto;
+      min-width: 0;
+    }
+    .nav-brand span { color: var(--accent); }
+    .nav-links {
+      display: flex;
+      list-style: none;
+      align-items: center;
+      flex-shrink: 0;
+      gap: 0;
+      margin: 0;
+    }
+    .nav-links li a {
+      font-size: 0.65rem; letter-spacing: 0.16em; text-transform: uppercase;
+      color: var(--grey); text-decoration: none; transition: color 0.2s;
+      padding: 0.5rem 1rem; display: block;
+      border-bottom: 2px solid transparent; cursor: pointer;
+    }
+    .nav-links li a:hover { color: #1A1A1A; }
+    .nav-links li a.active { color: #8B7355; border-bottom-color: #8B7355; }
+
+    /* ── PAGE SYSTEM ── */
+    .page {
+      display: none;
+      position: fixed;
+      top: 60px; left: 0; right: 0; bottom: 0;
+      overflow-y: auto;
+      opacity: 1;
+      transform: translateY(0);
+      transition: opacity 0.32s ease, transform 0.32s ease;
+    }
+    .page.active { display: block; }
+    .page.entering {
+      opacity: 0;
+      transform: translateY(16px);
+    }
+    .page.exit {
+      opacity: 0;
+      transform: translateY(-10px);
+      pointer-events: none;
+    }
+
+    
+    /* ══ HOME GRID (Elijah Louis style) ══ */
+    #page-home { display: none; position: fixed; top: 60px; left: 0; right: 0; bottom: 0; overflow-y: auto; background: #F7F5F0; flex-direction: column; }
+    #page-home.active { display: flex; }
+    #page-home.entering { opacity: 0; transform: translateY(16px); }
+    #page-home.exit { opacity: 0; transform: translateY(-10px); pointer-events: none; }
+
+    .home-grid-wrap { display: flex; flex-direction: column; flex: 1; }
+
+    /* Main 3-column grid */
+    .home-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      border-bottom: 1px solid #C8C3B8;
+      flex: 1;
+      min-height: 0;
+    }
+
+    /* Each cell */
+    .hg-cell {
+      position: relative;
+      border-right: 1px solid #C8C3B8;
+      overflow: hidden;
+    }
+    .hg-cell:last-child { border-right: none; }
+
+    /* Cell label at bottom — like "01_ABOUT ME >" */
+    .hg-cell-label {
+      position: absolute; bottom: 0; left: 0; right: 0;
+      padding: 1rem 1.5rem;
+      font-size: 0.65rem; letter-spacing: 0.16em;
+      text-transform: uppercase; color: #6B6B6B;
+      border-top: 1px solid #C8C3B8;
+      background: rgba(247,245,240,0.9);
+    }
+
+    /* CELL 1: Photo */
+    .hg-photo { background: #E8E5DE; }
+    .hg-photo-img {
+      width: 100%; height: 100%;
+      object-fit: cover; object-position: center top;
+      display: block;
+    }
+
+    /* CELL 2: About text — centred */
+    .hg-about {
+      display: flex; align-items: center; justify-content: center;
+      background: #F7F5F0;
+      padding: 3rem 2.5rem 4rem;
+    }
+    .hg-about-inner { text-align: center; max-width: 320px; }
+    .hg-greeting {
+      font-size: 1rem; color: #6B6B6B;
+      font-family: "Playfair Display", serif; font-style: italic;
+      margin-bottom: 0.5rem;
+    }
+    .hg-name {
+      font-family: "Playfair Display", serif;
+      font-size: clamp(2rem, 3.5vw, 3rem);
+      font-weight: 400; color: #1A1A1A;
+      line-height: 1.1; margin-bottom: 1.25rem;
+      letter-spacing: -0.01em;
+    }
+    .hg-sub {
+      font-size: 0.88rem; color: #6B6B6B;
+      line-height: 1.75; margin-bottom: 2rem;
+      font-weight: 300;
+    }
+    .hg-link-btn {
+      font-size: 0.68rem; letter-spacing: 0.18em; text-transform: uppercase;
+      color: #1A1A1A; background: none; border: none;
+      cursor: pointer; font-family: "DM Sans", sans-serif;
+      font-weight: 500; padding: 0;
+      border-bottom: 1px solid #1A1A1A;
+      padding-bottom: 2px; transition: color 0.2s, border-color 0.2s;
+    }
+    .hg-link-btn:hover { color: #8B7355; border-color: #8B7355; }
+
+    /* CELL 3: Stats */
+    .hg-stats {
+      background: #1A1A1A;
+      display: flex; flex-direction: column;
+      justify-content: center;
+      padding: 3rem 2.5rem 4rem;
+    }
+    .hg-cell-label.light {
+      color: rgba(247,245,240,0.5);
+      border-top-color: rgba(255,255,255,0.1);
+      background: transparent;
+    }
+    .hg-stats-inner { flex: 1; display: flex; flex-direction: column; justify-content: center; gap: 0; }
+    .hg-stat-row {
+      display: flex; align-items: baseline;
+      justify-content: space-between;
+      padding: 1.2rem 0;
+    }
+    .hg-divider { border-top: 1px solid rgba(255,255,255,0.1); }
+    .hg-stat-num {
+      font-family: "Bebas Neue", sans-serif;
+      font-size: 2.8rem; letter-spacing: 0.04em;
+      color: #F7F5F0; line-height: 1;
+    }
+    .hg-stat-lbl {
+      font-size: 0.6rem; letter-spacing: 0.16em;
+      text-transform: uppercase; color: rgba(247,245,240,0.5);
+    }
+
+    /* ROW 2: 3 nav tiles */
+    .home-grid-row2 {
+      display: grid; grid-template-columns: 1fr 1fr 1fr;
+      border-bottom: 1px solid #C8C3B8;
+    }
+    .hg-tile {
+      display: flex; align-items: center;
+      padding: 1.4rem 2rem; gap: 1rem;
+      cursor: pointer; transition: opacity 0.2s;
+      border-right: 1px solid #C8C3B8;
+    }
+    .hg-tile:last-child { border-right: none; }
+    .hg-tile:hover { opacity: 0.75; }
+    .hg-tile-dark { background: #2C2C2C; }
+    .hg-tile-accent { background: #8B7355; }
+    .hg-tile-mid { background: #4A4035; }
+    .hg-tile-num {
+      font-size: 0.6rem; letter-spacing: 0.2em;
+      color: rgba(247,245,240,0.5);
+    }
+    .hg-tile-title {
+      font-family: "Bebas Neue", sans-serif;
+      font-size: 1.1rem; letter-spacing: 0.1em;
+      color: #F7F5F0; flex: 1;
+    }
+    .hg-tile-arrow { font-size: 1.2rem; color: rgba(247,245,240,0.6); }
+
+    /* MARQUEE */
+    .marquee-wrap { background: #1A1A1A; overflow: hidden; padding: 0.75rem 0; flex-shrink: 0; }
+    .marquee-track { display: flex; gap: 2.5rem; animation: scroll 32s linear infinite; width: max-content; }
+    .marquee-item { font-family: "Bebas Neue", sans-serif; font-size: 0.8rem; letter-spacing: 0.2em; color: #F7F5F0; white-space: nowrap; }
+    @keyframes scroll { from { transform: translateX(0); } to { transform: translateX(-50%); } }
+
+    /* CONTACT BAR */
+    .home-contact-bar { flex-shrink: 0; background: #FFFFFF; border-top: 1px solid #C8C3B8; display: grid; grid-template-columns: 1fr 1fr 1fr; padding: 1.4rem 3vw; gap: 0; }
+    .hcb-item { display: flex; flex-direction: column; gap: 0.4rem; border-right: 1px solid #C8C3B8; padding: 0 2rem 0 0; justify-content: center; }
+    .hcb-item:first-child { }
+    .hcb-item:last-child { border-right: none; }
+    .hcb-label { font-size: 0.6rem; letter-spacing: 0.14em; text-transform: uppercase; color: #8B7355; font-weight: 400; }
+    .hcb-value { font-size: 0.85rem; color: #1A1A1A; text-decoration: none; font-weight: 300; transition: color 0.2s; }
+    a.hcb-value:hover { color: #8B7355; }
+    .hcb-social { display: flex; gap: 0.5rem; align-items: center; }
+    .sicon { width: 26px; height: 26px; border-radius: 50%; background: #1A1A1A; display: flex; align-items: center; justify-content: center; text-decoration: none; transition: background 0.2s; flex-shrink: 0; }
+    .sicon:hover { background: #8B7355; }
+    .sicon svg { width: 13px; height: 13px; }
+
+    /* NAV on light bg */
+    nav { background: rgba(247,245,240,0.97); backdrop-filter: blur(14px); border-bottom: 1px solid #C8C3B8; }
+    .nav-brand { color: #1A1A1A; }
+    .nav-brand span { color: #8B7355; }
+    .nav-links li a { color: #6B6B6B; }
+    .nav-links li a:hover { color: #1A1A1A; }
+    .nav-links li a.active { color: #8B7355; border-bottom-color: #8B7355; }
+
+
+
+    /* ── CONTACT FOOTER BAR ── */
+    .home-contact-bar {
+      flex-shrink: 0;
+      margin: 0 3vw 2rem;
+      background: #FFFFFF;
+      border-radius: 6px;
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr 1fr;
+      padding: 1.8rem 3rem;
+      gap: 0;
+    }
+    .hcb-item {
+      display: flex; flex-direction: column; gap: 0.5rem;
+      border-right: 1px solid #EDE8E2;
+      padding: 0 2rem 0 0;
+      justify-content: center;
+    }
+    .hcb-item:last-child { border-right: none; }
+    .hcb-label {
+      font-size: 0.62rem; letter-spacing: 0.14em; text-transform: uppercase;
+      color: #9E8E7E; font-weight: 400;
+    }
+    .hcb-value {
+      font-size: 0.9rem; color: #1C1410; text-decoration: none;
+      font-weight: 300; transition: color 0.2s;
+    }
+    a.hcb-value:hover { color: #8B7355; }
+    .hcb-social { display: flex; gap: 0.6rem; align-items: center; }
+    .sicon {
+      width: 28px; height: 28px; border-radius: 50%;
+      background: #1C1410; display: flex; align-items: center; justify-content: center;
+      text-decoration: none; transition: background 0.2s; flex-shrink: 0;
+    }
+    .sicon:hover { background: #8B7355; }
+    .sicon svg { width: 13px; height: 13px; }
+
+    /* ── INNER PAGES ── */
+    .sec-wrap { padding: 3.5rem 5vw 5rem; }
+    .sec-header { margin-bottom: 3rem; }
+    .sec-tag {
+      font-size: 0.6rem; letter-spacing: 0.22em; text-transform: uppercase;
+      color: var(--accent); margin-bottom: 0.75rem;
+      display: flex; align-items: center; gap: 0.6rem;
+    }
+    .sec-tag::before { content: ""; width: 1.5rem; height: 1px; background: #8B7355; }
+    .sec-title {
+      font-family: "Bebas Neue", sans-serif;
+      font-size: clamp(2.8rem, 6vw, 5rem); line-height: 0.95;
+      letter-spacing: 0.04em; color: var(--white);
+    }
+    .sec-title em { color: #8B7355; font-style: normal; }
+
+    /* ABOUT */
+    #page-about { background: var(--bg); }
+    .about-grid { display: grid; grid-template-columns: 1fr 1.5fr; gap: 5rem; align-items: start; }
+    .about-expertise-label { font-size: 0.6rem; letter-spacing: 0.18em; text-transform: uppercase; color: #8B7355; margin-bottom: 1.5rem; }
+    .expertise-list { list-style: none; }
+    .expertise-list li { padding: 0.85rem 0; border-bottom: 1px solid #C8C3B8; font-size: 0.82rem; color: #6B6B6B; display: flex; align-items: center; gap: 0.75rem; transition: color 0.2s; }
+    .expertise-list li:hover { color: #1A1A1A; }
+    .expertise-list li::before { content: "→"; color: #8B7355; font-size: 0.7rem; }
+    .about-text p { font-size: 1rem; color: #4A4A4A; line-height: 1.85; margin-bottom: 1.5rem; }
+    .about-text p:first-child { font-size: 1.18rem; color: #1A1A1A; }
+
+    /* CLIENTS */
+    #page-clients { background: var(--black); }
+    .clients-intro { font-size: 1rem; color: var(--grey); max-width: 60ch; line-height: 1.8; margin-bottom: 3.5rem; }
+    .client-cat-label { font-size: 0.6rem; letter-spacing: 0.2em; text-transform: uppercase; color: #8B7355; margin-bottom: 1.5rem; padding-bottom: 1rem; border-bottom: 1px solid #C8C3B8; }
+    .logo-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(155px, 1fr)); gap: 1px; background: #C8C3B8; border: 1px solid #C8C3B8; margin-bottom: 4rem; }
+    .logo-cell { background: #FAFAF8; padding: 1.5rem 1.2rem; display: flex; align-items: center; justify-content: center; flex-direction: column; gap: 0.3rem; min-height: 85px; transition: background 0.2s; }
+    .logo-cell:hover { background: #F2F0EB; }
+    .logo-name { font-family: "Bebas Neue", sans-serif; font-size: 1rem; letter-spacing: 0.1em; color: #6B6B6B; text-align: center; transition: color 0.2s; }
+    .logo-cell:hover .logo-name { color: #1A1A1A; }
+    .logo-sub { font-size: 0.5rem; letter-spacing: 0.14em; text-transform: uppercase; color: #8B7355; text-align: center; }
+
+    /* PROJECTS */
+    #page-projects { background: var(--dark); }
+    .projects-intro { font-size: 1rem; color: var(--grey); max-width: 55ch; line-height: 1.8; margin-bottom: 2.5rem; }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    /* MILESTONES */
+    #page-milestones { background: var(--bg); }
+    .ach-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1px; background: #C8C3B8; border: 1px solid #C8C3B8; }
+    .ach-card { background: #FFFFFF; padding: 2.5rem 2rem; transition: background 0.2s; }
+    .ach-card:hover { background: #F2F0EB; }
+    .ach-num { font-family: "Bebas Neue", sans-serif; font-size: 2.8rem; letter-spacing: 0.06em; color: #8B7355; line-height: 1; margin-bottom: 0.5rem; }
+    .ach-title { font-size: 0.72rem; letter-spacing: 0.1em; text-transform: uppercase; color: #1A1A1A; margin-bottom: 0.5rem; }
+    .ach-context { font-size: 0.78rem; color: #6B6B6B; line-height: 1.5; }
+
+
+    
+
+
+    /* ── PROJECTS FULLSCREEN ── */
+    .proj-fullscreen {
+      position: relative;
+      width: 100%; height: 100%;
+      display: flex; flex-direction: column;
+      overflow: hidden;
+    }
+    .proj-fs-bg {
+      position: absolute; inset: 0;
+      width: 100%; height: 100%;
+      object-fit: cover; object-position: center;
+      display: block;
+      filter: brightness(0.35);
+    }
+    .proj-fs-overlay {
+      position: absolute; inset: 0;
+      background: linear-gradient(
+        105deg,
+        rgba(0,0,0,0.88) 0%,
+        rgba(0,0,0,0.72) 40%,
+        rgba(0,0,0,0.18) 100%
+      );
+      pointer-events: none;
+    }
+    .proj-fs-text {
+      position: relative; z-index: 2;
+      padding: 3.5rem 5vw 0;
+      max-width: 560px;
+      flex: 1;
+    }
+    .proj-fs-eyebrow {
+      font-size: 0.6rem; letter-spacing: 0.25em; text-transform: uppercase;
+      color: #FFFFFF; margin-bottom: 1rem;
+      display: flex; align-items: center; gap: 0.75rem;
+    }
+    .proj-fs-eyebrow::before {
+      content: ""; display: inline-block;
+      width: 2rem; height: 1px; background: #FFFFFF;
+    }
+    .proj-fs-title {
+      font-family: "Bebas Neue", sans-serif;
+      font-size: clamp(4rem, 9vw, 7.5rem);
+      line-height: 0.88; letter-spacing: 0.03em;
+      color: #FFFFFF; margin-bottom: 1.5rem;
+      text-shadow: 0 2px 12px rgba(0,0,0,0.6);
+    }
+    .proj-fs-title span { color: #FFFFFF; }
+    .proj-fs-sub {
+      font-size: 0.9rem; color: #FFFFFF;
+      line-height: 1.8; max-width: 46ch; font-weight: 400;
+      text-shadow: 0 2px 8px rgba(0,0,0,0.8);
+    }
+    .proj-fs-bottom {
+      position: relative; z-index: 2;
+      padding: 1.5rem 5vw 2rem;
+      background: linear-gradient(to top, rgba(28,20,16,0.95) 60%, transparent);
+    }
+    .proj-filter-bar {
+      display: flex; gap: 0.5rem; flex-wrap: wrap; margin-bottom: 0.6rem;
+    }
+    .pfbtn {
+      font-size: 0.62rem; letter-spacing: 0.16em; text-transform: uppercase;
+      padding: 0.55rem 1.4rem;
+      background: rgba(255,255,255,0.1);
+      color: #FFFFFF;
+      border: 1px solid rgba(255,255,255,0.6);
+      cursor: pointer; transition: all 0.2s; font-family: "DM Sans", sans-serif;
+      backdrop-filter: blur(4px);
+    }
+    .pfbtn:hover { background: rgba(255,255,255,0.22); color: #FFFFFF; border-color: #FFFFFF; }
+    .pfbtn.active { background: #FFFFFF; color: #1A1A1A; border-color: #FFFFFF; font-weight: 500; }
+    .proj-fs-hint {
+      font-size: 0.6rem; letter-spacing: 0.12em;
+      color: rgba(255,255,255,0.7);
+    }
+
+    /* ── PROJECTS CARDS PANEL ── slides up from bottom ── */
+    .proj-cards-panel {
+      position: fixed;
+      top: 60px; left: 0; right: 0; bottom: 0;
+      background: var(--dark);
+      z-index: 400;
+      overflow-y: auto;
+      transform: translateY(100%);
+      transition: transform 0.45s cubic-bezier(0.22, 1, 0.36, 1);
+    }
+    .proj-cards-panel.open {
+      transform: translateY(0);
+    }
+    .proj-cards-header {
+      display: flex; align-items: center;
+      gap: 1.5rem; flex-wrap: wrap;
+      padding: 1.5rem 5vw;
+      border-bottom: 1px solid var(--grey2);
+      position: sticky; top: 0;
+      background: var(--dark); z-index: 10;
+    }
+    .proj-close-btn {
+      display: flex; align-items: center; gap: 0.4rem;
+      font-size: 0.65rem; letter-spacing: 0.14em; text-transform: uppercase;
+      color: var(--grey); background: none; border: 1px solid var(--grey2);
+      padding: 0.5rem 1rem; cursor: pointer;
+      font-family: "DM Sans", sans-serif; transition: all 0.2s;
+    }
+    .proj-close-btn svg { width: 14px; height: 14px; }
+    .proj-close-btn:hover { color: #1A1A1A; border-color: #1A1A1A; }
+    .proj-filter-bar-inner { display: flex; gap: 0.4rem; flex-wrap: wrap; }
+    .pfbtn-inner {
+      font-size: 0.6rem; letter-spacing: 0.16em; text-transform: uppercase;
+      padding: 0.45rem 1.1rem; background: transparent;
+      color: var(--grey); border: 1px solid var(--grey2);
+      cursor: pointer; transition: all 0.2s; font-family: "DM Sans", sans-serif;
+    }
+    .pfbtn-inner:hover, .pfbtn-inner.active {
+      background: var(--accent); color: var(--black); border-color: var(--accent);
+    }
+    .proj-grid {
+      display: grid; grid-template-columns: repeat(3,1fr);
+      gap: 1px; background: var(--grey2); border: 1px solid var(--grey2);
+      margin: 2rem 5vw 4rem;
+    }
+    .proj-card {
+      background: var(--dark2); padding: 1.5rem;
+      display: none; flex-direction: column; gap: 0.85rem;
+      transition: background 0.2s;
+    }
+    .proj-card.visible { display: flex; }
+    .proj-card.visible:hover { background: #F2F0EB; }
+    .proj-sport { font-size: 0.57rem; letter-spacing: 0.2em; text-transform: uppercase; color: #8B7355; }
+    .proj-title { font-family: "Bebas Neue", sans-serif; font-size: 1.15rem; letter-spacing: 0.06em; color: #1A1A1A; line-height: 1.2; }
+    .proj-type { font-size: 0.62rem; letter-spacing: 0.1em; text-transform: uppercase; color: #6B6B6B; }
+    .proj-desc { font-size: 0.82rem; color: #6B6B6B; line-height: 1.6; }
+    .proj-metric { display: inline-block; margin-top: auto; padding-top: 1rem; border-top: 1px solid #C8C3B8; font-family: "Bebas Neue", sans-serif; font-size: 1rem; letter-spacing: 0.08em; color: #8B7355; }
+
+
+    /* ── CLIENTS FULLSCREEN ── */
+    #page-clients { overflow: hidden; }
+    .clients-fullscreen {
+      position: relative; width: 100%; height: 100%;
+      display: flex; flex-direction: column;
+    }
+    .clients-fs-bg {
+      position: absolute; inset: 0;
+      width: 100%; height: 100%;
+      object-fit: cover; object-position: center;
+      display: block; filter: brightness(0.32);
+    }
+    .clients-fs-overlay {
+      position: absolute; inset: 0;
+      background: linear-gradient(
+        105deg,
+        rgba(0,0,0,0.88) 0%,
+        rgba(0,0,0,0.72) 40%,
+        rgba(0,0,0,0.18) 100%
+      );
+      pointer-events: none;
+    }
+    .clients-fs-text {
+      position: relative; z-index: 2;
+      padding: 3.5rem 5vw 0; max-width: 560px; flex: 1;
+    }
+    .clients-fs-eyebrow {
+      font-size: 0.6rem; letter-spacing: 0.25em; text-transform: uppercase;
+      color: #FFFFFF; margin-bottom: 1rem;
+      display: flex; align-items: center; gap: 0.75rem;
+    }
+    .clients-fs-eyebrow::before {
+      content: ""; display: inline-block;
+      width: 2rem; height: 1px; background: #FFFFFF;
+    }
+    .clients-fs-title {
+      font-family: "Bebas Neue", sans-serif;
+      font-size: clamp(4rem, 9vw, 7.5rem);
+      line-height: 0.88; letter-spacing: 0.03em;
+      color: #FFFFFF; margin-bottom: 1.5rem;
+      text-shadow: 0 2px 12px rgba(0,0,0,0.6);
+    }
+    .clients-fs-title span { color: #FFFFFF; }
+    .clients-fs-sub {
+      font-size: 0.9rem; color: #FFFFFF;
+      line-height: 1.8; max-width: 46ch; font-weight: 400;
+      text-shadow: 0 2px 8px rgba(0,0,0,0.8);
+    }
+    .clients-explore-btn-wrap {
+      position: absolute; bottom: 2.5rem; left: 50%;
+      transform: translateX(-50%); z-index: 10;
+    }
+    .clients-explore-btn {
+      display: flex; align-items: center; gap: 0.6rem;
+      font-size: 0.68rem; letter-spacing: 0.2em; text-transform: uppercase;
+      padding: 0.85rem 2rem;
+      background: var(--accent); color: var(--black);
+      border: none; cursor: pointer; font-family: "DM Sans", sans-serif;
+      font-weight: 500; transition: all 0.2s;
+    }
+    .clients-explore-btn:hover { background: #F2F0EB; }
+
+    /* ── CLIENTS PANEL ── slides up ── */
+    .clients-panel {
+      position: fixed;
+      top: 60px; left: 0; right: 0; bottom: 0;
+      background: #FFFFFF;
+      z-index: 400;
+      overflow-y: auto;
+      transform: translateY(100%);
+      transition: transform 0.45s cubic-bezier(0.22, 1, 0.36, 1);
+    }
+    .clients-panel.open { transform: translateY(0); }
+    .clients-panel-header {
+      padding: 1.5rem 5vw;
+      border-bottom: 1px solid #C8C3B8;
+      position: sticky; top: 0;
+      background: #FFFFFF; z-index: 10;
+    }
+    .clients-scroll-wrap { padding: 2.5rem 5vw 4rem; }
+    .client-cat-label {
+      font-size: 0.65rem; letter-spacing: 0.25em; text-transform: uppercase;
+      color: #8B7355; margin-bottom: 2rem;
+      padding-bottom: 1.25rem;
+      border-bottom: 1px solid #E8E4DC;
+      font-weight: 500;
+    }
+    .logo-grid {
+      display: grid; grid-template-columns: repeat(auto-fill, minmax(155px, 1fr));
+      gap: 1px; background: #C8C3B8; border: 1px solid #C8C3B8;
+      margin-bottom: 3rem;
+    }
+    .logo-cell {
+      background: #FFFFFF; padding: 1.5rem 1.2rem;
+      display: flex; align-items: center; justify-content: center;
+      flex-direction: column; gap: 0.3rem; min-height: 85px;
+      transition: background 0.2s;
+    }
+    .logo-cell:hover { background: #F2F0EB; }
+    .logo-name {
+      font-family: "Bebas Neue", sans-serif; font-size: 1rem;
+      letter-spacing: 0.1em; color: var(--grey);
+      text-align: center; transition: color 0.2s;
+    }
+    .logo-cell:hover .logo-name { color: #1A1A1A; }
+    .logo-sub {
+      font-size: 0.5rem; letter-spacing: 0.14em;
+      text-transform: uppercase; color: var(--accent); text-align: center;
+    }
+
+
+    /* ── PROJECT CARD IMAGE GALLERY ── */
+    .proj-card-imgs {
+      display: grid;
+      gap: 6px;
+      margin-bottom: 1rem;
+    }
+    .proj-card-imgs.cols-1 { grid-template-columns: 1fr; }
+    .proj-card-imgs.cols-2 { grid-template-columns: 1fr 1fr; }
+    .proj-card-imgs.cols-3 { grid-template-columns: 1fr 1fr 1fr; }
+    .proj-card-imgs img {
+      width: 100%; aspect-ratio: 16/10;
+      object-fit: cover; object-position: center top;
+      display: block; border-radius: 2px;
+    }
+    .proj-card-imgs.cols-1 img { aspect-ratio: 16/8; }
+
+    /* ─── PROJECT DETAIL PANEL (Arshia-inspired) ─── */
+    .proj-detail-panel {
+      position: fixed;
+      top: 60px; left: 0; right: 0; bottom: 0;
+      background: #FFFFFF;
+      z-index: 500;
+      overflow-y: auto;
+      transform: translateY(100%);
+      transition: transform 0.5s cubic-bezier(0.22, 1, 0.36, 1);
+    }
+    .proj-detail-panel.open { transform: translateY(0); }
+    .proj-detail-header {
+      padding: 1.5rem 5vw;
+      background: #FFFFFF;
+      border-bottom: 1px solid #EEE;
+      position: sticky; top: 0; z-index: 10;
+    }
+    .pd-body {
+      max-width: 760px;
+      margin: 0 auto;
+      padding: 4rem 2.5rem 6rem;
+    }
+    @media (max-width: 700px) {
+      .pd-body { padding: 3rem 1.5rem 4rem; }
+    }
+    .pd-title-block {
+      margin-bottom: 2.5rem;
+    }
+    .pd-eyebrow {
+      font-size: 0.7rem; letter-spacing: 0.25em; text-transform: uppercase;
+      color: #8B7355; margin-bottom: 1.25rem; font-weight: 500;
+    }
+    .pd-title {
+      font-family: "Bebas Neue", sans-serif;
+      font-size: clamp(2rem, 4.5vw, 3rem);
+      line-height: 1.1; letter-spacing: 0.01em;
+      color: #1A1A1A; margin: 0 0 1.5rem 0;
+      font-weight: 400;
+    }
+    .pd-title span {
+      color: #8B7355;
+    }
+    .pd-lede {
+      font-size: 1rem; line-height: 1.7;
+      color: #4A4A4A;
+      font-weight: 400;
+      margin: 0 0 2rem 0;
+    }
+    /* Hero image — sized like Arshia's small embed */
+    .pd-hero {
+      margin: 0 0 2.5rem 0;
+      max-width: 280px;
+    }
+    .pd-hero img {
+      width: 100%; height: auto; display: block;
+    }
+    .pd-section {
+      margin-bottom: 2rem;
+    }
+    .pd-section-spaced {
+      margin-bottom: 2.5rem;
+    }
+    .pd-section-label {
+      font-family: "Bebas Neue", sans-serif;
+      font-size: 1.4rem; letter-spacing: 0.05em;
+      color: #1A1A1A; margin-bottom: 1rem;
+      text-transform: none;
+      font-weight: 400;
+    }
+    .pd-prose {
+      font-size: 1rem; line-height: 1.75;
+      color: #4A4A4A;
+      margin: 0 0 1rem 0;
+    }
+    /* Metrics inline — small, no card */
+    .pd-metrics {
+      display: flex;
+      gap: 2.5rem;
+      flex-wrap: wrap;
+      margin: 1.5rem 0 2rem 0;
+    }
+    .pd-metric-card {
+      background: transparent;
+      padding: 0;
+      box-shadow: none;
+      text-align: left;
+    }
+    .pd-metric-num {
+      font-family: "Bebas Neue", sans-serif;
+      font-size: 2.25rem;
+      letter-spacing: 0.02em;
+      color: #8B7355; line-height: 1;
+      margin-bottom: 0.4rem;
+      font-weight: 400;
+    }
+    .pd-metric-label {
+      font-size: 0.65rem; letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: #6B6B6B; font-weight: 500;
+    }
+    /* Image rows — uniform height per row */
+    .pd-img-grid {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      margin-top: 1rem;
+      align-items: flex-start;
+    }
+    .pd-img-grid img {
+      height: 270px;
+      width: auto;
+      max-width: 100%;
+      object-fit: contain;
+      display: block;
+      background: transparent;
+      border-radius: 0;
+      box-shadow: none;
+    }
+    .pd-grid-1 img { max-height: 320px; }
+    @media (max-width: 700px) {
+      .pd-img-grid img { height: 200px; }
+      .pd-grid-1 img { max-height: 240px; }
+    }
+    @media (max-width: 480px) {
+      .pd-img-grid {
+        flex-direction: column;
+        align-items: stretch;
+      }
+      .pd-img-grid img { height: auto; max-height: 280px; width: 100%; }
+    }
+    .pd-footer {
+      margin-top: 3rem;
+      padding-top: 2rem;
+      border-top: 1px solid #EEE;
+    }
+    .pd-back-btn {
+      display: inline-flex; align-items: center; gap: 0.5rem;
+      font-size: 0.7rem; letter-spacing: 0.18em; text-transform: uppercase;
+      color: #1A1A1A; background: none;
+      border: 1px solid #1A1A1A;
+      padding: 0.85rem 1.5rem; cursor: pointer;
+      font-family: "DM Sans", sans-serif; font-weight: 500;
+      transition: all 0.2s;
+    }
+    .pd-back-btn svg { width: 14px; height: 14px; }
+    .pd-back-btn:hover {
+      background: #1A1A1A; color: #FFFFFF;
+    }
+    /* Project cards in panel — clickable hint */
+    .proj-card[data-detail] {
+      cursor: pointer;
+    }
+    .proj-card[data-detail]:hover .proj-title {
+      color: #8B7355;
+    }
+    .proj-card-cta {
+      display: inline-flex; align-items: center; gap: 0.4rem;
+      font-size: 0.62rem; letter-spacing: 0.18em; text-transform: uppercase;
+      color: #8B7355; margin-top: 0.5rem;
+      font-family: "DM Sans", sans-serif; font-weight: 500;
+    }
+    .proj-card-cta svg {
+      width: 12px; height: 12px;
+      transition: transform 0.2s;
+    }
+    .proj-card[data-detail]:hover .proj-card-cta svg {
+      transform: translateX(3px);
+    }
+
+
+
+    /* ── LOGO CELLS WITH BRAND COLOURS ── */
+
+
+
+
+
+
+
+
+    /* ── LOGO CELLS — no background patch, full block fill ── */
+    .logo-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 1.5rem;
+      background: transparent;
+      border: none;
+      margin-bottom: 4rem;
+      padding: 0.5rem 0;
+    }
+    @media (max-width: 1100px) {
+      .logo-grid { grid-template-columns: repeat(3, 1fr); gap: 1.25rem; }
+    }
+    @media (max-width: 700px) {
+      .logo-grid { grid-template-columns: repeat(2, 1fr); gap: 1rem; }
+    }
+    .logo-cell {
+      background: #FFFFFF;
+      display: flex; flex-direction: column;
+      align-items: center; justify-content: center;
+      aspect-ratio: 1 / 1;
+      padding: 1.75rem;
+      transition: transform 0.35s cubic-bezier(0.22, 1, 0.36, 1),
+                  box-shadow 0.35s ease;
+      box-sizing: border-box;
+      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04),
+                  0 4px 12px rgba(0, 0, 0, 0.05);
+      border-radius: 4px;
+    }
+    .logo-cell:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.06),
+                  0 12px 32px rgba(0, 0, 0, 0.10);
+    }
+    .logo-cell-img {
+      width: 100%;
+      aspect-ratio: 1 / 1;
+      display: flex; align-items: center; justify-content: center;
+      padding: 1.75rem; 
+      background: #FFFFFF;
+      text-decoration: none; color: inherit;
+      cursor: pointer;
+      transition: transform 0.35s cubic-bezier(0.22, 1, 0.36, 1),
+                  box-shadow 0.35s ease;
+      position: relative;
+      box-sizing: border-box;
+      overflow: hidden;
+      border-radius: 4px;
+      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04),
+                  0 4px 12px rgba(0, 0, 0, 0.05);
+    }
+    a.logo-cell-img { cursor: pointer; }
+    .logo-cell-img img {
+      max-width: 70%;
+      max-height: 70%;
+      width: auto; height: auto;
+      object-fit: contain; display: block;
+      transition: transform 0.35s cubic-bezier(0.22, 1, 0.36, 1);
+    }
+    .logo-cell-img:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.06),
+                  0 12px 32px rgba(0, 0, 0, 0.10);
+      z-index: 2;
+    }
+    .logo-cell-img:hover img {
+      transform: scale(1.04);
+    }
+    .logo-cell-img .logo-sub {
+      display: none;
+    }
+    .logo-name {
+      font-family: "Bebas Neue", sans-serif;
+      font-size: 1rem; letter-spacing: 0.1em;
+      color: #6B6B6B; text-align: center;
+    }
+    .logo-sub {
+      font-size: 0.5rem; letter-spacing: 0.14em;
+      text-transform: uppercase; color: #8B7355;
+      text-align: center;
+    }
+    .client-cat-label {
+      font-size: 0.65rem; letter-spacing: 0.25em; text-transform: uppercase;
+      color: #8B7355; margin-bottom: 2rem;
+      padding-bottom: 1.25rem;
+      border-bottom: 1px solid #E8E4DC;
+      font-weight: 500;
+    }
+    .clients-scroll-wrap { padding: 2.5rem 5vw 4rem; }
+
+    /* RESPONSIVE */
+    @media (max-width: 900px) {
+      .hero-body { grid-template-columns: 1fr; padding: 2rem 5vw 1rem; gap: 2rem; }
+      .hero-photo-wrap { justify-content: flex-start; }
+      .about-grid { grid-template-columns: 1fr; gap: 3rem; }
+      .proj-grid, .ach-grid { grid-template-columns: repeat(2, 1fr); }
+      .home-contact-bar { grid-template-columns: 1fr 1fr; gap: 1.2rem; }
+      .hcb-item { border-right: none; border-bottom: 1px solid #E8E0D8; padding: 0 0 1rem; }
+      .hcb-item:last-child { border-bottom: none; }
+    }
+    @media (max-width: 600px) {
+      .proj-grid, .ach-grid { grid-template-columns: 1fr; }
+      .nav-links li a { padding: 0.5rem 0.6rem; font-size: 0.58rem; }
+      .home-contact-bar { grid-template-columns: 1fr; }
+    }
+
+    /* Home: stack hero + nav tiles on compact viewports (aligned with mobile nav) */
+    @media (max-width: 960px) {
+      .home-grid {
+        display: flex;
+        flex-direction: column;
+        border-bottom: none;
+      }
+      .hg-cell {
+        border-right: none;
+        border-bottom: 1px solid #C8C3B8;
+      }
+      .hg-cell:last-child { border-bottom: none; }
+      .hg-photo {
+        position: relative;
+        aspect-ratio: 3 / 4;
+        max-height: min(72vh, 520px);
+        width: 100%;
+        min-height: 0;
+      }
+      .hg-photo-img {
+        position: absolute;
+        inset: 0;
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        object-position: center top;
+      }
+      .hg-photo .hg-cell-label {
+        z-index: 1;
+      }
+      .hg-about { padding: 2.25rem 1.5rem 2.75rem; }
+      .hg-about-inner { max-width: min(520px, 100%); }
+      .hg-stats { padding: 2.25rem 1.5rem 2.75rem; }
+      .home-grid-row2 {
+        grid-template-columns: 1fr;
+        border-bottom: none;
+      }
+      .hg-tile {
+        border-right: none;
+        border-bottom: 1px solid #C8C3B8;
+        min-height: 52px;
+        padding-top: 1.15rem;
+        padding-bottom: 1.15rem;
+      }
+      .hg-tile:last-child { border-bottom: none; }
+    }
+
+    /* Phone: intro first, then photo, then stats; larger type; 2-up stats */
+    @media (max-width: 480px) {
+      .hg-about { order: 1; padding: 2rem 1.25rem 2.25rem; }
+      .hg-photo { order: 2; }
+      .hg-stats { order: 3; padding: 2rem 1.25rem 2.25rem; }
+      .hg-about-inner {
+        max-width: none;
+        width: 100%;
+      }
+      .hg-greeting {
+        font-size: 1.05rem;
+      }
+      .hg-name {
+        font-size: clamp(2.35rem, 8vw, 3rem);
+      }
+      .hg-sub {
+        font-size: 0.95rem;
+        line-height: 1.7;
+      }
+      .hg-link-btn {
+        font-size: 0.72rem;
+        min-height: 44px;
+        padding: 0.5rem 0;
+        display: inline-flex;
+        align-items: center;
+      }
+      .hg-stats-inner .hg-divider { display: none; }
+      .hg-stats-inner {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        column-gap: 1rem;
+        row-gap: 0.25rem;
+      }
+      .hg-stat-row {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 0.35rem;
+        padding: 1rem 0;
+      }
+      .hg-stat-num {
+        font-size: 2.2rem;
+      }
+      .hg-stat-lbl {
+        font-size: 0.55rem;
+        line-height: 1.35;
+      }
+      .hg-tile {
+        min-height: 56px;
+        padding: 1.25rem 1.25rem;
+      }
+      .home-contact-bar {
+        margin-left: 1rem;
+        margin-right: 1rem;
+        padding: 1.35rem 1.25rem;
+      }
+      .hcb-item {
+        padding-left: 0;
+        padding-right: 0;
+      }
+    }
+
+    /* Mobile nav */
+    .nav-menu-toggle {
+      display: none;
+      position: relative;
+      z-index: 2;
+      align-items: center;
+      justify-content: center;
+      width: 44px;
+      height: 44px;
+      padding: 0;
+      border: 1px solid #C8C3B8;
+      background: #FFFFFF;
+      border-radius: 4px;
+      cursor: pointer;
+      flex-shrink: 0;
+      font-family: inherit;
+      touch-action: manipulation;
+      -webkit-tap-highlight-color: transparent;
+    }
+    .nav-menu-toggle:focus-visible {
+      outline: 2px solid #8B7355;
+      outline-offset: 2px;
+    }
+    .nav-menu-icon {
+      display: block;
+      width: 18px;
+      height: 2px;
+      background: #1A1A1A;
+      position: relative;
+    }
+    .nav-menu-icon::before,
+    .nav-menu-icon::after {
+      content: "";
+      position: absolute;
+      left: 0;
+      width: 18px;
+      height: 2px;
+      background: #1A1A1A;
+    }
+    .nav-menu-icon::before { top: -6px; }
+    .nav-menu-icon::after { top: 6px; }
+    #site-nav.nav-open .nav-menu-icon { background: transparent; }
+    #site-nav.nav-open .nav-menu-icon::before {
+      top: 0;
+      transform: rotate(45deg);
+    }
+    #site-nav.nav-open .nav-menu-icon::after {
+      top: 0;
+      transform: rotate(-45deg);
+    }
+    /* Siblings of #site-nav (not inside nav) so position:fixed is not clipped by
+       nav/backdrop-filter quirks on mobile Safari; still below nav bar (z-index). */
+    .nav-drawer-backdrop {
+      display: none;
+      position: fixed;
+      inset: 0;
+      padding-top: 60px;
+      background: rgba(26, 26, 26, 0.4);
+      z-index: 298;
+      box-sizing: border-box;
+    }
+    .nav-drawer {
+      display: none;
+      position: fixed;
+      left: 0;
+      right: 0;
+      top: 60px;
+      width: 100%;
+      box-sizing: border-box;
+      background: #F7F5F0;
+      border-top: 1px solid #C8C3B8;
+      z-index: 299;
+      padding: 0.5rem 0 max(1.5rem, env(safe-area-inset-bottom));
+      box-shadow: 0 12px 40px rgba(0, 0, 0, 0.12);
+      overflow-y: auto;
+      -webkit-overflow-scrolling: touch;
+      flex-direction: column;
+      align-items: stretch;
+      min-height: calc(100vh - 60px);
+      min-height: calc(100dvh - 60px);
+      min-height: calc(100svh - 60px);
+    }
+    .nav-drawer-inner {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 0.25rem;
+    }
+    .nav-drawer-inner a {
+      display: block;
+      padding: 0.85rem 1.5rem;
+      font-size: 0.72rem;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: #6B6B6B;
+      text-decoration: none;
+      cursor: pointer;
+      border-left: 3px solid transparent;
+    }
+    .nav-drawer-inner a:hover { color: #1A1A1A; background: rgba(139, 115, 85, 0.08); }
+    .nav-drawer-inner a:focus-visible {
+      outline: 2px solid #8B7355;
+      outline-offset: -2px;
+    }
+    .nav-drawer-inner a.active {
+      color: #8B7355;
+      border-left-color: #8B7355;
+      font-weight: 500;
+    }
+    @media (max-width: 960px) {
+      .nav-menu-toggle { display: flex; }
+      /* Remove desktop nav from layout entirely (no thin “HOME” leak row) */
+      #site-nav .nav-links {
+        display: none !important;
+        visibility: hidden;
+        pointer-events: none;
+        position: absolute;
+        width: 1px;
+        height: 1px;
+        margin: -1px;
+        padding: 0;
+        overflow: hidden;
+        clip: rect(0, 0, 0, 0);
+        clip-path: inset(50%);
+        white-space: nowrap;
+        border: 0;
+      }
+      #site-nav.nav-open ~ .nav-drawer-backdrop {
+        display: block;
+      }
+      #site-nav.nav-open ~ #nav-drawer {
+        display: flex;
+      }
+      .nav-drawer-inner {
+        gap: 0.15rem;
+        padding: 0.35rem 0 0.5rem;
+      }
+      .nav-drawer-inner a {
+        display: flex;
+        align-items: center;
+        min-height: 52px;
+        padding: 0.75rem 1.5rem;
+        font-size: 0.92rem;
+        letter-spacing: 0.12em;
+        border-left: none;
+        border-bottom: 1px solid rgba(200, 195, 184, 0.55);
+      }
+      .nav-drawer-inner li:last-child a {
+        border-bottom: none;
+      }
+      .nav-drawer-inner a.active {
+        border-left: none;
+        padding-left: 1.5rem;
+        box-shadow: inset 3px 0 0 #8B7355;
+      }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      .page,
+      #page-home { transition: none; }
+      .proj-cards-panel,
+      .clients-panel,
+      .proj-detail-panel { transition: none; }
+      .marquee-track { animation: none; }
+      .logo-cell,
+      .logo-cell-img,
+      .hg-tile,
+      .nav-links li a,
+      .sicon,
+      .proj-card { transition: none; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav id="site-nav">
+  <a class="nav-brand" href="#" onclick="event.preventDefault(); showPage('home');" data-nav-page="home">PARTHA <span>MAITY</span></a>
+  <button type="button" class="nav-menu-toggle" id="nav-menu-toggle" aria-expanded="false" aria-controls="nav-drawer" aria-label="Open menu">
+    <span class="nav-menu-icon" aria-hidden="true"></span>
+  </button>
+  <ul class="nav-links">
+    <li><a href="#" onclick="event.preventDefault(); showPage('home');" id="nav-home" data-nav-page="home" class="active">Home</a></li>
+    <li><a href="#" onclick="event.preventDefault(); showPage('about');" id="nav-about" data-nav-page="about">About</a></li>
+    <li><a href="#" onclick="event.preventDefault(); showPage('clients');" id="nav-clients" data-nav-page="clients">Clients</a></li>
+    <li><a href="#" onclick="event.preventDefault(); showPage('projects');" id="nav-projects" data-nav-page="projects">Projects</a></li>
+    <li><a href="#" onclick="event.preventDefault(); showPage('milestones');" id="nav-milestones" data-nav-page="milestones">Milestones</a></li>
+  </ul>
+</nav>
+<div class="nav-drawer-backdrop" id="nav-drawer-backdrop" onclick="closeMobileNav()" aria-hidden="true"></div>
+<div id="nav-drawer" class="nav-drawer" role="dialog" aria-modal="true" aria-label="Site menu">
+  <ul class="nav-drawer-inner">
+    <li><a href="#" onclick="event.preventDefault(); showPage('home');" data-nav-page="home" class="active">Home</a></li>
+    <li><a href="#" onclick="event.preventDefault(); showPage('about');" data-nav-page="about">About</a></li>
+    <li><a href="#" onclick="event.preventDefault(); showPage('clients');" data-nav-page="clients">Clients</a></li>
+    <li><a href="#" onclick="event.preventDefault(); showPage('projects');" data-nav-page="projects">Projects</a></li>
+    <li><a href="#" onclick="event.preventDefault(); showPage('milestones');" data-nav-page="milestones">Milestones</a></li>
+  </ul>
+</div>
+
+<!-- HOME PAGE -->
+<div class="page" id="page-home">
+
+  <!-- Top nav border strip -->
+  <div class="home-grid-wrap">
+
+    <!-- ROW 1: 3-column grid like Elijah Louis -->
+    <div class="home-grid">
+
+      <!-- Cell 1: Profile Photo -->
+      <div class="hg-cell hg-photo">
+        <img src="https://gkrcjpqlelrxgyanzyrg.supabase.co/storage/v1/object/public/portfolio-media/Passport%20Size%20Photo.jpeg" width="600" height="800" decoding="async" alt="Partha Maity" class="hg-photo-img" />
+        <div class="hg-cell-label">01_PARTHA MAITY</div>
+      </div>
+
+      <!-- Cell 2: Name + About text -->
+      <div class="hg-cell hg-about">
+        <div class="hg-about-inner">
+          <p class="hg-greeting">Hi, I'm</p>
+          <h1 class="hg-name">Partha Maity</h1>
+          <p class="hg-sub">a sports marketing strategist, brand builder, campaign architect &amp; partnership activator.</p>
+          <button onclick="showPage('about')" class="hg-link-btn">02_ABOUT ME &nbsp;›</button>
+        </div>
+      </div>
+
+      <!-- Cell 3: Stats / Marquee visual -->
+      <div class="hg-cell hg-stats">
+        <div class="hg-stats-inner">
+          <div class="hg-stat-row">
+            <div class="hg-stat-num">230M+</div>
+            <div class="hg-stat-lbl">Video Views</div>
+          </div>
+          <div class="hg-divider"></div>
+          <div class="hg-stat-row">
+            <div class="hg-stat-num">31M+</div>
+            <div class="hg-stat-lbl">Engagements</div>
+          </div>
+          <div class="hg-divider"></div>
+          <div class="hg-stat-row">
+            <div class="hg-stat-num">6K+</div>
+            <div class="hg-stat-lbl">Creatives</div>
+          </div>
+          <div class="hg-divider"></div>
+          <div class="hg-stat-row">
+            <div class="hg-stat-num">2×</div>
+            <div class="hg-stat-lbl">CTV Uplift</div>
+          </div>
+        </div>
+        <div class="hg-cell-label">03_MILESTONES</div>
+      </div>
+
+    </div>
+
+    <!-- ROW 2: Marquee + Nav tiles -->
+    <div class="home-grid-row2">
+
+      <div class="hg-tile hg-tile-dark" onclick="showPage('clients')">
+        <span class="hg-tile-num">04</span>
+        <span class="hg-tile-title">CLIENTS</span>
+        <span class="hg-tile-arrow">›</span>
+      </div>
+
+      <div class="hg-tile hg-tile-accent" onclick="showPage('projects')">
+        <span class="hg-tile-num">05</span>
+        <span class="hg-tile-title">PROJECTS</span>
+        <span class="hg-tile-arrow">›</span>
+      </div>
+
+      <div class="hg-tile hg-tile-mid" onclick="showPage('milestones')">
+        <span class="hg-tile-num">06</span>
+        <span class="hg-tile-title">MILESTONES</span>
+        <span class="hg-tile-arrow">›</span>
+      </div>
+
+    </div>
+
+    <!-- Marquee strip -->
+    <div class="marquee-wrap">
+      <div class="marquee-track">
+        <span class="marquee-item">JioCinema</span><span class="marquee-item">·</span>
+        <span class="marquee-item">Mumbai Indians</span><span class="marquee-item">·</span>
+        <span class="marquee-item">Star Sports</span><span class="marquee-item">·</span>
+        <span class="marquee-item">Voot Select</span><span class="marquee-item">·</span>
+        <span class="marquee-item">FIFA World Cup</span><span class="marquee-item">·</span>
+        <span class="marquee-item">TATA IPL</span><span class="marquee-item">·</span>
+        <span class="marquee-item">WPL</span><span class="marquee-item">·</span>
+        <span class="marquee-item">Arsenal</span><span class="marquee-item">·</span>
+        <span class="marquee-item">ATP Finals</span><span class="marquee-item">·</span>
+        <span class="marquee-item">Premier League</span><span class="marquee-item">·</span>
+        <span class="marquee-item">DHL</span><span class="marquee-item">·</span>
+        <span class="marquee-item">Gulf Giants</span><span class="marquee-item">·</span>
+        <span class="marquee-item">NBA</span><span class="marquee-item">·</span>
+        <span class="marquee-item">BWF</span><span class="marquee-item">·</span>
+        <span class="marquee-item">JioCinema</span><span class="marquee-item">·</span>
+        <span class="marquee-item">Mumbai Indians</span><span class="marquee-item">·</span>
+        <span class="marquee-item">Star Sports</span><span class="marquee-item">·</span>
+        <span class="marquee-item">Voot Select</span><span class="marquee-item">·</span>
+        <span class="marquee-item">FIFA World Cup</span><span class="marquee-item">·</span>
+        <span class="marquee-item">TATA IPL</span><span class="marquee-item">·</span>
+        <span class="marquee-item">WPL</span><span class="marquee-item">·</span>
+        <span class="marquee-item">Arsenal</span><span class="marquee-item">·</span>
+        <span class="marquee-item">ATP Finals</span><span class="marquee-item">·</span>
+        <span class="marquee-item">Premier League</span><span class="marquee-item">·</span>
+        <span class="marquee-item">DHL</span><span class="marquee-item">·</span>
+        <span class="marquee-item">Gulf Giants</span><span class="marquee-item">·</span>
+        <span class="marquee-item">NBA</span><span class="marquee-item">·</span>
+        <span class="marquee-item">BWF</span><span class="marquee-item">·</span>
+      </div>
+    </div>
+
+    <!-- Contact footer bar -->
+    <div class="home-contact-bar">
+      <div class="hcb-item">
+        <span class="hcb-label">Email</span>
+        <a href="mailto:partha.parto@gmail.com" class="hcb-value">partha.parto@gmail.com</a>
+      </div>
+      <div class="hcb-item">
+        <span class="hcb-label">LinkedIn</span>
+        <a href="https://www.linkedin.com/in/partha-maity-284b57126/" target="_blank" class="hcb-value">linkedin.com/in/partha-maity</a>
+      </div>
+      <div class="hcb-item" style="border-right:none;">
+        <span class="hcb-label">Contact</span>
+        <a href="tel:+447818913441" class="hcb-value">+44 7818 913 441</a>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<div class="page" id="page-about">
+  <div class="sec-wrap">
+    <div class="sec-header">
+      <div class="sec-tag">01 — Who I Am</div>
+      <h2 class="sec-title">ABOUT <em>ME</em></h2>
+    </div>
+    <div class="about-grid">
+      <div>
+        <div class="about-expertise-label">Areas of Expertise</div>
+        <ul class="expertise-list">
+          <li>Brand &amp; Account Management</li>
+          <li>Digital Campaign Strategy</li>
+          <li>Partnership &amp; Sponsorship Activation</li>
+          <li>Influencer Marketing</li>
+          <li>B2C &amp; B2B Performance Marketing</li>
+          <li>OEM &amp; CTV Advertising</li>
+          <li>Content Strategy &amp; Production</li>
+          <li>Social Media Management</li>
+        </ul>
+      </div>
+      <div class="about-text">
+        <p>I've always believed that great sport isn't just played on the field. It's felt everywhere else too. The conversations it sparks, the moments people share, the way it can stop you mid-scroll and make you feel something. That's the space I've worked in for the past several years, and honestly, I wouldn't have it any other way.</p>
+        <p>I'm Partha, a Sports Marketing professional who's had the privilege of working on some pretty incredible stages. From the chaos and energy of an IPL season to the quiet precision of an ATP Final, I've led campaigns for platforms like JioCinema, Star Sports, Voot Select and Mumbai Indians, across cricket, football, tennis, badminton, basketball and gaming.</p>
+        <p>The numbers are there. 230M+ video views, 2X Connected TV viewership for TATA IPL, campaigns spanning thousands of creatives across formats and platforms. But what I'm most proud of is the work that felt right. The jersey launch that got fans talking. The influencer campaign that actually landed. The sponsorship activation that went beyond a logo and meant something to people.</p>
+        <p>I specialise in brand and account management, full-funnel digital campaigns and partnership activation. But really, what I do is figure out how to make people care and then make sure the numbers follow.</p>
+        <p>I'm now looking for the next chapter. Global organisations, bigger stages, stories that matter beyond one market or one season. If that sounds like where you're headed too, I'd love to talk.</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="page" id="page-clients">
+  <div class="clients-fullscreen">
+    <img src="assets/img-749ef3c603e0.png" alt="Sports brands" class="clients-fs-bg" />
+    <div class="clients-fs-overlay"></div>
+    <div class="clients-fs-text">
+      <div class="clients-fs-eyebrow">Who I've Worked With</div>
+      <h1 class="clients-fs-title">CLIENTS</h1>
+      <p class="clients-fs-sub">Global platforms, iconic teams and world-class leagues — managing brand presence end-to-end and executing campaigns that connected sport with culture across every major format and market.</p>
+    </div>
+      <div class="clients-explore-btn-wrap">
+      <button class="clients-explore-btn" onclick="openClientsPanel()">
+        Explore Clients
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="16" height="16"><path d="M12 5v14M5 12l7 7 7-7"/></svg>
+      </button>
+    </div>
+  </div>
+  <div class="clients-panel" id="clients-panel">
+    <div class="clients-panel-header">
+      <button class="proj-close-btn" onclick="closeClientsPanel()">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 6L6 18M6 6l12 12"/></svg>
+        Back
+      </button>
+    </div>
+                    <div class="clients-scroll-wrap">
+      <div class="client-cat-label">Platforms &amp; Broadcasters</div>
+      <div class="logo-grid"><a class="logo-cell logo-cell-img" title="JioCinema" href="https://www.instagram.com/jiohotstar" target="_blank" rel="noopener noreferrer"><img src="assets/img-29345b7e3804.png" alt="JioCinema" /></a><a class="logo-cell logo-cell-img" title="Sony LIV" href="https://www.instagram.com/sonylivindia" target="_blank" rel="noopener noreferrer"><img src="assets/img-a53171f27f78.png" alt="Sony LIV" /></a><a class="logo-cell logo-cell-img" title="Voot Select" href="https://www.instagram.com/vootselect" target="_blank" rel="noopener noreferrer"><img src="assets/img-c00238e8b48a.png" alt="Voot Select" /></a><a class="logo-cell logo-cell-img" title="Colors Cineplex" href="https://www.instagram.com/colorscineplex" target="_blank" rel="noopener noreferrer"><img src="assets/img-3d5e4c44db2e.png" alt="Colors Cineplex" /></a></div>
+      <div class="client-cat-label">Teams &amp; Properties</div>
+      <div class="logo-grid"><a class="logo-cell logo-cell-img" title="Mumbai Indians" href="https://www.instagram.com/mumbaiindians" target="_blank" rel="noopener noreferrer"><img src="assets/img-a10fd7aa9931.png" alt="Mumbai Indians" /></a><a class="logo-cell logo-cell-img" title="Mumbai Indians Women · WPL" href="https://www.instagram.com/wplt20" target="_blank" rel="noopener noreferrer"><img src="assets/img-cf5fa1c3cc3c.png" alt="Mumbai Indians Women · WPL" /></a><a class="logo-cell logo-cell-img" title="MI Cape Town" href="https://www.instagram.com/micapetown" target="_blank" rel="noopener noreferrer"><img src="assets/img-a6e3ee7e9f92.png" alt="MI Cape Town" /></a><a class="logo-cell logo-cell-img" title="Gulf Giants" href="https://www.instagram.com/gulfgiants" target="_blank" rel="noopener noreferrer"><img src="assets/img-213e5ae6efcc.png" alt="Gulf Giants" /></a><a class="logo-cell logo-cell-img" title="DHL × Mumbai Indians" href="https://www.instagram.com/dhlexpressindia" target="_blank" rel="noopener noreferrer"><img src="assets/img-8b285577bae0.png" alt="DHL × Mumbai Indians" /></a><a class="logo-cell logo-cell-img" title="MI Shop" href="https://shop.mumbaiindians.com/collections/jersey-range" target="_blank" rel="noopener noreferrer"><img src="assets/img-3dc266796dc0.png" alt="MI Shop" /></a><a class="logo-cell logo-cell-img" title="Sobha Realty" href="https://www.instagram.com/sobharealty" target="_blank" rel="noopener noreferrer"><img src="assets/img-3701d523aa82.png" alt="Sobha Realty" /></a><a class="logo-cell logo-cell-img" title="Abu Dhabi Knight Riders" href="https://www.instagram.com/adkriders" target="_blank" rel="noopener noreferrer"><img src="assets/img-f073db0de67f.png" alt="Abu Dhabi Knight Riders" /></a></div>
+      <div class="client-cat-label">Leagues &amp; Tournaments</div>
+      <div class="logo-grid"><a class="logo-cell logo-cell-img" title="TATA IPL" href="https://www.instagram.com/iplt20" target="_blank" rel="noopener noreferrer"><img src="assets/img-2a0cecdbd673.png" alt="TATA IPL" /></a><a class="logo-cell logo-cell-img" title="WPL" href="https://www.instagram.com/wplt20" target="_blank" rel="noopener noreferrer"><img src="assets/img-e892cfa67a73.png" alt="WPL" /></a><div class="logo-cell logo-cell-img" title="FIFA World Cup Qatar 2022"><img src="assets/img-ebc95d2e424f.png" alt="FIFA World Cup Qatar 2022" /></div><a class="logo-cell logo-cell-img" title="La Liga" href="https://www.instagram.com/laliga" target="_blank" rel="noopener noreferrer"><img src="assets/img-0e8adab29fa1.png" alt="La Liga" /></a><a class="logo-cell logo-cell-img" title="Serie A" href="https://www.instagram.com/seriea" target="_blank" rel="noopener noreferrer"><img src="assets/img-fd377c289221.png" alt="Serie A" /></a><a class="logo-cell logo-cell-img" title="Ligue 1" href="https://www.instagram.com/ligue1mcdonalds" target="_blank" rel="noopener noreferrer"><img src="assets/img-7015de61032e.png" alt="Ligue 1" /></a><a class="logo-cell logo-cell-img" title="UEFA Champions League" href="https://www.instagram.com/championsleague" target="_blank" rel="noopener noreferrer"><img src="assets/img-7069cf6ddd92.png" alt="UEFA Champions League" /></a><a class="logo-cell logo-cell-img" title="Australian Open" href="https://www.instagram.com/australianopen" target="_blank" rel="noopener noreferrer"><img src="assets/img-bad3cda90d97.png" alt="Australian Open" /></a><a class="logo-cell logo-cell-img" title="ATP Masters 1000" href="https://www.instagram.com/atptour" target="_blank" rel="noopener noreferrer"><img src="assets/img-1bfa1b443212.png" alt="ATP Masters 1000" /></a><a class="logo-cell logo-cell-img" title="BWF" href="https://www.instagram.com/bwf.official" target="_blank" rel="noopener noreferrer"><img src="assets/img-fff51cd3bcaa.png" alt="BWF" /></a><a class="logo-cell logo-cell-img" title="NBA" href="https://www.instagram.com/nba" target="_blank" rel="noopener noreferrer"><img src="assets/img-690b0cfa3cea.png" alt="NBA" /></a><a class="logo-cell logo-cell-img" title="BCCI" href="https://www.instagram.com/indiancricketteam" target="_blank" rel="noopener noreferrer"><img src="assets/img-23ce77b86249.png" alt="BCCI" /></a><a class="logo-cell logo-cell-img" title="Abu Dhabi T10" href="https://www.instagram.com/t10league" target="_blank" rel="noopener noreferrer"><img src="assets/img-411a04c66ccc.png" alt="Abu Dhabi T10" /></a><a class="logo-cell logo-cell-img" title="Carabao Cup" href="https://www.instagram.com/thecarabaocup" target="_blank" rel="noopener noreferrer"><img src="assets/img-076b834adba3.png" alt="Carabao Cup" /></a><a class="logo-cell logo-cell-img" title="Road Safety World Series" href="https://www.instagram.com/rsworldseries" target="_blank" rel="noopener noreferrer"><img src="assets/img-24b08b589eda.png" alt="Road Safety World Series" /></a><a class="logo-cell logo-cell-img" title="ILT20" href="https://www.instagram.com/ilt20official" target="_blank" rel="noopener noreferrer"><img src="assets/img-89c232c07071.png" alt="ILT20" /></a></div>
+    </div>
+    </div>
+  </div>
+
+<div class="page" id="page-projects">
+  <div class="proj-fullscreen">
+    <img src="assets/img-6448208ec731.png" alt="Projects" class="proj-fs-bg" />
+    <div class="proj-fs-overlay"></div>
+    <div class="proj-fs-text">
+      <div class="proj-fs-eyebrow">Selected Work</div>
+      <h1 class="proj-fs-title">PROJECTS</h1>
+      <p class="proj-fs-sub">Every campaign I've worked on sits at the crossroads of sport, culture and commerce. From high-stakes IPL seasons to global football tournaments — this is the work that moved audiences and delivered results.</p>
+    </div>
+    <div class="proj-fs-bottom">
+      <div class="proj-filter-bar">
+        <button class="pfbtn active" data-f="all">All</button>
+        <button class="pfbtn" data-f="cricket">Cricket</button>
+        <button class="pfbtn" data-f="football">Football</button>
+        <button class="pfbtn" data-f="tennis">Tennis</button>
+        <button class="pfbtn" data-f="badminton">Badminton</button>
+        <button class="pfbtn" data-f="basketball">Basketball</button>
+        <button class="pfbtn" data-f="rmg">RMG</button>
+      </div>
+      <p class="proj-fs-hint">Select a category to explore the work</p>
+    </div>
+  </div>
+  <div class="proj-cards-panel" id="proj-cards-panel">
+    <div class="proj-cards-header">
+      <button class="proj-close-btn" onclick="closeProjectCards()">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 6L6 18M6 6l12 12"/></svg>
+        Back
+      </button>
+      <div class="proj-filter-bar-inner">
+        <button class="pfbtn-inner active" data-fi="all">All</button>
+        <button class="pfbtn-inner" data-fi="cricket">Cricket</button>
+        <button class="pfbtn-inner" data-fi="football">Football</button>
+        <button class="pfbtn-inner" data-fi="tennis">Tennis</button>
+        <button class="pfbtn-inner" data-fi="badminton">Badminton</button>
+        <button class="pfbtn-inner" data-fi="basketball">Basketball</button>
+        <button class="pfbtn-inner" data-fi="rmg">RMG</button>
+      </div>
+    </div>
+    <div class="proj-grid">
+<div class="proj-card" data-cat="cricket" data-detail="wpl" onclick="openProjectDetail('wpl')"><div class="proj-card-imgs cols-3"><img src="assets/img-5fd863bb8458.png" loading="lazy" /><img src="assets/img-84b1a1756fbd.png" loading="lazy" /><img src="assets/img-0c828083df60.png" loading="lazy" /></div><div class="proj-sport">Cricket</div><div class="proj-title">Mumbai Indians Women — WPL 2024</div><div class="proj-type">B2C Social Media Marketing</div><div class="proj-desc">Full season campaign covering jersey launch, pixel theme graphics, player arrival content, influencer activation, hero creatives and season-end key posters.</div><div class="proj-metric">31M+ Engagements · 230M+ Video Views</div><div class="proj-card-cta">View case study <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg></div></div>
+<div class="proj-card" data-cat="cricket"><div class="proj-card-imgs cols-2"><img src="assets/img-039abe30ad5d.png" loading="lazy" /><img src="assets/img-c7610ec6cfff.png" loading="lazy" /></div><div class="proj-sport">Cricket</div><div class="proj-title">MI Cape Town — SA20 2024</div><div class="proj-type">B2C Social Media Marketing</div><div class="proj-desc">Full season social for South African audience — jersey launch film, hero posters including RVD Beast Mode, region-centric content and match footage edits.</div><div class="proj-metric">11M+ Reach</div></div>
+<div class="proj-card" data-cat="cricket"><div class="proj-card-imgs cols-3"><img src="assets/img-5cc695744d08.png" loading="lazy" /><img src="assets/img-54d4dbf82a89.png" loading="lazy" /><img src="assets/img-b00fba4d339f.png" loading="lazy" /></div><div class="proj-sport">Cricket</div><div class="proj-title">JioCinema — IPL 2024</div><div class="proj-type">B2C & B2B Performance Marketing</div><div class="proj-desc">OEM & CTV performance creatives, campaign film production and holistic influencer shoot for #ViralWeekends. Match-specific video adapts and B2B print communication.</div><div class="proj-metric">6,000+ Creatives Produced</div></div>
+<div class="proj-card" data-cat="cricket"><div class="proj-card-imgs cols-1"><img src="assets/img-b838db17f65f.png" loading="lazy" /></div><div class="proj-sport">Cricket</div><div class="proj-title">JioCinema — IPL 2023</div><div class="proj-type">B2C & B2B Performance Marketing</div><div class="proj-desc">6000+ creatives for TATA IPL on JioCinema. Campaign drove Connected TV viewership to 2X vs HD Linear TV and boosted advertising spots by 20%.</div><div class="proj-metric">2× CTV Viewership · +20% Ad Spots</div></div>
+<div class="proj-card" data-cat="cricket"><div class="proj-card-imgs cols-1"><img src="assets/img-6fb4680958d2.png" loading="lazy" /></div><div class="proj-sport">Cricket</div><div class="proj-title">DHL × Mumbai Indians — WPL & IPL 2024</div><div class="proj-type">Sponsorship Activation</div><div class="proj-desc">End-to-end sponsorship activation — player shoot content, match build-up posts and post-match content for DHL as Official Logistics Partner of Mumbai Indians.</div><div class="proj-metric">Sponsorship Activation</div></div>
+<div class="proj-card" data-cat="cricket"><div class="proj-card-imgs cols-1"><img src="assets/img-1e70a0bb24e0.png" loading="lazy" /></div><div class="proj-sport">Cricket</div><div class="proj-title">MI Shop — IPL 2024</div><div class="proj-type">E-Commerce Creatives</div><div class="proj-desc">Creative suite for MI Shop featuring official jersey launch, membership cards, Kung Fu Panda collab merchandise and fan merchandise across the full IPL season.</div><div class="proj-metric">E-Commerce Campaign</div></div>
+<div class="proj-card" data-cat="cricket"><div class="proj-card-imgs cols-1"><img src="assets/img-b96d1e9e9e23.png" loading="lazy" /></div><div class="proj-sport">Cricket</div><div class="proj-title">Mumbai Indians — Social Media</div><div class="proj-type">B2C Content Marketing</div><div class="proj-desc">Supporting content for Mumbai Indians men's team — CGI visuals, GIFs for Cricket World Cup 2023 published on Giphy and trending social media content.</div><div class="proj-metric">Brand Content</div></div>
+
+    </div>
+  </div>
+
+  <div class="proj-detail-panel" id="proj-detail-wpl">
+    <div class="proj-detail-header">
+      <button type="button" class="proj-close-btn" onclick="closeProjectDetail('wpl')">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 6L6 18M6 6l12 12"/></svg>
+        Back
+      </button>
+    </div>
+    <div class="pd-body">
+      <div class="pd-title-block">
+        <div class="pd-eyebrow">Cricket · WPL</div>
+        <h1 class="pd-title">Mumbai Indians Women — <span>WPL 2024</span></h1>
+        <p class="pd-lede">Season-long creative and social strategy for Mumbai Indians Women across the Women&apos;s Premier League 2024 — from match-day systems to platform-native storytelling.</p>
+      </div>
+      <div class="pd-hero">
+        <img src="https://gkrcjpqlelrxgyanzyrg.supabase.co/storage/v1/object/public/portfolio-media/wpl%20cover%20photo.jpg" width="560" height="700" decoding="async" alt="Match Day cover creative" />
+      </div>
+      <div class="pd-section pd-section-spaced">
+        <div class="pd-section-label">Impact</div>
+        <div class="pd-metrics">
+          <div class="pd-metric-card"><div class="pd-metric-num">230M+</div><div class="pd-metric-label">Video Views</div></div>
+          <div class="pd-metric-card"><div class="pd-metric-num">31M+</div><div class="pd-metric-label">Engagements</div></div>
+        </div>
+        <p class="pd-prose">Delivered for Mumbai Indians Women across all platforms during the WPL 2024 season, with coordinated creative sprints, match narratives and cultural moments built for digital-first audiences.</p>
+      </div>
+      <div class="pd-footer">
+        <button type="button" class="pd-back-btn" onclick="closeProjectDetail('wpl')">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
+          Back to projects
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="page" id="page-milestones">
+  <div class="sec-wrap">
+    <div class="sec-header">
+      <div class="sec-tag">04 — Impact &amp; Results</div>
+      <h2 class="sec-title">MILE<em>STONES</em></h2>
+    </div>
+    <div class="ach-grid">
+      <div class="ach-card"><div class="ach-num">230M+</div><div class="ach-title">Video Views</div><div class="ach-context">Delivered for Mumbai Indians Women across all platforms during WPL 2024 season</div></div>
+      <div class="ach-card"><div class="ach-num">31M+</div><div class="ach-title">Engagements</div><div class="ach-context">Generated for Mumbai Indians Women&apos;s social media campaign during WPL 2024</div></div>
+      <div class="ach-card"><div class="ach-num">2×</div><div class="ach-title">CTV Viewership Uplift</div><div class="ach-context">Connected TV viewership vs HD Linear TV driven by JioCinema IPL 2023 campaign</div></div>
+      <div class="ach-card"><div class="ach-num">+20%</div><div class="ach-title">Ad Spot Boost</div><div class="ach-context">Increase in advertising spots on Connected TV via JioCinema IPL 2023 performance campaign</div></div>
+      <div class="ach-card"><div class="ach-num">6,000+</div><div class="ach-title">Creatives Produced</div><div class="ach-context">Graphic and video creatives for TATA IPL across OEM, CTV, digital and print</div></div>
+      <div class="ach-card"><div class="ach-num">11M+</div><div class="ach-title">Platform Reach</div><div class="ach-context">Achieved for MI Cape Town across all social media platforms during SA20 2024</div></div>
+      <div class="ach-card"><div class="ach-num">1.5M+</div><div class="ach-title">Video Views</div><div class="ach-context">FIFA World Cup music influencer campaign &quot;Aap Qatar mein hai&quot; for JioCinema</div></div>
+      <div class="ach-card"><div class="ach-num">104%</div><div class="ach-title">Engagement Increase</div><div class="ach-context">Colors Cineplex engagement growth during Road Safety World Series 2022</div></div>
+      <div class="ach-card"><div class="ach-num">3,000+</div><div class="ach-title">Reels Created</div><div class="ach-context">By 300+ influencer creators over 50 days of the IPL 2020 influencer campaign</div></div>
+    </div>
+  </div>
+</div>
+
+<script>
+  let currentPage = null;
+
+  function setNavActive(name) {
+    document.querySelectorAll('[data-nav-page]').forEach(a => {
+      a.classList.toggle('active', a.dataset.navPage === name);
+    });
+  }
+
+  function closeMobileNav() {
+    const nav = document.getElementById('site-nav');
+    const btn = document.getElementById('nav-menu-toggle');
+    if (!nav || !btn) return;
+    nav.classList.remove('nav-open');
+    document.body.classList.remove('nav-open');
+    btn.setAttribute('aria-expanded', 'false');
+    btn.setAttribute('aria-label', 'Open menu');
+  }
+
+  function toggleMobileNav() {
+    const nav = document.getElementById('site-nav');
+    const btn = document.getElementById('nav-menu-toggle');
+    if (!nav || !btn) return;
+    const open = !nav.classList.contains('nav-open');
+    nav.classList.toggle('nav-open', open);
+    document.body.classList.toggle('nav-open', open);
+    btn.setAttribute('aria-expanded', open ? 'true' : 'false');
+    btn.setAttribute('aria-label', open ? 'Close menu' : 'Open menu');
+  }
+
+  const navMenuBtn = document.getElementById('nav-menu-toggle');
+  if (navMenuBtn) navMenuBtn.addEventListener('click', toggleMobileNav);
+
+  document.addEventListener('keydown', e => {
+    if (e.key === 'Escape') closeMobileNav();
+  });
+
+  function showPage(name) {
+    const incoming = document.getElementById('page-' + name);
+    if (!incoming || (currentPage && currentPage.id === 'page-' + name)) return;
+
+    closeMobileNav();
+    setNavActive(name);
+
+    if (currentPage) {
+      currentPage.classList.add('exit');
+      const leaving = currentPage;
+      setTimeout(() => {
+        leaving.classList.remove('active', 'exit');
+        leaving.scrollTop = 0;
+      }, 320);
+    }
+
+    incoming.classList.add('entering');
+    incoming.classList.add('active');
+    incoming.scrollTop = 0;
+
+    requestAnimationFrame(() => {
+      requestAnimationFrame(() => {
+        incoming.classList.remove('entering');
+      });
+    });
+
+    currentPage = incoming;
+  }
+
+  function openProjectCards(f) {
+    const panel = document.getElementById('proj-cards-panel');
+    panel.classList.add('open');
+    applyInnerFilter(f || 'all');
+  }
+
+  function closeProjectCards() {
+    const panel = document.getElementById('proj-cards-panel');
+    panel.classList.remove('open');
+  }
+
+  function openProjectDetail(slug) {
+    const panel = document.getElementById('proj-detail-' + slug);
+    if (!panel) {
+      console.warn('Detail panel not found for slug:', slug);
+      return;
+    }
+    const cardsPanel = document.getElementById('proj-cards-panel');
+    if (cardsPanel) cardsPanel.classList.remove('open');
+    panel.classList.add('open');
+    panel.scrollTop = 0;
+    document.body.style.overflow = 'hidden';
+  }
+
+  function closeProjectDetail(slug) {
+    const panel = document.getElementById('proj-detail-' + slug);
+    if (!panel) return;
+    panel.classList.remove('open');
+    document.body.style.overflow = '';
+    const cardsPanel = document.getElementById('proj-cards-panel');
+    if (cardsPanel) cardsPanel.classList.add('open');
+  }
+
+  function applyInnerFilter(f) {
+    document.querySelectorAll('.pfbtn-inner').forEach(b => b.classList.remove('active'));
+    const active = document.querySelector('.pfbtn-inner[data-fi="' + f + '"]');
+    if (active) active.classList.add('active');
+    document.querySelectorAll('.proj-card').forEach(card => {
+      card.classList.toggle('visible', f === 'all' || card.dataset.cat === f);
+    });
+    document.querySelectorAll('.pfbtn').forEach(b => b.classList.remove('active'));
+    const outerActive = document.querySelector('.pfbtn[data-f="' + f + '"]');
+    if (outerActive) outerActive.classList.add('active');
+  }
+
+  document.querySelectorAll('.pfbtn').forEach(btn => {
+    btn.addEventListener('click', () => openProjectCards(btn.dataset.f));
+  });
+
+  document.querySelectorAll('.pfbtn-inner').forEach(btn => {
+    btn.addEventListener('click', () => applyInnerFilter(btn.dataset.fi));
+  });
+
+  function openClientsPanel() {
+    document.getElementById('clients-panel').classList.add('open');
+  }
+  function closeClientsPanel() {
+    document.getElementById('clients-panel').classList.remove('open');
+  }
+
+  showPage('home');
+</script>
+</body>
+</html>
