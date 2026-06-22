@@ -1,0 +1,12 @@
+.DS_Store
+**/.DS_Store
+
+# Local source files — media is hosted on Supabase
+P.A rtha/
+*.zip
+*.pptx
+*.pub
+*.mp4
+
+# Editor / tooling
+.cursor/
