@@ -484,6 +484,16 @@
       91% { object-position: 88% 80%; transform: scale(1.02); }
       95% { transform: scale(1.06); }
     }
+    @keyframes fs-pan-ltr {
+      0%, 100% {
+        object-position: 6% 48%;
+        transform: scale(1.1);
+      }
+      50% {
+        object-position: 94% 48%;
+        transform: scale(1.1);
+      }
+    }
     .hg-stats-bg-shade {
       position: absolute;
       inset: 0;
@@ -647,7 +657,7 @@
     }
     .home-contact-bar {
       display: grid;
-      grid-template-columns: repeat(4, 1fr);
+      grid-template-columns: repeat(3, 1fr);
       gap: 1rem;
       max-width: 72rem;
       margin: 0 auto;
@@ -880,49 +890,60 @@
       display: flex;
       align-items: center;
       justify-content: center;
-      padding: clamp(3.5rem, 10vw, 7rem) 5vw;
-      text-align: center;
+      padding: clamp(4rem, 8vw, 6rem) 5vw clamp(3rem, 6vw, 5rem);
       transition: background 0.45s var(--ease), color 0.45s var(--ease);
     }
-    .contact-page-inner { max-width: 52rem; margin: 0 auto; }
+    .contact-page-grid {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) minmax(0, 1.05fr);
+      gap: clamp(2.5rem, 6vw, 5.5rem);
+      align-items: start;
+      max-width: 72rem;
+      width: 100%;
+      margin: 0 auto;
+    }
+    .contact-page-info {
+      text-align: left;
+    }
+    .contact-page-eyebrow {
+      font-size: 0.62rem;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      margin: 0 0 1.75rem;
+      font-weight: 500;
+    }
     .contact-page-title {
       font-family: "Playfair Display", Georgia, serif;
-      font-size: clamp(2rem, 5vw, 3.25rem);
+      font-size: clamp(2.1rem, 4.5vw, 3.35rem);
       font-weight: 400;
-      font-style: italic;
+      font-style: normal;
       color: var(--text);
-      line-height: 1.15;
-      margin: 0 0 1.25rem;
+      line-height: 1.12;
+      margin: 0 0 1.5rem;
       letter-spacing: -0.02em;
       transition: color 0.45s var(--ease);
-      display: flex;
-      flex-direction: column;
-      gap: 0.3rem;
-    }
-    .contact-page-title-line {
-      display: block;
     }
     .contact-page-title em {
       color: var(--accent);
       font-style: italic;
     }
     .contact-page-sub {
-      font-size: clamp(0.95rem, 2vw, 1.125rem);
+      font-size: clamp(0.92rem, 1.8vw, 1.05rem);
       color: var(--text-soft);
-      line-height: 1.7;
-      margin: 0 auto 3rem;
-      max-width: 52ch;
+      line-height: 1.75;
+      margin: 0 0 2.25rem;
+      max-width: 38ch;
       font-weight: 400;
       transition: color 0.45s var(--ease);
     }
-    .contact-page-buttons {
+    .contact-page-chips {
       display: flex;
       flex-wrap: wrap;
-      justify-content: center;
-      align-items: center;
       gap: 0.75rem;
+      align-items: center;
     }
-    .contact-page-btn {
+    .contact-page-chip {
       display: inline-flex;
       align-items: center;
       gap: 0.55rem;
@@ -942,33 +963,121 @@
         color 0.3s var(--ease);
       box-shadow: 0 2px 8px var(--shadow-sm);
     }
-    .contact-page-btn:hover {
+    .contact-page-chip:hover {
       background: var(--bg-elevated);
       border-color: var(--accent);
       transform: translateY(-4px) scale(1.025);
       box-shadow: 0 14px 32px var(--shadow-md);
       color: var(--text);
     }
-    .contact-page-btn svg {
+    .contact-page-chip svg {
       width: 17px;
       height: 17px;
       flex-shrink: 0;
       stroke: currentColor;
     }
-    .contact-page-location {
-      display: inline-flex;
-      align-items: center;
-      gap: 0.5rem;
-      padding: 0.8rem 1.1rem;
-      color: var(--text-soft);
-      font-size: 0.82rem;
+    .contact-page-chip--static {
+      cursor: default;
+    }
+    .contact-page-chip--static:hover {
+      transform: none;
+      border-color: var(--border);
+      box-shadow: 0 2px 8px var(--shadow-sm);
+      color: var(--text);
+    }
+    .contact-page-form-wrap {
+      padding-top: 0.15rem;
+    }
+    .contact-form {
+      display: flex;
+      flex-direction: column;
+      gap: 0;
+    }
+    .contact-form-field {
+      margin-bottom: 2rem;
+    }
+    .contact-form-field--message {
+      margin-bottom: 2.5rem;
+    }
+    .contact-form-field label {
+      display: block;
+      font-size: 0.62rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      margin-bottom: 0.85rem;
+      font-weight: 500;
+    }
+    .contact-form-field input,
+    .contact-form-field textarea {
+      width: 100%;
+      border: none;
+      border-bottom: 1px solid var(--border);
+      background: transparent;
+      color: var(--text);
+      font-family: "DM Sans", sans-serif;
+      font-size: 0.95rem;
       font-weight: 400;
+      padding: 0.55rem 0 0.75rem;
+      outline: none;
+      border-radius: 0;
+      transition: border-color 0.25s var(--ease);
+      resize: vertical;
     }
-    .contact-page-location svg {
-      width: 17px;
-      height: 17px;
-      flex-shrink: 0;
-      stroke: currentColor;
+    .contact-form-field textarea {
+      min-height: 7.5rem;
+      line-height: 1.65;
+    }
+    .contact-form-field input:focus,
+    .contact-form-field textarea:focus {
+      border-bottom-color: var(--accent);
+    }
+    .contact-form-field input::placeholder,
+    .contact-form-field textarea::placeholder {
+      color: var(--text-muted);
+      opacity: 0.65;
+    }
+    .contact-form-submit {
+      width: 100%;
+      padding: 1.05rem 1.5rem;
+      border: none;
+      border-radius: 0;
+      background: var(--text);
+      color: var(--bg);
+      font-family: "DM Sans", sans-serif;
+      font-size: 0.68rem;
+      font-weight: 600;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      cursor: pointer;
+      transition:
+        background 0.3s var(--ease),
+        transform 0.38s cubic-bezier(0.34, 1.45, 0.64, 1),
+        opacity 0.25s var(--ease);
+    }
+    .contact-form-submit:hover:not(:disabled) {
+      background: var(--accent);
+      color: var(--bg);
+      transform: translateY(-2px);
+    }
+    .contact-form-submit:disabled {
+      opacity: 0.65;
+      cursor: wait;
+    }
+    .contact-form-status {
+      margin-top: 1rem;
+      font-size: 0.88rem;
+      line-height: 1.5;
+      color: var(--text-soft);
+    }
+    .contact-form-status.is-success {
+      color: var(--accent);
+    }
+    .contact-form-status.is-error {
+      color: #b54a4a;
+    }
+    [data-theme="dark"] .contact-form-status.is-error {
+      color: #e08a8a;
     }
 
     /* ── INNER PAGES ── */
@@ -1328,13 +1437,28 @@
       width: 100%; height: 100%;
       display: flex; flex-direction: column;
       overflow: hidden;
+      isolation: isolate;
     }
     .proj-fs-bg {
       position: absolute; inset: 0;
-      width: 100%; height: 100%;
-      object-fit: cover; object-position: center;
+      z-index: 0;
+      pointer-events: none;
+    }
+    .proj-fs-bg-frame {
+      position: absolute;
+      inset: 0;
+      overflow: hidden;
+    }
+    .proj-fs-bg-frame img {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: 50% 48%;
       display: block;
       filter: brightness(0.35);
+      animation: fs-pan-ltr 100s ease-in-out infinite alternate;
+      will-change: transform, object-position;
     }
     .proj-fs-overlay {
       position: absolute; inset: 0;
@@ -1519,12 +1643,29 @@
     .clients-fullscreen {
       position: relative; width: 100%; height: 100%;
       display: flex; flex-direction: column;
+      overflow: hidden;
+      isolation: isolate;
     }
     .clients-fs-bg {
       position: absolute; inset: 0;
-      width: 100%; height: 100%;
-      object-fit: cover; object-position: center;
-      display: block; filter: brightness(0.32);
+      z-index: 0;
+      pointer-events: none;
+    }
+    .clients-fs-bg-frame {
+      position: absolute;
+      inset: 0;
+      overflow: hidden;
+    }
+    .clients-fs-bg-frame img {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: 50% 42%;
+      display: block;
+      filter: brightness(0.32);
+      animation: fs-pan-ltr 100s ease-in-out infinite alternate;
+      will-change: transform, object-position;
     }
     .clients-fs-overlay {
       position: absolute; inset: 0;
@@ -2353,6 +2494,36 @@
       font-size: 0.65rem; letter-spacing: 0.18em;
       text-transform: uppercase;
       color: var(--text-muted); font-weight: 500;
+    }
+    .pd-season-phases {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(11.5rem, 1fr));
+      gap: 1rem;
+      margin-top: 1.5rem;
+    }
+    .pd-season-phase {
+      padding: 1.2rem 1rem 1.15rem;
+      border: 1px solid var(--border-soft);
+      background: var(--bg-muted);
+      border-radius: 8px;
+    }
+    .pd-season-phase-tag {
+      font-size: 0.58rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 0.7rem;
+      font-weight: 600;
+    }
+    .pd-season-phase p {
+      font-size: 0.84rem;
+      line-height: 1.65;
+      color: var(--text-soft);
+      margin: 0;
+    }
+    .pd-season-phase strong {
+      color: var(--text);
+      font-weight: 600;
     }
 
     /* WPL case study — reference layout */
@@ -3185,6 +3356,8 @@
     }
     @media (max-width: 500px) {
       .pd-wpl-stats { grid-template-columns: 1fr; }
+      .pd-season-phases { grid-template-columns: 1fr; }
+      .pd-season-phases { grid-template-columns: repeat(2, minmax(0, 1fr)); }
       .pd-wpl-row-3,
       .pd-wpl-row-2 {
         grid-template-columns: 1fr;
@@ -3433,9 +3606,8 @@
       .proj-grid:not(.proj-grid--single):not(.proj-grid--double), .ach-kpi-row { grid-template-columns: repeat(2, 1fr); }
       .proj-grid.proj-grid--double { grid-template-columns: repeat(2, minmax(0, 1fr)); }
       .home-contact-bar { grid-template-columns: repeat(2, 1fr); }
-      .contact-page-buttons { flex-direction: column; align-items: stretch; }
-      .contact-page-btn { justify-content: center; }
-      .contact-page-location { justify-content: center; }
+      .contact-page-grid { grid-template-columns: 1fr; gap: 3rem; }
+      .contact-page-info { max-width: 36rem; }
     }
     @media (max-width: 600px) {
       .proj-grid:not(.proj-grid--single), .ach-layout { grid-template-columns: 1fr; }
@@ -3791,6 +3963,8 @@
       .home-grid-reveal { opacity: 1; transform: none; transition: none; }
       .hg-photo:hover .hg-photo-img,
       .hg-stats-bg-frame img { animation: none; transform: none; object-position: 50% 40%; }
+      .clients-fs-bg-frame img,
+      .proj-fs-bg-frame img { animation: none; transform: none; object-position: 50% 48%; }
       .hg-stats:hover .hg-work-title { transform: none; }
       .logo-cell,
       .logo-cell-img,
@@ -3798,10 +3972,12 @@
       .nav-links li a,
       .sicon,
       .proj-card,
-      .contact-page-btn,
+      .contact-page-chip,
+      .contact-form-submit,
       .expertise-list li,
       .expertise-list li::before { transition: none; }
-      .contact-page-btn:hover { transform: none; box-shadow: 0 2px 8px var(--shadow-sm); }
+      .contact-page-chip:hover,
+      .contact-form-submit:hover:not(:disabled) { transform: none; }
       .pd-hero-metric:hover,
       .pd-do-list li:hover { transform: none; }
       .expertise-list li:hover {
@@ -3978,13 +4154,6 @@
           <span class="hcb-label">LinkedIn</span>
           <span class="hcb-value">linkedin.com/in/partha-maity</span>
         </a>
-        <a href="tel:+447818913441" class="hcb-card dock-item">
-          <span class="hcb-icon" aria-hidden="true">
-            <svg viewBox="0 0 24 24" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07 19.5 19.5 0 01-6-6 19.79 19.79 0 01-3.07-8.67A2 2 0 014.11 2h3a2 2 0 012 1.72 12.84 12.84 0 00.7 2.81 2 2 0 01-.45 2.11L8.09 9.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45 12.84 12.84 0 002.81.7A2 2 0 0122 16.92z"/></svg>
-          </span>
-          <span class="hcb-label">Contact</span>
-          <span class="hcb-value">+44 7818 913 441</span>
-        </a>
         <div class="hcb-card hcb-card--static dock-item">
           <span class="hcb-icon" aria-hidden="true">
             <svg viewBox="0 0 24 24" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 014 10 15.3 15.3 0 01-4 10 15.3 15.3 0 01-4-10 15.3 15.3 0 014-10z"/></svg>
@@ -4059,11 +4228,11 @@
         </ul>
       </div>
       <div class="about-text">
-        <p>I've always believed that great sport isn't just played on the field. It's felt everywhere else too. The conversations it sparks, the moments people share, the way it can stop you mid-scroll and make you feel something. That's the space I've worked in for the past several years, and I wouldn't have it any other way.</p>
-        <p>I'm Partha, a Sports Marketing professional who's had the privilege of working on some pretty incredible stages. From the chaos and energy of an IPL season to the quiet precision of an ATP Final, I've led campaigns for platforms like JioCinema, Colors Cineplex, Sports18, Voot Select and Mumbai Indians, across cricket, football, tennis, badminton, basketball and gaming.</p>
-        <p>The numbers are there. 230M+ video views, 2X Connected TV viewership for TATA IPL, campaigns spanning thousands of creatives across formats and platforms. But the work I'm most proud of sits behind those numbers — the stakeholder relationships built on data, not promises. The client briefs I've translated into campaigns that actually moved people. The five accounts managed simultaneously, all retained.</p>
-        <p>I specialise in brand and account management, full-funnel digital campaigns, partnership activation and sports consultancy. What that really means in practice is knowing when a client needs a strategy and when they need someone to tell them the strategy they have won't work — and having the data to back either conversation.</p>
-        <p>I'm now looking for the next chapter. Global organisations, bigger stages, stories that matter beyond one market or one season. If that sounds like where you're headed too, I'd love to talk.</p>
+        <p>I've always believed that great sport isn't just played on the field. It's felt everywhere else too. The conversations it sparks, the moments people share, the way it can stop you mid-scroll and make you feel something. That's the space I've worked in for the past several years.</p>
+        <p>I'm Partha, a Sports Marketing professional with five years across the biggest stages in the game. IPL seasons, ATP Finals, FIFA World Cups. I've led campaigns for JioCinema, Colors Cineplex, Sports18, Voot Select and Mumbai Indians across cricket, football, tennis, badminton, basketball and gaming.</p>
+        <p>The numbers are there. 230M+ video views, 2&times; Connected TV viewership for TATA IPL, campaigns spanning thousands of creatives across formats and platforms. But the work I'm most proud of sits behind those numbers. Stakeholder relationships built on data, not promises. Five accounts managed simultaneously. All retained.</p>
+        <p>I specialise in brand and account management, full-funnel digital campaigns, partnership activation and sports consultancy. In practice that means knowing when a client needs a strategy and when they need someone to tell them the strategy they have won't work. I carry the data for both conversations.</p>
+        <p>I'm now looking to work with global organisations on bigger stages, across markets and sports that matter. If that's the kind of brief you're building, I'd like to be part of it.</p>
       </div>
     </div>
   </div>
@@ -4107,29 +4276,43 @@
 
 <div class="page" id="page-contact">
   <div class="contact-page">
-    <div class="contact-page-inner">
-      <h1 class="contact-page-title reveal-on-enter">
-        <span class="contact-page-title-line">You&apos;ve seen the work.</span>
-        <span class="contact-page-title-line">You know where to <em>find me.</em></span>
-      </h1>
-      <p class="contact-page-sub reveal-on-enter stagger-1">Open to Sports Marketing, Brand Management and Consultancy roles across global organisations.</p>
-      <div class="contact-page-buttons reveal-on-enter stagger-2 dock-zone dock-zone--row">
-        <a href="mailto:partha.parto@gmail.com" class="contact-page-btn dock-item">
-          <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
-          partha.parto@gmail.com
-        </a>
-        <a href="https://www.linkedin.com/in/partha-maity-284b57126/" class="contact-page-btn dock-item" target="_blank" rel="noopener noreferrer">
-          <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 01-2.063-2.065 2.064 2.064 0 112.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
-          LinkedIn
-        </a>
-        <a href="tel:+447818913441" class="contact-page-btn dock-item">
-          <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07 19.5 19.5 0 01-6-6 19.79 19.79 0 01-3.07-8.67A2 2 0 014.11 2h3a2 2 0 012 1.72 12.84 12.84 0 00.7 2.81 2 2 0 01-.45 2.11L8.09 9.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45 12.84 12.84 0 002.81.7A2 2 0 0122 16.92z"/></svg>
-          +44 7818 913 441
-        </a>
-        <span class="contact-page-location">
-          <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 014 10 15.3 15.3 0 01-4 10 15.3 15.3 0 01-4-10 15.3 15.3 0 014-10z"/></svg>
-          Global
-        </span>
+    <div class="contact-page-grid">
+      <div class="contact-page-info reveal-on-enter">
+        <p class="contact-page-eyebrow">Contact</p>
+        <h1 class="contact-page-title">You&apos;ve seen the work. You know where to <em>find me.</em></h1>
+        <p class="contact-page-sub">Open to Sports Marketing, Brand Management and Consultancy roles across global organisations.</p>
+        <div class="contact-page-chips dock-zone dock-zone--row">
+          <a href="mailto:partha.parto@gmail.com" class="contact-page-chip dock-item">
+            <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+            partha.parto@gmail.com
+          </a>
+          <a href="https://www.linkedin.com/in/partha-maity-284b57126/" class="contact-page-chip dock-item" target="_blank" rel="noopener noreferrer">
+            <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 01-2.063-2.065 2.064 2.064 0 112.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
+            LinkedIn
+          </a>
+          <span class="contact-page-chip contact-page-chip--static dock-item">
+            <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 014 10 15.3 15.3 0 01-4 10 15.3 15.3 0 01-4-10 15.3 15.3 0 014-10z"/></svg>
+            Global
+          </span>
+        </div>
+      </div>
+      <div class="contact-page-form-wrap reveal-on-enter stagger-1">
+        <form class="contact-form" id="contact-enquiry-form" novalidate>
+          <div class="contact-form-field">
+            <label for="contact-name">Your name</label>
+            <input type="text" id="contact-name" name="name" autocomplete="name" required />
+          </div>
+          <div class="contact-form-field">
+            <label for="contact-email">Your email</label>
+            <input type="email" id="contact-email" name="email" autocomplete="email" required />
+          </div>
+          <div class="contact-form-field contact-form-field--message">
+            <label for="contact-message">Your message</label>
+            <textarea id="contact-message" name="message" rows="5" required></textarea>
+          </div>
+          <button type="submit" class="contact-form-submit" id="contact-form-submit">Send enquiry</button>
+          <p class="contact-form-status" id="contact-form-status" hidden aria-live="polite"></p>
+        </form>
       </div>
     </div>
   </div>
@@ -4137,7 +4320,11 @@
 
 <div class="page" id="page-clients">
   <div class="clients-fullscreen">
-    <img src="assets/img-749ef3c603e0.png" alt="Sports brands" class="clients-fs-bg" />
+    <div class="clients-fs-bg" aria-hidden="true">
+      <div class="clients-fs-bg-frame">
+        <img src="assets/img-749ef3c603e0.png" alt="" />
+      </div>
+    </div>
     <div class="clients-fs-overlay"></div>
     <div class="clients-fs-text">
       <div class="clients-fs-eyebrow">Who I've Worked With</div>
@@ -4200,7 +4387,11 @@
 
 <div class="page" id="page-projects">
   <div class="proj-fullscreen">
-    <img src="assets/img-6448208ec731.png" alt="Projects" class="proj-fs-bg" />
+    <div class="proj-fs-bg" aria-hidden="true">
+      <div class="proj-fs-bg-frame">
+        <img src="assets/img-6448208ec731.png" alt="" />
+      </div>
+    </div>
     <div class="proj-fs-overlay"></div>
     <div class="proj-fs-text">
       <div class="proj-fs-eyebrow">Selected Work</div>
@@ -4234,7 +4425,7 @@
       </div>
     </div>
     <div class="proj-grid dock-zone dock-zone--grid">
-<div class="proj-card dock-item" data-cat="cricket" data-detail="wpl"><div class="proj-card-imgs cols-1"><img src="https://gkrcjpqlelrxgyanzyrg.supabase.co/storage/v1/object/public/portfolio-media/Cover%20Images/Cricket/WPL%20F.png" loading="lazy" alt="Mumbai Indians Women WPL 2024 cover" /></div><div class="proj-sport">Cricket</div><div class="proj-title">Mumbai Indians Women — WPL 2024</div><div class="proj-type">B2C Social Media Marketing</div><div class="proj-desc">Full season campaign covering jersey launch, pixel theme graphics, player arrival content, influencer activation, hero creatives and season-end key posters.</div><div class="proj-metric">31M+ Engagements · 230M+ Video Views</div><div class="proj-card-cta">View case study <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg></div></div>
+<div class="proj-card dock-item" data-cat="cricket" data-detail="wpl"><div class="proj-card-imgs cols-1"><img src="https://gkrcjpqlelrxgyanzyrg.supabase.co/storage/v1/object/public/portfolio-media/Cover%20Images/Cricket/WPL%20F.png" loading="lazy" alt="Mumbai Indians Women WPL 2024 cover" /></div><div class="proj-sport">Cricket</div><div class="proj-title">Mumbai Indians Women — WPL 2024</div><div class="proj-type">Brand Management</div><div class="proj-desc">Senior Brand Manager on WPL 2024 — full-season ownership from auction through post-season, building MI Women&apos;s franchise voice across jersey launch, match-day systems, influencer beats and season wrap.</div><div class="proj-metric">31M+ Engagements · 230M+ Video Views</div><div class="proj-card-cta">View case study <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg></div></div>
 <div class="proj-card dock-item" data-cat="cricket" data-detail="mict"><div class="proj-card-imgs cols-1"><img src="https://gkrcjpqlelrxgyanzyrg.supabase.co/storage/v1/object/public/portfolio-media/Cover%20Images/Cricket/MICT.png" loading="lazy" alt="MI Cape Town SA20 2024 cover" /></div><div class="proj-sport">Cricket</div><div class="proj-title">MI Cape Town — SA20 2024</div><div class="proj-type">B2C Social Media Marketing</div><div class="proj-desc">Full season campaign building a distinct Cape Town identity through jersey launch creative, cinematic player posters, local culture and fast-turnaround match-week content.</div><div class="proj-metric">11M+ Engagements · 25M+ Video Views</div><div class="proj-card-cta">View case study <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg></div></div>
 <div class="proj-card dock-item" data-cat="cricket" data-detail="jioipl2024"><div class="proj-card-imgs cols-1"><img src="https://gkrcjpqlelrxgyanzyrg.supabase.co/storage/v1/object/public/portfolio-media/Cover%20Images/Cricket/IPL2.png" loading="lazy" alt="JioCinema IPL case study cover" /></div><div class="proj-sport">Cricket</div><div class="proj-title">JioCinema — IPL 2023 &amp; 2024</div><div class="proj-type">B2C &amp; B2B Performance Marketing</div><div class="proj-desc">OEM and CTV performance creatives, campaign film production, match-specific video adapts, B2B print communication, and a holistic influencer shoot for #ViralWeekends. 6,000+ creatives delivered per season for TATA IPL on JioCinema — driving Connected TV viewership to 2× HD Linear TV and boosting ad-spot sales by 20%.</div><div class="proj-metric">6000+ Creatives &amp; 1500+ Videos · 2× CTV Viewership · +20% Ad Spots</div><div class="proj-card-cta">View case study <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg></div></div>
 <div class="proj-card dock-item" data-cat="cricket" data-detail="dhlmi2024"><div class="proj-card-imgs cols-1"><img src="https://gkrcjpqlelrxgyanzyrg.supabase.co/storage/v1/object/public/portfolio-media/Cover%20Images/Cricket/DHL.png" loading="lazy" alt="DHL Mumbai Indians WPL and IPL 2024 cover" /></div><div class="proj-sport">Cricket</div><div class="proj-title">DHL × Mumbai Indians — WPL &amp; IPL 2024</div><div class="proj-type">Sponsorship Activation</div><div class="proj-desc">End-to-end sponsorship activation across WPL and IPL 2024, bringing DHL&apos;s partnership with Mumbai Indians to life through player-led, match build-up and post-match content.</div><div class="proj-metric">WPL &amp; IPL Partner Activation</div><div class="proj-card-cta">View case study <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg></div></div>
@@ -4242,7 +4433,7 @@
 <div class="proj-card dock-item" data-cat="cricket" data-detail="misocial2023"><div class="proj-card-imgs cols-1"><img src="https://gkrcjpqlelrxgyanzyrg.supabase.co/storage/v1/object/public/portfolio-media/Cover%20Images/Cricket/MI%20Men.png" loading="lazy" alt="Mumbai Indians social media cover" /></div><div class="proj-sport">Cricket</div><div class="proj-title">Mumbai Indians — Social Media</div><div class="proj-type">B2C Content Marketing</div><div class="proj-desc">Supporting content for Mumbai Indians men's team — CGI visuals, GIFs for Cricket World Cup 2023 published on Giphy and trending social media content.</div><div class="proj-metric">Brand Content</div><div class="proj-card-cta">View case study <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg></div></div>
 <div class="proj-card dock-item" data-cat="cricket" data-detail="colorsrsws2022"><div class="proj-card-imgs cols-1"><img src="https://gkrcjpqlelrxgyanzyrg.supabase.co/storage/v1/object/public/portfolio-media/Cover%20Images/Cricket/RSWS.png" loading="lazy" alt="Colors Cineplex Road Safety World Series 2022 cover" /></div><div class="proj-sport">Cricket</div><div class="proj-title">Colors Cineplex — Road Safety World Series 2022</div><div class="proj-type">Social Media &amp; Influencer Marketing</div><div class="proj-desc">Digital-exclusive player interviews, GoPro shoots at ground and off-field influencer content driving tune-ins for the broadcaster.</div><div class="proj-metric">104% Engagement Increase · 4× Profile Visits</div><div class="proj-card-cta">View case study <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg></div></div>
 <div class="proj-card dock-item" data-cat="cricket" data-detail="colorst102022"><div class="proj-card-imgs cols-1"><img src="https://gkrcjpqlelrxgyanzyrg.supabase.co/storage/v1/object/public/portfolio-media/Cover%20Images/Cricket/ILT20.png" loading="lazy" alt="Colors Cineplex Abu Dhabi T10 2022 cover" /></div><div class="proj-sport">Cricket</div><div class="proj-title">Colors Cineplex — Abu Dhabi T10 2022</div><div class="proj-type">Multi-Channel Social Campaign</div><div class="proj-desc">Match footage edits, influencer marketing, digital exclusive player content and social media marketing driving sustained engagement throughout the season.</div><div class="proj-metric">160K+ Interactions</div><div class="proj-card-cta">View case study <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg></div></div>
-<div class="proj-card dock-item" data-cat="cricket" data-detail="gulfgiants2024"><div class="proj-card-imgs cols-1"><img src="https://gkrcjpqlelrxgyanzyrg.supabase.co/storage/v1/object/public/portfolio-media/Cover%20Images/Cricket/GulfG.png" loading="lazy" alt="Gulf Giants ILT20 2024 cover" /></div><div class="proj-sport">Cricket</div><div class="proj-title">Gulf Giants — ILT20 2024</div><div class="proj-type">B2C Promo Shoot</div><div class="proj-desc">Concept, script, and shoot of the main campaign film for Gulf Giants&apos; ILT20 2024 season — a hero asset built to anchor the franchise&apos;s launch into Season 2 of the UAE&apos;s premier T20 league.</div><div class="proj-metric">Campaign Film Production</div><div class="proj-card-cta">View case study <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg></div></div>
+<div class="proj-card dock-item" data-cat="cricket" data-detail="gulfgiants2024"><div class="proj-card-imgs cols-1"><img src="https://gkrcjpqlelrxgyanzyrg.supabase.co/storage/v1/object/public/portfolio-media/Cover%20Images/Cricket/GulfG.png" loading="lazy" alt="Gulf Giants ILT20 2024 cover" /></div><div class="proj-sport">Cricket</div><div class="proj-title">Gulf Giants — ILT20 2024</div><div class="proj-type">Account Management</div><div class="proj-desc">Account lead for Gulf Giants and Adani Sportsline on ILT20 2024 — owning the season launch brief and delivering the hero film that anchored the franchise into Season 2 of the UAE&apos;s premier T20 league.</div><div class="proj-metric">Season Launch · Hero Film</div><div class="proj-card-cta">View case study <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg></div></div>
 <div class="proj-card dock-item" data-cat="football" data-detail="sobhaarsenal"><div class="proj-card-imgs cols-1"><img src="https://gkrcjpqlelrxgyanzyrg.supabase.co/storage/v1/object/public/portfolio-media/Sobha%20X%20Arsenal.png" loading="lazy" alt="Sobha Realty Arsenal partnership cover" /></div><div class="proj-sport">Football</div><div class="proj-title">Sobha Realty × Arsenal</div><div class="proj-type">Partnership Film Production</div><div class="proj-desc">Concept, script, and edit of the announcement film for Sobha Realty&apos;s launch as Arsenal&apos;s Global Real Estate Partner — featuring first-team players, presented at the official reveal.</div><div class="proj-metric">Partnership Film Production</div><div class="proj-card-cta">View case study <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg></div></div>
 <div class="proj-card dock-item" data-cat="football" data-detail="vootleagues"><div class="proj-card-imgs cols-1"><img src="https://gkrcjpqlelrxgyanzyrg.supabase.co/storage/v1/object/public/portfolio-media/Football%20C.png" loading="lazy" alt="Voot Select football leagues and tournaments cover" /></div><div class="proj-sport">Football</div><div class="proj-title">Voot Select × Football</div><div class="proj-type">Season Social, Tournaments &amp; Campaigns</div><div class="proj-desc">Season-long social for Serie A, La Liga and Ligue 1, plus tournament coverage from the FIFA World Cup to the Carabao Cup. Led #SuperChargedSunday, a weekly campaign that trended on Twitter India.</div><div class="proj-metric">#SuperChargedSunday · Twitter India Trend</div><div class="proj-card-cta">View case study <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg></div></div>
 <div class="proj-card dock-item" data-cat="football" data-detail="jiofifawc2022"><div class="proj-card-imgs cols-1"><img src="https://gkrcjpqlelrxgyanzyrg.supabase.co/storage/v1/object/public/portfolio-media/FIFA%20Q.png" loading="lazy" alt="JioCinema FIFA World Cup Qatar 2022 cover" /></div><div class="proj-sport">Football</div><div class="proj-title">JioCinema — FIFA World Cup Qatar 2022</div><div class="proj-type">Influencer Marketing</div><div class="proj-desc">&quot;Aap Qatar mein hai&quot; (You&apos;re in Qatar) — music influencer campaign driving viral reach around the tournament for Indian audiences.</div><div class="proj-metric">1.5M+ Video Views</div><div class="proj-card-cta">View case study <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg></div></div>
@@ -4262,9 +4453,9 @@
     </div>
     <div class="pd-body">
       <div class="pd-title-block">
-        <div class="pd-eyebrow">Cricket · B2C Social Media Marketing</div>
+        <div class="pd-eyebrow">Cricket · Brand Management</div>
         <h1 class="pd-title">Mumbai Indians Women — <span>WPL 2024</span></h1>
-        <p class="pd-lede">Mumbai Indians Women (MIW) is the women&apos;s franchise of one of cricket&apos;s most decorated teams, competing in the Women&apos;s Premier League (WPL). The 2024 season campaign aimed to deepen audience connection through bold creative direction, cultural storytelling, and a season-long narrative arc.</p>
+        <p class="pd-lede">Senior Brand Manager on WPL 2024 — full-season ownership from auction through post-season, building MI Women&apos;s distinct franchise voice across 31M+ engagements and 230M+ video views.</p>
       </div>
 
       <div class="pd-hero pd-hero-wide">
@@ -4273,21 +4464,24 @@
 
       <div class="pd-section pd-section-spaced">
         <div class="pd-section-label">Objective</div>
-        <p class="pd-prose">Establish Mumbai Indians Women as a distinct property within the wider MI universe — with its own voice, audience, and visual identity. Drive engagement across the WPL season, from squad announcement through to the playoffs, while honouring the Mumbai-rooted cultural ethos that defines the franchise.</p>
+        <p class="pd-prose">Establish Mumbai Indians Women as a distinct property within the wider MI universe — with its own voice, audience, and visual identity. As Senior Brand Manager, own the full WPL calendar from auction and squad reveal through pre-season, match weeks, and post-season — while honouring the Mumbai-rooted cultural ethos that defines the franchise.</p>
       </div>
 
       <div class="pd-section pd-section-spaced">
         <div class="pd-section-label">Campaign Approach</div>
-        <p class="pd-prose">A retro-gaming creative direction anchored the season — turning every match-day, player arrival, and squad reveal into a pixel-art world that felt instantly distinctive. The strategy combined four pillars: a bold jersey launch with paint-tool aesthetics, gaming-themed pixel graphics including a Choose Your Fighter player reveal series, culturally-rooted Mumbai player arrivals built around auto-rickshaws and Marathi callouts, and influencer activations that brought a younger audience into the fold.</p>
-        <p class="pd-prose">Every piece of content was designed to be screenshot-able, share-able, and unmistakably MI Women — from the season opener through to a season-end thank-you collage that united players, fans, and the city in one frame.</p>
+        <p class="pd-prose">A retro-gaming creative direction anchored the season — turning auction beats, player arrivals, match-days, and squad reveals into a pixel-art world that felt instantly distinctive. The strategy combined four pillars: a bold jersey launch with paint-tool aesthetics, gaming-themed pixel graphics including a Choose Your Fighter player reveal series, culturally-rooted Mumbai player arrivals built around auto-rickshaws and Marathi callouts, and influencer activations that brought a younger audience into the fold.</p>
+        <p class="pd-prose">Every phase was briefed, tracked, and reported against — from auction-day momentum through to a season-end thank-you collage that united players, fans, and the city in one frame.</p>
       </div>
 
       <div class="pd-section pd-section-spaced">
-        <div class="pd-section-label">Impact</div>
+        <div class="pd-section-label">Impact &amp; analytics</div>
         <div class="pd-metrics">
-          <div class="pd-metric-card"><div class="pd-metric-num">31M+</div><div class="pd-metric-label">Engagements</div></div>
-          <div class="pd-metric-card"><div class="pd-metric-num">230M+</div><div class="pd-metric-label">Video Views</div></div>
+          <div class="pd-metric-card"><div class="pd-metric-num">31M+</div><div class="pd-metric-label">Engagements · full season</div></div>
+          <div class="pd-metric-card"><div class="pd-metric-num">230M+</div><div class="pd-metric-label">Video views · full season</div></div>
+          <div class="pd-metric-card"><div class="pd-metric-num">4</div><div class="pd-metric-label">Season phases · auction to post</div></div>
+          <div class="pd-metric-card"><div class="pd-metric-num">4</div><div class="pd-metric-label">Creative pillars</div></div>
         </div>
+        <p class="pd-prose">Season analytics were tracked and reported across every phase — auction momentum, pre-season launch spikes, in-season match-day performance, and post-season wrap. The full WPL 2024 window delivered <strong>31M+ engagements</strong> and <strong>230M+ video views</strong> for Mumbai Indians Women, with creative performance read against benchmarks at each stakeholder review.</p>
       </div>
 
       <section class="pd-wpl-gallery" aria-label="Campaign collage">
@@ -5105,9 +5299,9 @@
     </div>
     <div class="pd-body">
       <div class="pd-title-block">
-        <div class="pd-eyebrow">Cricket · B2C Promo Shoot</div>
+        <div class="pd-eyebrow">Cricket · Account Management</div>
         <h1 class="pd-title">Gulf Giants — <span>ILT20 2024</span></h1>
-        <p class="pd-lede">Gulf Giants is the UAE-based franchise owned by Adani Sportsline, competing in the ILT20 — the UAE&apos;s premier T20 league and one of the fastest-growing properties in the global cricket calendar. The 2024 brief centred on the franchise&apos;s main campaign film for the season — a hero asset built to announce the team&apos;s return and pull fans into the story before the first ball was bowled.</p>
+        <p class="pd-lede">Account lead for Gulf Giants and Adani Sportsline on ILT20 2024 — owning the season launch brief and delivering the hero film that anchored the franchise before the first ball was bowled.</p>
       </div>
 
       <div class="pd-hero pd-hero-wide">
@@ -5116,17 +5310,17 @@
 
       <div class="pd-section pd-section-spaced">
         <div class="pd-section-label">Objective</div>
-        <p class="pd-prose">Give Gulf Giants a season-opening film that did more than tease a fixture list. Announce the team&apos;s arrival into ILT20 2024 with intent, reach the widest possible audience across the UAE and the wider cricket community, and turn that first wave of attention into followers, supporters, and match-day energy ahead of Season 2.</p>
+        <p class="pd-prose">Give Gulf Giants a season-opening film that did more than tease a fixture list. As account lead, the mandate was to announce the team&apos;s arrival into ILT20 2024 with intent, reach the widest possible audience across the UAE and the wider cricket community, and turn that first wave of attention into followers, supporters, and match-day energy ahead of Season 2.</p>
       </div>
 
       <div class="pd-section pd-section-spaced">
         <div class="pd-section-label">Campaign Approach</div>
-        <p class="pd-prose">The film was delivered end-to-end by the team — concept, script, and shoot. The creative direction leaned into a darker, more cinematic register than the usual squad-led teaser, building anticipation through tone and pace rather than spelling the season out. It was less a fixture promo, more a statement of arrival — designed to land the franchise&apos;s presence before fans saw a single player on the field.</p>
+        <p class="pd-prose">I owned the brief end-to-end for Gulf Giants and Adani Sportsline — translating the launch objective into a creative mandate and steering delivery through to the final film. The direction leaned into a darker, more cinematic register than the usual squad-led teaser, building anticipation through tone and pace rather than spelling the season out. It was less a fixture promo, more a statement of arrival — designed to land the franchise&apos;s presence before fans saw a single player on the field.</p>
       </div>
 
       <div class="pd-section pd-section-spaced">
         <div class="pd-section-label">Amplification</div>
-        <p class="pd-prose">The film travelled across Gulf Giants&apos; social platforms as the franchise&apos;s main season opener, supported by shorter adapts cut for the run-up to the league. As the anchor asset for ILT20 2024, it carried the team into the season and gave every piece of match-day, partner, and player-led content that followed a single story to build from.</p>
+        <p class="pd-prose">From the account side, I managed rollout across Gulf Giants&apos; social platforms as the franchise&apos;s main season opener, briefing shorter adapts for the pre-league run-up. As the anchor asset for ILT20 2024, the film carried the team into the season and gave every piece of match-day, partner, and player-led content that followed a single story to build from.</p>
       </div>
 
       <section class="pd-jio-gallery pd-gg-film-gallery" aria-label="Gulf Giants campaign film">
@@ -5989,7 +6183,7 @@
   const PAGE_TRANSITION_MS = 480;
 
   function initPageReveals() {
-    const selectors = '.sec-header, .sec-wrap > *, .about-grid, .edu-intro, .edu-card, .projects-intro, .ach-layout, .ach-narrative, .ach-data, .home-grid-row2 .hg-tile, .clients-explore-btn-wrap, .contact-page-title, .contact-page-sub, .contact-page-buttons, .home-contact-strip';
+    const selectors = '.sec-header, .sec-wrap > *, .about-grid, .edu-intro, .edu-card, .projects-intro, .ach-layout, .ach-narrative, .ach-data, .home-grid-row2 .hg-tile, .clients-explore-btn-wrap, .contact-page-info, .contact-page-form-wrap, .home-contact-strip';
     document.querySelectorAll('.page').forEach(page => {
       page.querySelectorAll(selectors).forEach((el, i) => {
         if (!el.classList.contains('reveal-on-enter')) {
@@ -6230,20 +6424,20 @@
   const PROJECT_CASE_META = {
     wpl: {
       accent: '#004BA0',
-      role: 'Social lead · creative direction, season narrative & franchise identity',
-      ledeShort: 'The 2024 WPL season for Mumbai Indians Women — building a distinct franchise voice through bold creative, cultural storytelling, and a season-long narrative arc.',
+      role: 'Senior Brand Manager · auction to post-season · brand strategy, narrative & analytics',
+      ledeShort: 'Senior Brand Manager on WPL 2024 — full-season ownership from auction through post-season, building MI Women\'s franchise voice across 31M+ engagements and 230M+ video views.',
       heroMetrics: [
-        { num: '31M+', label: 'Engagements · WPL 2024' },
-        { num: '230M+', label: 'Video views · season' },
-        { num: '4', label: 'Creative pillars' },
-        { num: 'Full', label: 'Season coverage' }
+        { num: '31M+', label: 'Engagements · full season' },
+        { num: '230M+', label: 'Video views · full season' },
+        { num: '4', label: 'Phases · auction to post' },
+        { num: '4', label: 'Creative pillars' }
       ],
       doList: [
-        'Owned MI Women\'s distinct voice within the wider MI universe',
-        'Ran retro-gaming pixel theme across match-day and squad content',
-        'Delivered jersey launch, player arrivals and influencer beats',
-        'Built the Choose Your Fighter player reveal series',
-        'Closed the season with a unified fan–player–city collage'
+        'Led brand strategy from WPL auction through post-season wrap',
+        'Welcomed new squad members in Mumbaikar style across auction beats',
+        'Delivered pre-season arrivals, jersey launch & Skechers activation',
+        'Owned in-season match-day, AI hero & reactive content calendar',
+        'Reported season analytics — 31M+ engagements & 230M+ video views'
       ]
     },
     mict: {
@@ -6338,7 +6532,7 @@
     },
     colorsrsws2022: {
       accent: '#E31E24',
-      role: 'Social lead · broadcaster tune-ins, player access & influencer reach',
+      role: 'Account Manager · broadcaster tune-ins, player access & influencer reach',
       ledeShort: 'Colors Cineplex during RSWS 2022 — using social as a steady feeder for broadcast through content TV couldn\'t carry.',
       heroMetrics: [
         { num: '104%', label: 'Engagement increase' },
@@ -6374,20 +6568,20 @@
     },
     gulfgiants2024: {
       accent: '#00A651',
-      role: 'Creative producer · concept, script, shoot & hero film delivery',
-      ledeShort: 'Gulf Giants ILT20 2024 — a season-opening film built to anchor the franchise launch before the first ball was bowled.',
+      role: 'Account lead · Gulf Giants & Adani Sportsline · season launch & hero film delivery',
+      ledeShort: 'Account lead for Gulf Giants and Adani Sportsline on ILT20 2024 — owning the season launch brief and delivering the hero film that anchored the franchise before the first ball was bowled.',
       heroMetrics: [
+        { num: '2', label: 'Brands · Giants & Adani' },
         { num: '1', label: 'Hero season film' },
-        { num: 'E2E', label: 'Concept to final edit' },
-        { num: 'ILT20', label: 'Season 2 launch asset' },
-        { num: 'Multi', label: 'Platform adapts' }
+        { num: 'ILT20', label: 'Season 2 launch' },
+        { num: 'E2E', label: 'Brief to delivery' }
       ],
       doList: [
-        'Concepted and scripted the season-opening hero film',
-        'Directed a cinematic shoot with a darker, bolder register',
-        'Anchored the franchise launch before the first match',
-        'Cut shorter adapts for the pre-league social run-up',
-        'Gave all season content a single narrative base'
+        'Led the Gulf Giants account for Adani Sportsline through ILT20 2024',
+        'Owned the season launch brief and stakeholder alignment',
+        'Mandated and steered the hero campaign film to delivery',
+        'Set a darker, cinematic tone for the franchise arrival',
+        'Managed rollout and platform adapts ahead of the league'
       ]
     },
     sobhaarsenal: {
@@ -6518,6 +6712,215 @@
     }
   };
 
+  const PROJECT_CASE_CALENDARS = {
+    wpl: {
+      calendarTitle: 'Full-season calendar',
+      calendarIntro: 'The brand calendar ran in four clear windows. Each phase had its own content mandate, stakeholder sign-off, and performance read — with season totals reported at close.',
+      calendarPhases: [
+        { tag: 'Auction', body: '<strong>Welcome the new members</strong> in Mumbaikar style — auction-day social and squad narrative to bring fresh signings into the MI Women fold before the season kicked in.' },
+        { tag: 'Pre-season', body: '<strong>Player arrivals</strong> (Choose Your Fighter), <strong>jersey launch</strong> and <strong>sponsor activation</strong> (Skechers) — setting tone and visual identity ahead of the opener.' },
+        { tag: 'In-season', body: '<strong>Match-day pixel systems</strong>, AI hero creatives, reactive edits and influencer beats across every fixture — sustaining engagement through the league window.' },
+        { tag: 'Post-season', body: '<strong>Season wrap</strong> thank-you collage, key posters and performance reporting — closing the loop on <strong>31M+ engagements</strong> and <strong>230M+ video views</strong>.' }
+      ]
+    },
+    mict: {
+      calendarTitle: 'Season calendar',
+      calendarIntro: 'The SA20 calendar was built in four phases — establishing Cape Town identity early, sustaining match-week momentum, and extending reach into MI\'s wider ecosystem.',
+      calendarPhases: [
+        { tag: 'Launch', body: '<strong>Franchise identity</strong> from day one — gaming-controller jersey creative and a bold tone of voice that signalled a younger, distinct MI Cape Town property.' },
+        { tag: 'Pre-season', body: '<strong>Cinematic player posters</strong>, local culture assets and arrival content — building a Cape Town story before the first ball in SA20.' },
+        { tag: 'In-season', body: '<strong>Match footage edits</strong>, conceptual video and fast-turnaround reactive content across every match week of the league window.' },
+        { tag: 'Close', body: '<strong>Cross-property MI moments</strong> and season reporting — <strong>11M+ engagements</strong>, <strong>25M+ video views</strong>, <strong>100% engagement lift</strong> and <strong>40%+ follower gain</strong>.' }
+      ]
+    },
+    jioipl2024: {
+      calendarTitle: 'Campaign calendar',
+      calendarIntro: 'Two IPL seasons on JioCinema ran as a continuous performance engine — with distinct windows for setup, in-season delivery, B2B comms and results reporting.',
+      calendarPhases: [
+        { tag: 'Pre-season', body: '<strong>OEM &amp; CTV setup</strong>, campaign film production and #ViralWeekends influencer planning ahead of each IPL window.' },
+        { tag: 'In-season', body: '<strong>6,000+ performance ads</strong> and <strong>1,500+ videos</strong> per season — match-specific adapts, partnership creative and daily delivery at broadcast scale.' },
+        { tag: 'B2B window', body: '<strong>Regional print</strong> and partner communication — keeping advertisers and stakeholders aligned through the season.' },
+        { tag: 'Results', body: '<strong>2× Connected TV viewership</strong> vs HD linear, <strong>+20% ad spot sales lift</strong> and install growth tracked across both IPL 2023 and 2024.' }
+      ]
+    },
+    dhlmi2024: {
+      calendarTitle: 'Activation calendar',
+      calendarIntro: 'The DHL × MI partnership ran across two league calendars — WPL first, then IPL — with a daily match-day rhythm once each season was live.',
+      calendarPhases: [
+        { tag: 'WPL launch', body: '<strong>Hero film</strong> concepted and shot in-house with the women\'s squad — setting partnership tone before the league opened.' },
+        { tag: 'IPL window', body: '<strong>Co-branded player shoots</strong> across the men\'s squad and season transition creative carrying DHL into the summer calendar.' },
+        { tag: 'Match-day', body: '<strong>Build-up and post-match</strong> performance content every fixture — keeping the partnership in the daily feed.' },
+        { tag: 'Amplification', body: '<strong>OOH and partner channels</strong> extended the films beyond social — embedding DHL as a voice inside the MI conversation.' }
+      ]
+    },
+    mishop2024: {
+      calendarTitle: 'Commerce calendar',
+      calendarIntro: 'MI Shop ran year-round — peak conversion in IPL, sustained catalogue movement off-season, and collabs to keep merch relevant between cricket windows.',
+      calendarPhases: [
+        { tag: 'IPL peak', body: '<strong>Jersey customisation</strong>, membership bundles and player-led merch creative through the highest-intent conversion window.' },
+        { tag: 'Mid-season', body: '<strong>Player drops</strong> and catalogue pushes sustaining sales momentum as the league progressed.' },
+        { tag: 'Off-season', body: '<strong>Character-led hooks</strong> and retention creative keeping the store visible when cricket wasn\'t on air — <strong>5–7% sales lift</strong> in quiet months.' },
+        { tag: 'Collabs', body: '<strong>Kung Fu Panda 4</strong> partnership and pop-culture bundles — widening reach beyond core cricket fans.' }
+      ]
+    },
+    misocial2023: {
+      calendarTitle: 'Tournament calendar',
+      calendarIntro: 'Three upsell campaigns were sequenced across the Men\'s Cricket World Cup in Mumbai — pitching, producing and publishing in tight tournament windows.',
+      calendarPhases: [
+        { tag: 'Pitch', body: '<strong>Three upsell campaigns</strong> sold to the client — owning MI\'s presence in a tournament that wasn\'t theirs to broadcast.' },
+        { tag: 'Build-up', body: '<strong>CGI Team India welcome film</strong> for Mumbai and the <strong>90s AI squad shoot</strong> — pop-culture creative ahead of the World Cup window.' },
+        { tag: 'Live window', body: '<strong>Giphy GIF pack</strong> for real-time WhatsApp community reactions — keeping MI in the conversation match by match.' },
+        { tag: 'Results', body: '<strong>2M+ CGI film views</strong> and <strong>1M+ engagements</strong> across the full World Cup calendar.' }
+      ]
+    },
+    colorsrsws2022: {
+      calendarTitle: 'Tournament calendar',
+      calendarIntro: 'RSWS 2022 ran as a short, high-intensity broadcast window — with social feeding tune-ins through formats TV couldn\'t carry.',
+      calendarPhases: [
+        { tag: 'Pre-tournament', body: '<strong>Channel positioning</strong> and content format planning — setting up Colors Cineplex as more than a match-day broadcaster.' },
+        { tag: 'During RSWS', body: '<strong>Digital-exclusive player interviews</strong> and <strong>GoPro POV</strong> content from angles television doesn\'t show.' },
+        { tag: 'Influencer', body: '<strong>Off-field influencer sessions</strong> with legends — widening reach beyond traditional TV promo.' },
+        { tag: 'Results', body: '<strong>104% engagement increase</strong>, <strong>4× profile visits</strong> and <strong>7% follower gain</strong> across the tournament window.' }
+      ]
+    },
+    colorst102022: {
+      calendarTitle: 'League calendar',
+      calendarIntro: 'Abu Dhabi T10\'s fast format demanded a calendar shaped around speed — pre-league setup, group-stage reactivity, and playoff intensity.',
+      calendarPhases: [
+        { tag: 'Pre-league', body: '<strong>Multi-channel setup</strong> and distinct franchise identities across eight teams before the first ball.' },
+        { tag: 'Group stage', body: '<strong>Match moments cut within minutes</strong> of play ending — social paced to the rhythm of a 90-minute format.' },
+        { tag: 'Playoffs', body: '<strong>Influencer funnel</strong>, venue interviews and behind-the-scenes content through the knockout window.' },
+        { tag: 'Results', body: '<strong>160K+ interactions</strong> across the T10 season with four content layers running in parallel.' }
+      ]
+    },
+    gulfgiants2024: {
+      calendarTitle: 'Launch calendar',
+      calendarIntro: 'As account lead for Gulf Giants and Adani Sportsline, the ILT20 2024 mandate moved from brief alignment through to platform rollout.',
+      calendarPhases: [
+        { tag: 'Brief', body: '<strong>Stakeholder alignment</strong> on the season launch objective — positioning the hero film as the franchise\'s arrival statement.' },
+        { tag: 'Production', body: '<strong>Cinematic hero film</strong> delivered end-to-end — darker, bolder tone set for ILT20 Season 2.' },
+        { tag: 'Launch', body: '<strong>Season opener asset</strong> published as the anchor creative before the first match.' },
+        { tag: 'Rollout', body: '<strong>Platform adapts</strong> and pre-league social run-up — giving all season content a single narrative base.' }
+      ]
+    },
+    sobhaarsenal: {
+      calendarTitle: 'Partnership calendar',
+      calendarIntro: 'The Sobha × Arsenal announcement was built as a single launch moment — from brief through to the official reveal in Dubai.',
+      calendarPhases: [
+        { tag: 'Brief', body: '<strong>Partnership narrative</strong> — framing Dubai\'s skyline with Arsenal first-team players as equals, not a standard sponsorship spot.' },
+        { tag: 'Production', body: '<strong>Concept, script and shoot</strong> featuring Ødegaard, Rice and Saka — cinematic weight for both global brands.' },
+        { tag: 'Reveal', body: '<strong>Official announcement event</strong> in Dubai — film premiered as the centrepiece of the partnership launch.' },
+        { tag: 'Distribution', body: '<strong>Press, social and partner channels</strong> — setting the tone for all follow-up partnership content.' }
+      ]
+    },
+    vootleagues: {
+      calendarTitle: 'Year-round calendar',
+      calendarIntro: 'Voot Select football ran across league seasons, tournament windows and an owned weekly campaign — each with its own content mandate.',
+      calendarPhases: [
+        { tag: 'League season', body: '<strong>Serie A, La Liga and Ligue 1</strong> — week-in/week-out social, match analysis and tune-in creative.' },
+        { tag: 'Tournaments', body: '<strong>FIFA WC, U-20 WWC and Carabao Cup</strong> — dedicated coverage windows across the football calendar.' },
+        { tag: '#SuperChargedSunday', body: '<strong>Weekly owned campaign</strong> that trended <strong>#1 on Twitter India</strong> — turning a broadcast slot into cultural property.' },
+        { tag: 'Year-round', body: '<strong>Platform identity</strong> beyond match-day graphics — Voot Select as the Indian home for global football.' }
+      ]
+    },
+    jiofifawc2022: {
+      calendarTitle: 'Campaign calendar',
+      calendarIntro: '"Aap Qatar mein hai" was sequenced to pull a non-football audience into the JioCinema FIFA World Cup window through music and culture.',
+      calendarPhases: [
+        { tag: 'Launch', body: '<strong>Original anthem</strong> released as the campaign anchor — sound-first entry point for Indian audiences.' },
+        { tag: 'Influencer', body: '<strong>Regional cover versions</strong> briefed across music creators — widening reach beyond core football fans.' },
+        { tag: 'Tournament', body: '<strong>Cultural momentum</strong> sustained through the Qatar 2022 window on social and digital.' },
+        { tag: 'Tune-ins', body: '<strong>1.5M+ video views</strong> — every cover routed back to the free JioCinema stream.' }
+      ]
+    },
+    vootatp: {
+      calendarTitle: 'Tour calendar',
+      calendarIntro: 'ATP coverage on Voot Select followed the Masters 1000 rhythm — editorial framing, tune-ins and a hero Finals window.',
+      calendarPhases: [
+        { tag: 'Masters 1000', body: '<strong>GOATs vs Future</strong> editorial frame across the ATP calendar — building narrative through the season.' },
+        { tag: 'Build-up', body: '<strong>Match tune-ins</strong>, quizzes and opinion posts driving engagement between fixtures.' },
+        { tag: 'Finals', body: '<strong>Nitto ATP Finals</strong> hero treatment — the biggest window on the tennis calendar given full creative weight.' },
+        { tag: 'Results', body: '<strong>2.5M+ views &amp; interactions</strong> and <strong>+15% engagement rate lift</strong> across the coverage window.' }
+      ]
+    },
+    vootbwf: {
+      calendarTitle: 'Season calendar',
+      calendarIntro: 'BWF social followed the natural tournament rhythm — draw to final — with India\'s Thomas Cup win as the season\'s defining moment.',
+      calendarPhases: [
+        { tag: 'Tour calendar', body: '<strong>BWF World Tour</strong> season-long management — build-up graphics, stats and milestone posts across the year.' },
+        { tag: 'Live window', body: '<strong>Quick-turnaround updates</strong> for set wins, key moments and results as matches happened.' },
+        { tag: 'Thomas Cup', body: '<strong>India\'s historic first title</strong> — hero champions creative landing as the result came in.' },
+        { tag: 'Results', body: '<strong>+20% engagement lift</strong>, <strong>1M+ views per tournament</strong> and <strong>Top 10 on Twitter India</strong> for milestone moments.' }
+      ]
+    },
+    vootnba: {
+      calendarTitle: 'Season calendar',
+      calendarIntro: 'NBA in India meant building fandom despite the US timezone — regular season presence, playoff storylines and an All-Star tentpole.',
+      calendarPhases: [
+        { tag: 'Regular season', body: '<strong>Live tweets, highlights</strong> and morning-after graphics — keeping the league present when games aired overnight.' },
+        { tag: 'Playoffs', body: '<strong>Finals storylines</strong> and playoff campaigns sustaining narrative through the business end of the season.' },
+        { tag: 'All-Star', body: '<strong>Ranveer Singh tentpole</strong> activation — cultural reach on the league\'s biggest weekend.' },
+        { tag: 'Results', body: '<strong>10M+ All-Star views</strong>, <strong>+30% engagement lift</strong>, <strong>Top 3 on Twitter India</strong> and <strong>+5% season engagement</strong>.' }
+      ]
+    },
+    humaninsports: {
+      calendarTitle: 'Venture roadmap',
+      calendarIntro: 'Human In Sports was developed as an MSc dissertation venture — moving from research insight through to a modelled five-year plan.',
+      calendarPhases: [
+        { tag: 'Research', body: '<strong>76 survey respondents</strong> — primary research into the under-5% coverage gap for women, para-athletes and non-traditional sports.' },
+        { tag: 'Strategy', body: '<strong>Blue Ocean &amp; Ansoff</strong> frameworks applied — positioning against mainstream sports media.' },
+        { tag: 'Model', body: '<strong>Five revenue streams</strong> modelled with <strong>Year 3 break-even</strong> projected.' },
+        { tag: 'Vision', body: '<strong>100K community target</strong> by 2027 — aligned with UN SDG 5 and SDG 10.' }
+      ]
+    }
+  };
+
+  function buildCalendarPhasesHtml(phases) {
+    return phases.map(phase =>
+      '<div class="pd-season-phase">' +
+      '<div class="pd-season-phase-tag">' + phase.tag + '</div>' +
+      '<p>' + phase.body + '</p></div>'
+    ).join('');
+  }
+
+  function injectCampaignCalendar(panel, calendar) {
+    if (!calendar?.calendarPhases?.length || panel.querySelector('.pd-campaign-calendar')) return;
+
+    const section = document.createElement('div');
+    section.className = 'pd-section pd-section-spaced pd-campaign-calendar';
+    section.innerHTML =
+      '<div class="pd-section-label">' + (calendar.calendarTitle || 'Campaign calendar') + '</div>' +
+      (calendar.calendarIntro ? '<p class="pd-prose">' + calendar.calendarIntro + '</p>' : '') +
+      '<div class="pd-season-phases">' + buildCalendarPhasesHtml(calendar.calendarPhases) + '</div>';
+
+    const sections = Array.from(panel.querySelectorAll('.pd-section'));
+    const impactSection = sections.find(section => {
+      const label = section.querySelector('.pd-section-label')?.textContent.trim().toLowerCase() || '';
+      return label.startsWith('impact');
+    });
+    const amplificationSection = sections.find(section => {
+      const label = section.querySelector('.pd-section-label')?.textContent.trim().toLowerCase() || '';
+      return label === 'amplification';
+    });
+    const anchor = impactSection || amplificationSection;
+    const gallery = panel.querySelector('.pd-wpl-gallery, .pd-jio-gallery, section[aria-label]');
+    const footer = panel.querySelector('.pd-footer');
+
+    if (anchor) {
+      panel.querySelector('.pd-body').insertBefore(section, anchor);
+      return;
+    }
+    if (gallery) {
+      gallery.parentNode.insertBefore(section, gallery);
+      return;
+    }
+    if (footer) {
+      footer.parentNode.insertBefore(section, footer);
+      return;
+    }
+    panel.querySelector('.pd-body')?.appendChild(section);
+  }
+
   function getCaseTitle(slug) {
     const card = document.querySelector('.proj-card[data-detail="' + slug + '"] .proj-title');
     if (card) return card.textContent.trim();
@@ -6588,6 +6991,8 @@
     if (panel.dataset.returnTo !== 'education') {
       updateCaseStudyNav(panel, slug, filter);
     }
+
+    injectCampaignCalendar(panel, PROJECT_CASE_CALENDARS[slug]);
   }
 
   function updateCaseStudyNav(panel, slug, filter) {
@@ -7650,12 +8055,81 @@
     openProjectDetail(card.dataset.detail);
   });
 
+  function initContactForm() {
+    const form = document.getElementById('contact-enquiry-form');
+    if (!form) return;
+
+    const statusEl = document.getElementById('contact-form-status');
+    const submitBtn = document.getElementById('contact-form-submit');
+
+    form.addEventListener('submit', async e => {
+      e.preventDefault();
+
+      const name = form.querySelector('#contact-name')?.value.trim();
+      const email = form.querySelector('#contact-email')?.value.trim();
+      const message = form.querySelector('#contact-message')?.value.trim();
+
+      if (!name || !email || !message) {
+        if (statusEl) {
+          statusEl.hidden = false;
+          statusEl.textContent = 'Please fill in all fields.';
+          statusEl.className = 'contact-form-status is-error';
+        }
+        return;
+      }
+
+      if (submitBtn) {
+        submitBtn.disabled = true;
+        submitBtn.textContent = 'Sending…';
+      }
+      if (statusEl) statusEl.hidden = true;
+
+      try {
+        const res = await fetch('https://formsubmit.co/ajax/partha.parto@gmail.com', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            Accept: 'application/json'
+          },
+          body: JSON.stringify({
+            name,
+            email,
+            message,
+            _subject: 'New portfolio enquiry',
+            _template: 'table'
+          })
+        });
+
+        if (!res.ok) throw new Error('Request failed');
+
+        form.reset();
+        if (statusEl) {
+          statusEl.hidden = false;
+          statusEl.textContent = 'Thanks — your message is on its way. I\'ll get back to you soon.';
+          statusEl.className = 'contact-form-status is-success';
+        }
+      } catch (err) {
+        if (statusEl) {
+          statusEl.hidden = false;
+          statusEl.textContent = 'Something went wrong. Please email partha.parto@gmail.com directly.';
+          statusEl.className = 'contact-form-status is-error';
+        }
+      } finally {
+        if (submitBtn) {
+          submitBtn.disabled = false;
+          submitBtn.textContent = 'Send enquiry';
+        }
+      }
+    });
+  }
+
   initAchMetrics();
   initPageReveals();
   initThemeToggle();
   bindScrollProgress();
   initRoleRotator();
   initPhonePreview();
+  initContactForm();
   initWplVideoMaximize();
   initProjectImageLightbox();
   initDhlMixedRows();
