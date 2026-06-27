@@ -6,9 +6,14 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <meta name="color-scheme" content="light dark" />
   <title>Partha Maity — Sports Marketing</title>
+  <link rel="canonical" href="https://parthamaity.com/" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300&family=Playfair+Display:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet" />
+  <link rel="preconnect" href="https://gkrcjpqlelrxgyanzyrg.supabase.co" crossorigin />
+  <link rel="dns-prefetch" href="https://gkrcjpqlelrxgyanzyrg.supabase.co" />
+  <link rel="preload" as="image" href="https://gkrcjpqlelrxgyanzyrg.supabase.co/storage/v1/object/public/portfolio-media/Partha%20Maity.jpeg" fetchpriority="high" />
+  <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:wght@400;500;600&family=Playfair+Display:wght@400;600&display=swap" onload="this.onload=null;this.rel='stylesheet'" />
+  <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:wght@400;500;600&family=Playfair+Display:wght@400;600&display=swap" /></noscript>
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
     :root {
@@ -192,11 +197,19 @@
       opacity: 1;
       transform: translateY(0);
       transition: opacity var(--dur-page) var(--ease), transform var(--dur-page) var(--ease);
-      will-change: opacity, transform;
       background: var(--bg);
       color: var(--text);
+      content-visibility: hidden;
+      contain-intrinsic-size: 0 100vh;
     }
-    .page.active { display: block; }
+    .page.active {
+      display: block;
+      content-visibility: visible;
+    }
+    .page.entering,
+    .page.exit {
+      will-change: opacity, transform;
+    }
     .page.entering {
       opacity: 0;
       transform: translateY(22px);
@@ -456,7 +469,9 @@
       object-fit: cover;
       object-position: 50% 8%;
       animation: hg-stats-tour 240s ease-in-out infinite;
-      will-change: transform, object-position;
+    }
+    #page-home:not(.active) .hg-stats-bg-frame img {
+      animation-play-state: paused;
     }
     @keyframes hg-stats-tour {
       0%, 100% { object-position: 12% 6%; transform: scale(1.02); }
@@ -4101,7 +4116,7 @@
     <div class="home-grid">
 
       <div class="hg-cell hg-photo home-grid-reveal">
-        <img src="https://gkrcjpqlelrxgyanzyrg.supabase.co/storage/v1/object/public/portfolio-media/Partha%20Maity.jpeg" width="600" height="800" decoding="async" alt="Partha Maity" class="hg-photo-img" />
+        <img src="https://gkrcjpqlelrxgyanzyrg.supabase.co/storage/v1/object/public/portfolio-media/Partha%20Maity.jpeg" width="600" height="800" decoding="async" fetchpriority="high" alt="Partha Maity" class="hg-photo-img" />
       </div>
 
       <div class="hg-cell hg-about home-grid-reveal delay-1">
@@ -4121,7 +4136,7 @@
       <div class="hg-cell hg-stats home-grid-reveal delay-2">
         <div class="hg-stats-bg" aria-hidden="true">
           <div class="hg-stats-bg-frame">
-            <img src="https://gkrcjpqlelrxgyanzyrg.supabase.co/storage/v1/object/public/portfolio-media/HP%20COVER.png" width="1920" height="1078" decoding="async" alt="" />
+            <img src="https://gkrcjpqlelrxgyanzyrg.supabase.co/storage/v1/object/public/portfolio-media/HP%20COVER.png" width="1920" height="1078" loading="lazy" decoding="async" alt="" />
           </div>
           <div class="hg-stats-bg-shade"></div>
         </div>
@@ -4380,7 +4395,7 @@
   <div class="clients-fullscreen">
     <div class="clients-fs-bg" aria-hidden="true">
       <div class="clients-fs-bg-frame">
-        <img src="assets/img-749ef3c603e0.png" alt="" />
+        <img src="assets/img-749ef3c603e0.png" alt="" loading="lazy" decoding="async" />
       </div>
     </div>
     <div class="clients-fs-overlay"></div>
@@ -4447,7 +4462,7 @@
   <div class="proj-fullscreen">
     <div class="proj-fs-bg" aria-hidden="true">
       <div class="proj-fs-bg-frame">
-        <img src="assets/img-6448208ec731.png" alt="" />
+        <img src="assets/img-6448208ec731.png" alt="" loading="lazy" decoding="async" />
       </div>
     </div>
     <div class="proj-fs-overlay"></div>
@@ -7269,6 +7284,13 @@
     });
   }
 
+  function initDeferredPageImages() {
+    document.querySelectorAll('#site-overlays img, .page:not(#page-home) img').forEach(img => {
+      if (!img.getAttribute('loading')) img.setAttribute('loading', 'lazy');
+      if (!img.getAttribute('decoding')) img.setAttribute('decoding', 'async');
+    });
+  }
+
   function pauseAllPortfolioVideos() {
     const modal = document.getElementById('pd-wpl-video-modal');
     if (modal && !modal.hidden) closeWplVideoModal();
@@ -8223,6 +8245,7 @@
   initDhlMixedRows();
   initDhlHeroVideo();
   initDeferredPanelVideos();
+  initDeferredPageImages();
   initAppRouter();
 </script>
 </body>
