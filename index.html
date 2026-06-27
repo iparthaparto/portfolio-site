@@ -2214,11 +2214,60 @@
     #proj-detail-vootatp .pd-voot-atp-gallery,
     #proj-detail-vootbwf .pd-voot-bwf-gallery,
     #proj-detail-vootnba .pd-voot-nba-gallery {
-      max-width: 680px;
+      max-width: min(100%, 680px);
+      width: 100%;
       margin-left: 0;
       margin-right: auto;
       padding-left: 0;
       padding-right: 0;
+    }
+    #proj-detail-vootatp .pd-atp-media-stack {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      width: 100%;
+    }
+    #proj-detail-vootatp .pd-atp-hero-image {
+      width: 100%;
+      aspect-ratio: 16 / 9;
+      border-radius: 6px;
+      overflow: hidden;
+      background: #0a0a0a;
+      line-height: 0;
+    }
+    #proj-detail-vootatp .pd-atp-hero-image img {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+      object-position: center;
+      display: block;
+    }
+    #proj-detail-vootatp .pd-atp-video-pair {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 12px;
+      width: 100%;
+    }
+    #proj-detail-vootatp .pd-atp-video-pair .pd-case-video {
+      max-width: none;
+      width: 100%;
+      aspect-ratio: 16 / 9;
+      overflow: hidden;
+      border-radius: 6px;
+      background: #0a0a0a;
+      line-height: 0;
+      position: relative;
+    }
+    #proj-detail-vootatp .pd-atp-video-pair .pd-case-video video {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      max-height: none;
+      object-fit: cover;
+      object-position: center;
+      border-radius: 6px;
+      background: #0a0a0a;
     }
     #proj-detail-vootbwf .pd-bwf-stack .pd-hero {
       margin-bottom: 1.25rem;
@@ -3367,6 +3416,9 @@
       .pd-jio-grid-3 {
         grid-template-columns: 1fr;
       }
+      #proj-detail-vootatp .pd-atp-video-pair {
+        grid-template-columns: 1fr;
+      }
     }
 
     /* Image rows — uniform height per row */
@@ -4431,15 +4483,15 @@
 <div class="proj-card dock-item" data-cat="cricket" data-detail="dhlmi2024"><div class="proj-card-imgs cols-1"><img src="https://gkrcjpqlelrxgyanzyrg.supabase.co/storage/v1/object/public/portfolio-media/Cover%20Images/Cricket/DHL.png" loading="lazy" alt="DHL Mumbai Indians WPL and IPL 2024 cover" /></div><div class="proj-sport">Cricket</div><div class="proj-title">DHL × Mumbai Indians — WPL &amp; IPL 2024</div><div class="proj-type">Sponsorship Activation</div><div class="proj-desc">End-to-end sponsorship activation across WPL and IPL 2024, bringing DHL&apos;s partnership with Mumbai Indians to life through player-led, match build-up and post-match content.</div><div class="proj-metric">WPL &amp; IPL Partner Activation</div><div class="proj-card-cta">View case study <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg></div></div>
 <div class="proj-card dock-item" data-cat="cricket" data-detail="mishop2024"><div class="proj-card-imgs cols-1"><img src="https://gkrcjpqlelrxgyanzyrg.supabase.co/storage/v1/object/public/portfolio-media/Cover%20Images/Cricket/MI%20Shop.png" loading="lazy" alt="MI Shop IPL 2024 merchandise cover" /></div><div class="proj-sport">Cricket</div><div class="proj-title">MI Shop — IPL 2024</div><div class="proj-type">E-Commerce Creatives</div><div class="proj-desc">Official MI merchandise campaign spanning IPL peak and off-season creative, from jersey customisation and membership bundles to Kung Fu Panda 4 collaborations.</div><div class="proj-metric">Year-Round E-Commerce Campaign</div><div class="proj-card-cta">View case study <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg></div></div>
 <div class="proj-card dock-item" data-cat="cricket" data-detail="misocial2023"><div class="proj-card-imgs cols-1"><img src="https://gkrcjpqlelrxgyanzyrg.supabase.co/storage/v1/object/public/portfolio-media/Cover%20Images/Cricket/MI%20Men.png" loading="lazy" alt="Mumbai Indians social media cover" /></div><div class="proj-sport">Cricket</div><div class="proj-title">Mumbai Indians — Social Media</div><div class="proj-type">B2C Content Marketing</div><div class="proj-desc">Supporting content for Mumbai Indians men's team — CGI visuals, GIFs for Cricket World Cup 2023 published on Giphy and trending social media content.</div><div class="proj-metric">Brand Content</div><div class="proj-card-cta">View case study <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg></div></div>
-<div class="proj-card dock-item" data-cat="cricket" data-detail="colorsrsws2022"><div class="proj-card-imgs cols-1"><img src="https://gkrcjpqlelrxgyanzyrg.supabase.co/storage/v1/object/public/portfolio-media/Cover%20Images/Cricket/RSWS.png" loading="lazy" alt="Colors Cineplex Road Safety World Series 2022 cover" /></div><div class="proj-sport">Cricket</div><div class="proj-title">Colors Cineplex — Road Safety World Series 2022</div><div class="proj-type">Social Media &amp; Influencer Marketing</div><div class="proj-desc">Digital-exclusive player interviews, GoPro shoots at ground and off-field influencer content driving tune-ins for the broadcaster.</div><div class="proj-metric">104% Engagement Increase · 4× Profile Visits</div><div class="proj-card-cta">View case study <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg></div></div>
+<div class="proj-card dock-item" data-cat="cricket" data-detail="colorsrsws2022"><div class="proj-card-imgs cols-1"><img src="https://gkrcjpqlelrxgyanzyrg.supabase.co/storage/v1/object/public/portfolio-media/Cover%20Images/Cricket/RSWS.png" loading="lazy" alt="Colors Cineplex Road Safety World Series 2022 cover" /></div><div class="proj-sport">Cricket</div><div class="proj-title">Colors Cineplex — Road Safety World Series 2022</div><div class="proj-type">Social Media &amp; Influencer Marketing</div><div class="proj-desc">Account lead on Colors Cineplex during RSWS 2022 — digital-exclusive player interviews, GoPro shoots and influencer content driving broadcast tune-ins.</div><div class="proj-metric">104% Engagement Increase · 4× Profile Visits</div><div class="proj-card-cta">View case study <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg></div></div>
 <div class="proj-card dock-item" data-cat="cricket" data-detail="colorst102022"><div class="proj-card-imgs cols-1"><img src="https://gkrcjpqlelrxgyanzyrg.supabase.co/storage/v1/object/public/portfolio-media/Cover%20Images/Cricket/ILT20.png" loading="lazy" alt="Colors Cineplex Abu Dhabi T10 2022 cover" /></div><div class="proj-sport">Cricket</div><div class="proj-title">Colors Cineplex — Abu Dhabi T10 2022</div><div class="proj-type">Multi-Channel Social Campaign</div><div class="proj-desc">Match footage edits, influencer marketing, digital exclusive player content and social media marketing driving sustained engagement throughout the season.</div><div class="proj-metric">160K+ Interactions</div><div class="proj-card-cta">View case study <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg></div></div>
-<div class="proj-card dock-item" data-cat="cricket" data-detail="gulfgiants2024"><div class="proj-card-imgs cols-1"><img src="https://gkrcjpqlelrxgyanzyrg.supabase.co/storage/v1/object/public/portfolio-media/Cover%20Images/Cricket/GulfG.png" loading="lazy" alt="Gulf Giants ILT20 2024 cover" /></div><div class="proj-sport">Cricket</div><div class="proj-title">Gulf Giants — ILT20 2024</div><div class="proj-type">Account Management</div><div class="proj-desc">Account lead for Gulf Giants and Adani Sportsline on ILT20 2024 — owning the season launch brief and delivering the hero film that anchored the franchise into Season 2 of the UAE&apos;s premier T20 league.</div><div class="proj-metric">Season Launch · Hero Film</div><div class="proj-card-cta">View case study <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg></div></div>
-<div class="proj-card dock-item" data-cat="football" data-detail="sobhaarsenal"><div class="proj-card-imgs cols-1"><img src="https://gkrcjpqlelrxgyanzyrg.supabase.co/storage/v1/object/public/portfolio-media/Sobha%20X%20Arsenal.png" loading="lazy" alt="Sobha Realty Arsenal partnership cover" /></div><div class="proj-sport">Football</div><div class="proj-title">Sobha Realty × Arsenal</div><div class="proj-type">Partnership Film Production</div><div class="proj-desc">Concept, script, and edit of the announcement film for Sobha Realty&apos;s launch as Arsenal&apos;s Global Real Estate Partner — featuring first-team players, presented at the official reveal.</div><div class="proj-metric">Partnership Film Production</div><div class="proj-card-cta">View case study <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg></div></div>
-<div class="proj-card dock-item" data-cat="football" data-detail="vootleagues"><div class="proj-card-imgs cols-1"><img src="https://gkrcjpqlelrxgyanzyrg.supabase.co/storage/v1/object/public/portfolio-media/Football%20C.png" loading="lazy" alt="Voot Select football leagues and tournaments cover" /></div><div class="proj-sport">Football</div><div class="proj-title">Voot Select × Football</div><div class="proj-type">Season Social, Tournaments &amp; Campaigns</div><div class="proj-desc">Season-long social for Serie A, La Liga and Ligue 1, plus tournament coverage from the FIFA World Cup to the Carabao Cup. Led #SuperChargedSunday, a weekly campaign that trended on Twitter India.</div><div class="proj-metric">#SuperChargedSunday · Twitter India Trend</div><div class="proj-card-cta">View case study <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg></div></div>
+<div class="proj-card dock-item" data-cat="cricket" data-detail="gulfgiants2024"><div class="proj-card-imgs cols-1"><img src="https://gkrcjpqlelrxgyanzyrg.supabase.co/storage/v1/object/public/portfolio-media/Cover%20Images/Cricket/GulfG.png" loading="lazy" alt="Gulf Giants ILT20 2024 cover" /></div><div class="proj-sport">Cricket</div><div class="proj-title">Gulf Giants — ILT20 2024</div><div class="proj-type">Account Management</div><div class="proj-desc">Account lead for Gulf Giants and Adani Sportsline on ILT20 2024 — owning the season launch brief, stakeholder alignment and hero film delivery that anchored Season 2.</div><div class="proj-metric">Season Launch · Hero Film</div><div class="proj-card-cta">View case study <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg></div></div>
+<div class="proj-card dock-item" data-cat="football" data-detail="sobhaarsenal"><div class="proj-card-imgs cols-1"><img src="https://gkrcjpqlelrxgyanzyrg.supabase.co/storage/v1/object/public/portfolio-media/Sobha%20X%20Arsenal.png" loading="lazy" alt="Sobha Realty Arsenal partnership cover" /></div><div class="proj-sport">Football</div><div class="proj-title">Sobha Realty × Arsenal</div><div class="proj-type">Partnership Film Production</div><div class="proj-desc">Project lead on the announcement film for Sobha Realty&apos;s launch as Arsenal&apos;s Global Real Estate Partner — from brief and production through the official Dubai reveal featuring first-team players.</div><div class="proj-metric">Partnership Film Production</div><div class="proj-card-cta">View case study <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg></div></div>
+<div class="proj-card dock-item" data-cat="football" data-detail="vootleagues"><div class="proj-card-imgs cols-1"><img src="https://gkrcjpqlelrxgyanzyrg.supabase.co/storage/v1/object/public/portfolio-media/Football%20C.png" loading="lazy" alt="Voot Select football leagues and tournaments cover" /></div><div class="proj-sport">Football</div><div class="proj-title">Voot Select × Football</div><div class="proj-type">Season Social, Tournaments &amp; Campaigns</div><div class="proj-desc">Account lead on Voot Select football — season-long social for Serie A, La Liga and Ligue 1, tournament coverage from the FIFA World Cup to the Carabao Cup, and #SuperChargedSunday, a weekly campaign that trended on Twitter India.</div><div class="proj-metric">#SuperChargedSunday · Twitter India Trend</div><div class="proj-card-cta">View case study <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg></div></div>
 <div class="proj-card dock-item" data-cat="football" data-detail="jiofifawc2022"><div class="proj-card-imgs cols-1"><img src="https://gkrcjpqlelrxgyanzyrg.supabase.co/storage/v1/object/public/portfolio-media/FIFA%20Q.png" loading="lazy" alt="JioCinema FIFA World Cup Qatar 2022 cover" /></div><div class="proj-sport">Football</div><div class="proj-title">JioCinema — FIFA World Cup Qatar 2022</div><div class="proj-type">Influencer Marketing</div><div class="proj-desc">&quot;Aap Qatar mein hai&quot; (You&apos;re in Qatar) — music influencer campaign driving viral reach around the tournament for Indian audiences.</div><div class="proj-metric">1.5M+ Video Views</div><div class="proj-card-cta">View case study <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg></div></div>
-<div class="proj-card dock-item" data-cat="tennis" data-detail="vootatp"><div class="proj-card-imgs cols-1"><img src="https://gkrcjpqlelrxgyanzyrg.supabase.co/storage/v1/object/public/portfolio-media/Tennis%20C.png" loading="lazy" alt="Voot Select ATP Masters 1000 and Nitto ATP Finals cover" /></div><div class="proj-sport">Tennis</div><div class="proj-title">Voot Select — ATP Masters 1000 &amp; Nitto ATP Finals</div><div class="proj-type">Social Media Strategy</div><div class="proj-desc">GOATs vs the Future of Tennis — social strategy across the ATP Masters 1000 calendar and Nitto ATP Finals, building tune-ins and engagement for men&apos;s tennis on Indian OTT.</div><div class="proj-metric">2.5M+ Views · +15% Engagement Rate</div><div class="proj-card-cta">View case study <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg></div></div>
-<div class="proj-card dock-item" data-cat="badminton" data-detail="vootbwf"><div class="proj-card-imgs cols-1"><img src="https://gkrcjpqlelrxgyanzyrg.supabase.co/storage/v1/object/public/portfolio-media/BWF%20C.png" loading="lazy" alt="Voot Select BWF World Tour and Thomas Cup cover" /></div><div class="proj-sport">Badminton</div><div class="proj-title">Voot Select — BWF World Tour &amp; Thomas Cup</div><div class="proj-type">Social Media Management</div><div class="proj-desc">Season-long social covering match build-up, player stats, milestones and live updates across the BWF tour. Celebrated India&apos;s historic Thomas Cup victory.</div><div class="proj-metric">+20% Engagement · 1M+ Views Per Tournament · Top 10 on Twitter India</div><div class="proj-card-cta">View case study <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg></div></div>
-<div class="proj-card dock-item" data-cat="basketball" data-detail="vootnba"><div class="proj-card-imgs cols-1"><img src="https://gkrcjpqlelrxgyanzyrg.supabase.co/storage/v1/object/public/portfolio-media/NBA%20All%20Star.png" loading="lazy" alt="Voot Select NBA and NBA All-Star cover" /></div><div class="proj-sport">Basketball</div><div class="proj-title">Voot Select — NBA &amp; NBA All-Star</div><div class="proj-type">Audience Building &amp; Campaign</div><div class="proj-desc">Built NBA fan engagement in India through season-long social and the NBA All-Star campaign fronted by Ranveer Singh — keeping fans connected despite the timezone challenge.</div><div class="proj-metric">+30% Engagement (All-Star) · 10M+ Views · Top 3 on Twitter India</div><div class="proj-card-cta">View case study <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg></div></div>
+<div class="proj-card dock-item" data-cat="tennis" data-detail="vootatp"><div class="proj-card-imgs cols-1"><img src="https://gkrcjpqlelrxgyanzyrg.supabase.co/storage/v1/object/public/portfolio-media/Tennis%20C.png" loading="lazy" alt="Voot Select ATP Masters 1000 and Nitto ATP Finals cover" /></div><div class="proj-sport">Tennis</div><div class="proj-title">Voot Select — ATP Masters 1000 &amp; Nitto ATP Finals</div><div class="proj-type">Social Media Strategy</div><div class="proj-desc">Account lead on Voot Select tennis — GOATs vs the Future strategy across the ATP Masters 1000 calendar and Nitto ATP Finals, building tune-ins and engagement for men&apos;s tennis on Indian OTT.</div><div class="proj-metric">2.5M+ Views · +15% Engagement Rate</div><div class="proj-card-cta">View case study <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg></div></div>
+<div class="proj-card dock-item" data-cat="badminton" data-detail="vootbwf"><div class="proj-card-imgs cols-1"><img src="https://gkrcjpqlelrxgyanzyrg.supabase.co/storage/v1/object/public/portfolio-media/BWF%20C.png" loading="lazy" alt="Voot Select BWF World Tour and Thomas Cup cover" /></div><div class="proj-sport">Badminton</div><div class="proj-title">Voot Select — BWF World Tour &amp; Thomas Cup</div><div class="proj-type">Social Media Management</div><div class="proj-desc">Account lead on Voot Select badminton — season-long social across the BWF tour, from match build-up and live updates to India&apos;s historic Thomas Cup victory.</div><div class="proj-metric">+20% Engagement · 1M+ Views Per Tournament · Top 10 on Twitter India</div><div class="proj-card-cta">View case study <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg></div></div>
+<div class="proj-card dock-item" data-cat="basketball" data-detail="vootnba"><div class="proj-card-imgs cols-1"><img src="https://gkrcjpqlelrxgyanzyrg.supabase.co/storage/v1/object/public/portfolio-media/NBA%20All%20Star.png" loading="lazy" alt="Voot Select NBA and NBA All-Star cover" /></div><div class="proj-sport">Basketball</div><div class="proj-title">Voot Select — NBA &amp; NBA All-Star</div><div class="proj-type">Audience Building &amp; Campaign</div><div class="proj-desc">Account lead on Voot Select NBA — season-long social and the All-Star campaign fronted by Ranveer Singh, building fan engagement in India despite the timezone challenge.</div><div class="proj-metric">+30% Engagement (All-Star) · 10M+ Views · Top 3 on Twitter India</div><div class="proj-card-cta">View case study <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg></div></div>
 
     </div>
   </div>
@@ -5084,7 +5136,7 @@
       <div class="pd-title-block">
         <div class="pd-eyebrow">Cricket · Social Media &amp; Influencer Marketing</div>
         <h1 class="pd-title">Colors Cineplex — <span>Road Safety World Series 2022</span></h1>
-        <p class="pd-lede">Colors Cineplex is the official broadcaster of the Road Safety World Series — a T20 tournament featuring cricket legends from India, Sri Lanka, West Indies, South Africa, England, Australia, New Zealand, and Bangladesh, played in support of road safety awareness. The 2022 brief was to drive tune-ins for the broadcast by building a social presence that lived where the fans were.</p>
+        <p class="pd-lede">Colors Cineplex is the official broadcaster of the Road Safety World Series — a T20 tournament featuring cricket legends from India, Sri Lanka, West Indies, South Africa, England, Australia, New Zealand, and Bangladesh, played in support of road safety awareness. As account lead, I managed the Colors Cineplex account through RSWS 2022 end-to-end — stakeholder alignment, strategy, execution and reporting — to drive tune-ins for the broadcast by building a social presence that lived where the fans were.</p>
       </div>
 
       <div class="pd-hero pd-hero-wide">
@@ -5301,7 +5353,7 @@
       <div class="pd-title-block">
         <div class="pd-eyebrow">Cricket · Account Management</div>
         <h1 class="pd-title">Gulf Giants — <span>ILT20 2024</span></h1>
-        <p class="pd-lede">Account lead for Gulf Giants and Adani Sportsline on ILT20 2024 — owning the season launch brief and delivering the hero film that anchored the franchise before the first ball was bowled.</p>
+        <p class="pd-lede">Account lead for Gulf Giants and Adani Sportsline on ILT20 2024 — managing the account end-to-end across stakeholder alignment, strategy, production and delivery, and landing the hero film that anchored the franchise before the first ball was bowled in Season 2 of the UAE&apos;s premier T20 league.</p>
       </div>
 
       <div class="pd-hero pd-hero-wide">
@@ -5315,7 +5367,7 @@
 
       <div class="pd-section pd-section-spaced">
         <div class="pd-section-label">Campaign Approach</div>
-        <p class="pd-prose">I owned the brief end-to-end for Gulf Giants and Adani Sportsline — translating the launch objective into a creative mandate and steering delivery through to the final film. The direction leaned into a darker, more cinematic register than the usual squad-led teaser, building anticipation through tone and pace rather than spelling the season out. It was less a fixture promo, more a statement of arrival — designed to land the franchise&apos;s presence before fans saw a single player on the field.</p>
+        <p class="pd-prose">I owned the brief end-to-end for Gulf Giants and Adani Sportsline — translating the launch objective into a creative mandate, aligning stakeholders, and steering the hero film from strategy through production to final delivery. The direction leaned into a darker, more cinematic register than the usual squad-led teaser, building anticipation through tone and pace rather than spelling the season out. It was less a fixture promo, more a statement of arrival — designed to land the franchise&apos;s presence before fans saw a single player on the field.</p>
       </div>
 
       <div class="pd-section pd-section-spaced">
@@ -5358,7 +5410,7 @@
       <div class="pd-title-block">
         <div class="pd-eyebrow">Football · Partnership Film Production</div>
         <h1 class="pd-title">Sobha Realty × <span>Arsenal</span></h1>
-        <p class="pd-lede">Sobha Realty is one of the Middle East&apos;s leading luxury real estate developers, with a portfolio spanning Dubai&apos;s most recognisable skylines. Arsenal Football Club is one of the most followed sporting brands in the world. The brief covered the launch of their partnership — Sobha Realty as Arsenal&apos;s Official Global Real Estate Partner — and the headline film that introduced it to the world.</p>
+        <p class="pd-lede">Sobha Realty is one of the Middle East&apos;s leading luxury real estate developers, with a portfolio spanning Dubai&apos;s most recognisable skylines. Arsenal Football Club is one of the most followed sporting brands in the world. As project lead, I owned the launch film for their partnership — Sobha Realty as Arsenal&apos;s Official Global Real Estate Partner — from brief and stakeholder alignment through to the headline asset that introduced the deal at the official reveal in Dubai.</p>
       </div>
 
       <div class="pd-hero pd-hero-wide">
@@ -5367,17 +5419,17 @@
 
       <div class="pd-section pd-section-spaced">
         <div class="pd-section-label">Objective</div>
-        <p class="pd-prose">Give the partnership a launch moment that lived up to both brands. Build a film that worked as the centrepiece of the official announcement event, framed two global names with the right amount of cinematic weight, and gave the deal a clear story to travel with across press, social, and partner channels.</p>
+        <p class="pd-prose">Own the partnership launch end-to-end: align Sobha Realty and Arsenal on narrative and timing, deliver a film worthy of both brands, and land the centrepiece asset for the official announcement event — with a clear story built to travel across press, social, and partner channels.</p>
       </div>
 
       <div class="pd-section pd-section-spaced">
         <div class="pd-section-label">Campaign Approach</div>
-        <p class="pd-prose">The film was conceptualised, scripted, and edited in-house. The creative direction set Dubai&apos;s skyline against Arsenal&apos;s first-team players — Ødegaard, Rice, Saka — pulling the two worlds into one frame. Less a sponsorship announcement, more a statement of arrival: two global brands standing alongside each other, with the city and the club holding equal visual weight.</p>
+        <p class="pd-prose">I steered the project from brief to final cut — setting creative direction, briefing and overseeing concept, script, and production, and managing the in-house edit. The film set Dubai&apos;s skyline against Arsenal&apos;s first-team players — Ødegaard, Rice, Saka — pulling the two worlds into one frame. Less a sponsorship announcement, more a statement of arrival: two global brands standing alongside each other, with the city and the club holding equal visual weight.</p>
       </div>
 
       <div class="pd-section pd-section-spaced">
         <div class="pd-section-label">Amplification</div>
-        <p class="pd-prose">The film opened the official announcement event in Dubai and travelled into Sobha Realty&apos;s and Arsenal&apos;s wider communication around the partnership. As the anchor asset, it set the tone for every follow-up piece of content the deal generated.</p>
+        <p class="pd-prose">The film opened the official announcement event in Dubai and rolled out across Sobha Realty&apos;s and Arsenal&apos;s wider partnership communications. As the anchor asset I delivered for the reveal, it set the tone for every follow-up piece of content the deal generated.</p>
       </div>
 
       <section class="pd-jio-gallery pd-sobha-gallery" aria-label="Partnership film">
@@ -5415,7 +5467,7 @@
       <div class="pd-title-block">
         <div class="pd-eyebrow">Football · Season Social, Tournaments &amp; Campaigns</div>
         <h1 class="pd-title">Voot Select × <span>Football</span></h1>
-        <p class="pd-lede">Voot Select was the OTT streaming home of European football in India, holding broadcast rights for Serie A, La Liga and Ligue 1, alongside major tournaments including the FIFA World Cup Qatar 2022, the FIFA U-20 Women&apos;s World Cup Costa Rica 2022, and the EFL Carabao Cup. The brief covered everything social did around the broadcast — week-in, week-out league coverage, tournament-window storytelling, and the campaigns that gave the platform its own voice in the football conversation.</p>
+        <p class="pd-lede">Voot Select was the OTT streaming home of European football in India, holding broadcast rights for Serie A, La Liga and Ligue 1, alongside major tournaments including the FIFA World Cup Qatar 2022, the FIFA U-20 Women&apos;s World Cup Costa Rica 2022, and the EFL Carabao Cup. As account lead for Voot Select&apos;s football vertical, I managed the account end-to-end — stakeholder management, strategy, execution and reporting across week-in/week-out league coverage, tournament-window storytelling, and owned campaigns like #SuperChargedSunday.</p>
       </div>
 
       <div class="pd-hero pd-hero-wide">
@@ -5627,7 +5679,7 @@
       <div class="pd-title-block">
         <div class="pd-eyebrow">Tennis · Social Media Strategy</div>
         <h1 class="pd-title">Voot Select — <span>ATP Masters 1000 &amp; Nitto ATP Finals</span></h1>
-        <p class="pd-lede">Voot Select held the Indian streaming rights for the ATP Masters 1000 series and the Nitto ATP Finals across the tennis calendar — covering some of the biggest tournaments on the men&apos;s tour, from Indian Wells through to the season-ending finale in Turin. The brief covered the social media strategy that ran alongside the broadcast, designed to build the audience for tennis on Indian OTT.</p>
+        <p class="pd-lede">Voot Select held the Indian streaming rights for the ATP Masters 1000 series and the Nitto ATP Finals across the tennis calendar — covering some of the biggest tournaments on the men&apos;s tour, from Indian Wells through to the season-ending finale in Turin. As account lead for Voot Select&apos;s tennis vertical, I managed the account end-to-end — stakeholder management, strategy, execution and reporting — to build the audience for tennis on Indian OTT.</p>
       </div>
 
       <div class="pd-hero pd-hero-wide">
@@ -5650,17 +5702,33 @@
         <p class="pd-prose">The strategy drove a 15% lift in engagement rate over benchmark and 2.5M+ views and interactions across platforms through the tournament windows. By treating the next generation with the same weight as the established names, the platform built relevance with both ends of the tennis audience — and held its position as a serious home for the ATP tour in India.</p>
       </div>
 
-      <section class="pd-jio-gallery pd-voot-atp-gallery" aria-label="ATP campaign film">
+      <section class="pd-jio-gallery pd-voot-atp-gallery" aria-label="ATP campaign work">
         <div class="pd-jio-group">
           <h2 class="pd-jio-group-title">ATP Marketing Campaigns</h2>
-          <div class="pd-case-video pd-case-video--wide">
-            <video
-              src="https://gkrcjpqlelrxgyanzyrg.supabase.co/storage/v1/object/public/portfolio-media/Videos/SaveClip.App_AQNtxXs-0zt5-KFKKakpB4YagKVQ_eIO0vs0XF5wgBVG-jA0ppuM-mMVE-mbeGLIYvGKzs33QMReVWUg4kzZ3Wil.mp4"
-              controls
-              playsinline
-              preload="metadata"
-              aria-label="Voot Select ATP Masters 1000 and Nitto ATP Finals campaign film"
-            ></video>
+          <div class="pd-atp-media-stack">
+            <div class="pd-atp-hero-image">
+              <img src="https://gkrcjpqlelrxgyanzyrg.supabase.co/storage/v1/object/public/portfolio-media/ATP%20Group.png" loading="lazy" decoding="async" alt="Voot Select ATP Masters 1000 and major tour tournament creative group" />
+            </div>
+            <div class="pd-atp-video-pair">
+              <div class="pd-case-video">
+                <video
+                  src="https://gkrcjpqlelrxgyanzyrg.supabase.co/storage/v1/object/public/portfolio-media/Videos/SaveClip.App_AQNtxXs-0zt5-KFKKakpB4YagKVQ_eIO0vs0XF5wgBVG-jA0ppuM-mMVE-mbeGLIYvGKzs33QMReVWUg4kzZ3Wil.mp4"
+                  controls
+                  playsinline
+                  preload="metadata"
+                  aria-label="Nitto ATP Finals tune-in creative for Voot Select"
+                ></video>
+              </div>
+              <div class="pd-case-video">
+                <video
+                  src="https://gkrcjpqlelrxgyanzyrg.supabase.co/storage/v1/object/public/portfolio-media/Videos/ATP2.mp4"
+                  controls
+                  playsinline
+                  preload="metadata"
+                  aria-label="Western and Southern Open tune-in creative for Voot Select ATP coverage"
+                ></video>
+              </div>
+            </div>
           </div>
         </div>
       </section>
@@ -5685,7 +5753,7 @@
       <div class="pd-title-block">
         <div class="pd-eyebrow">Badminton · Social Media Management</div>
         <h1 class="pd-title">Voot Select — <span>BWF World Tour &amp; Thomas Cup</span></h1>
-        <p class="pd-lede">Voot Select held the Indian streaming rights for the BWF World Tour and the Thomas &amp; Uber Cup, covering some of the biggest tournaments in world badminton. The brief covered season-long social media management across the calendar — building the audience for badminton on Indian OTT during one of the most significant chapters in the sport&apos;s Indian history.</p>
+        <p class="pd-lede">Voot Select held the Indian streaming rights for the BWF World Tour and the Thomas &amp; Uber Cup, covering some of the biggest tournaments in world badminton. As account lead for Voot Select&apos;s badminton vertical, I managed the account end-to-end — stakeholder management, strategy, execution and reporting — across the full calendar during one of the most significant chapters in the sport&apos;s Indian history.</p>
       </div>
 
       <div class="pd-hero pd-hero-wide">
@@ -5777,7 +5845,7 @@
       <div class="pd-title-block">
         <div class="pd-eyebrow">Basketball · Audience Building &amp; Campaign</div>
         <h1 class="pd-title">Voot Select — <span>NBA &amp; NBA All-Star</span></h1>
-        <p class="pd-lede">Voot Select held the Indian streaming rights for the NBA across regular season, playoffs, and the NBA All-Star window. The brief covered season-long social media for the league and the headline All-Star campaign fronted by Ranveer Singh — both designed to build basketball&apos;s footprint with an Indian audience that doesn&apos;t always tune in live, given the timezone gap with the US.</p>
+        <p class="pd-lede">Voot Select held the Indian streaming rights for the NBA across regular season, playoffs, and the NBA All-Star window. As account lead for Voot Select&apos;s basketball vertical, I managed the account end-to-end — stakeholder management, strategy, execution and reporting — for season-long league social and the headline All-Star campaign fronted by Ranveer Singh, built to grow basketball&apos;s footprint with an Indian audience that doesn&apos;t always tune in live.</p>
       </div>
 
       <div class="pd-hero pd-hero-wide">
@@ -6532,8 +6600,8 @@
     },
     colorsrsws2022: {
       accent: '#E31E24',
-      role: 'Account Manager · broadcaster tune-ins, player access & influencer reach',
-      ledeShort: 'Colors Cineplex during RSWS 2022 — using social as a steady feeder for broadcast through content TV couldn\'t carry.',
+      role: 'Account lead · stakeholder management, strategy, execution & reporting',
+      ledeShort: 'Account lead on Colors Cineplex during RSWS 2022 — using social as a steady feeder for broadcast through content TV couldn\'t carry.',
       heroMetrics: [
         { num: '104%', label: 'Engagement increase' },
         { num: '4×', label: 'Profile visits' },
@@ -6541,11 +6609,11 @@
         { num: '3', label: 'Exclusive content formats' }
       ],
       doList: [
-        'Fed broadcast tune-ins through social-first content',
-        'Shot digital-exclusive player interviews on match days',
-        'Captured GoPro POV content from angles TV doesn\'t show',
-        'Activated influencers for off-field player chat sessions',
-        'Grew the channel beyond traditional TV promo reliance'
+        'Led the Colors Cineplex account through RSWS 2022 end-to-end',
+        'Owned stakeholder alignment, strategy and content execution across the tournament',
+        'Fed broadcast tune-ins through digital-exclusive player interviews',
+        'Captured GoPro POV and influencer content from angles TV couldn\'t carry',
+        'Delivered 104% engagement lift, 4× profile visits and 7% follower gain'
       ]
     },
     colorst102022: {
@@ -6568,7 +6636,7 @@
     },
     gulfgiants2024: {
       accent: '#00A651',
-      role: 'Account lead · Gulf Giants & Adani Sportsline · season launch & hero film delivery',
+      role: 'Account lead · Gulf Giants & Adani Sportsline · stakeholders, strategy, production & delivery',
       ledeShort: 'Account lead for Gulf Giants and Adani Sportsline on ILT20 2024 — owning the season launch brief and delivering the hero film that anchored the franchise before the first ball was bowled.',
       heroMetrics: [
         { num: '2', label: 'Brands · Giants & Adani' },
@@ -6578,16 +6646,16 @@
       ],
       doList: [
         'Led the Gulf Giants account for Adani Sportsline through ILT20 2024',
-        'Owned the season launch brief and stakeholder alignment',
-        'Mandated and steered the hero campaign film to delivery',
-        'Set a darker, cinematic tone for the franchise arrival',
-        'Managed rollout and platform adapts ahead of the league'
+        'Owned the season launch brief and stakeholder alignment across both brands',
+        'Mandated and steered the hero campaign film from strategy through to delivery',
+        'Set a darker, cinematic tone for the franchise arrival ahead of Season 2',
+        'Managed rollout and platform adapts across franchise social channels'
       ]
     },
     sobhaarsenal: {
       accent: '#EF0107',
-      role: 'Film lead · partnership launch, scripting & event anchor asset',
-      ledeShort: 'Sobha Realty × Arsenal — an announcement film built to match both brands at the official global partnership reveal in Dubai.',
+      role: 'Project lead · partnership launch film, brief-to-reveal delivery',
+      ledeShort: 'Sobha Realty × Arsenal — project lead on the announcement film from brief through the official global partnership reveal in Dubai.',
       heroMetrics: [
         { num: 'Global', label: 'Partnership launch' },
         { num: '1', label: 'Anchor announcement film' },
@@ -6595,17 +6663,17 @@
         { num: 'Dubai', label: 'Official reveal event' }
       ],
       doList: [
-        'Concepted and scripted the official partnership film',
-        'Framed Dubai skyline with Arsenal first-team players',
-        'Edited the film as the announcement event centrepiece',
-        'Distributed across press, social and partner channels',
-        'Set the tone for all follow-up partnership content'
+        'Owned the partnership launch film from brief to Dubai reveal',
+        'Aligned Sobha Realty and Arsenal on narrative and timing',
+        'Briefed and steered concept, script and production',
+        'Delivered the anchor film for the official announcement event',
+        'Coordinated rollout across press, social and partner channels'
       ]
     },
     vootleagues: {
       accent: '#6C2BD9',
-      role: 'Social strategy lead · league ops, tournament windows & owned campaigns',
-      ledeShort: 'Voot Select football — season-long social across European leagues, tournament windows, and the #SuperChargedSunday campaign that trended on Twitter India.',
+      role: 'Account lead · stakeholder management, strategy, execution & reporting',
+      ledeShort: 'Voot Select football — account lead across European leagues, tournament windows, and #SuperChargedSunday, which trended on Twitter India.',
       heroMetrics: [
         { num: '3', label: 'European leagues managed' },
         { num: '#1', label: 'Twitter India trend · SCS' },
@@ -6613,11 +6681,11 @@
         { num: 'Year', label: 'Round coverage' }
       ],
       doList: [
-        'Ran Serie A, La Liga and Ligue 1 week-in/week-out social',
-        'Covered FIFA WC, U-20 WWC and Carabao Cup windows',
-        'Produced match analysis and tune-in creative',
-        'Led #SuperChargedSunday to a Twitter India trend',
-        'Built platform identity beyond match-day graphics'
+        'Managed the Voot Select football account end-to-end',
+        'Aligned stakeholders across leagues, tournaments and campaigns',
+        'Set strategy for Serie A, La Liga, Ligue 1 and #SuperChargedSunday',
+        'Steered execution across league, tournament and owned campaign windows',
+        'Reported performance — including #SuperChargedSunday trending on Twitter India'
       ]
     },
     jiofifawc2022: {
@@ -6640,8 +6708,8 @@
     },
     vootatp: {
       accent: '#006BB6',
-      role: 'Social strategist · audience building, editorial framing & tournament tune-ins',
-      ledeShort: 'ATP Masters 1000 and Nitto ATP Finals on Voot Select — growing tennis engagement in India through the GOATs vs Future editorial frame.',
+      role: 'Account lead · stakeholder management, strategy, execution & reporting',
+      ledeShort: 'Voot Select tennis — account lead across ATP Masters 1000 and Nitto ATP Finals, growing engagement through the GOATs vs Future frame.',
       heroMetrics: [
         { num: '2.5M+', label: 'Views & interactions' },
         { num: '+15%', label: 'Engagement rate lift' },
@@ -6649,17 +6717,17 @@
         { num: 'Full', label: 'ATP calendar coverage' }
       ],
       doList: [
-        'Built the GOATs vs Future frame across the ATP calendar',
-        'Ran match build-up and tune-in creative',
-        'Drove engagement through quizzes and opinion posts',
-        'Gave the Nitto ATP Finals a hero treatment window',
-        'Grew the audience beyond India\'s existing tennis fan base'
+        'Managed the Voot Select tennis account end-to-end',
+        'Aligned stakeholders across ATP Masters 1000 and Nitto ATP Finals',
+        'Set the GOATs vs Future editorial strategy across the tour calendar',
+        'Steered match tune-ins, quizzes and hero Finals creative to execution',
+        'Reported 2.5M+ views and +15% engagement rate lift'
       ]
     },
     vootbwf: {
       accent: '#FFD700',
-      role: 'Social manager · season-long ops, live coverage & milestone storytelling',
-      ledeShort: 'BWF World Tour and Thomas Cup on Voot Select — season-long social built to grow badminton\'s footprint beyond its existing Indian fan base.',
+      role: 'Account lead · stakeholder management, strategy, execution & reporting',
+      ledeShort: 'Voot Select badminton — account lead across BWF World Tour and Thomas Cup, growing the sport\'s footprint on Indian OTT.',
       heroMetrics: [
         { num: '+20%', label: 'Engagement lift · Thomas Cup' },
         { num: '1M+', label: 'Views per tournament' },
@@ -6667,17 +6735,17 @@
         { num: '1st', label: 'Thomas Cup title celebrated' }
       ],
       doList: [
-        'Managed BWF World Tour social across the calendar',
-        'Published build-up, stats and live update graphics',
-        'Spotlighted Indian stars through draws and milestones',
-        'Hero-treated India\'s historic Thomas Cup victory',
-        'Set a platform benchmark for badminton viewership'
+        'Managed the Voot Select badminton account end-to-end',
+        'Aligned stakeholders across BWF World Tour and Thomas Cup windows',
+        'Set season-long social strategy for tour coverage and milestone storytelling',
+        'Steered live updates and India\'s Thomas Cup hero moment to execution',
+        'Reported +20% engagement lift and 1M+ views per tournament'
       ]
     },
     vootnba: {
       accent: '#C8102E',
-      role: 'Campaign lead · timezone-aware social ops & celebrity tentpole activation',
-      ledeShort: 'NBA and NBA All-Star on Voot Select — building an Indian fanbase through content that worked even when the live games didn\'t.',
+      role: 'Account lead · stakeholder management, strategy, execution & reporting',
+      ledeShort: 'Voot Select NBA — account lead across regular season, playoffs and All-Star, building fandom despite the US timezone gap.',
       heroMetrics: [
         { num: '10M+', label: 'All-Star campaign views' },
         { num: '+30%', label: 'All-Star engagement lift' },
@@ -6685,11 +6753,11 @@
         { num: '+5%', label: 'Season engagement lift' }
       ],
       doList: [
-        'Kept the NBA present despite the US timezone gap',
-        'Ran live tweets, highlights and morning-after graphics',
-        'Built playoff and Finals storyline campaigns',
-        'Fronted All-Star with Ranveer Singh cultural activation',
-        'Trended Top 3 on Twitter India on match day'
+        'Managed the Voot Select NBA account end-to-end',
+        'Aligned stakeholders across regular season, playoffs and All-Star',
+        'Set timezone-aware social strategy and All-Star tentpole direction',
+        'Steered Ranveer Singh campaign and season content to execution',
+        'Reported 10M+ All-Star views and Top 3 Twitter India trend'
       ]
     },
     humaninsports: {
@@ -6775,7 +6843,7 @@
     },
     colorsrsws2022: {
       calendarTitle: 'Tournament calendar',
-      calendarIntro: 'RSWS 2022 ran as a short, high-intensity broadcast window — with social feeding tune-ins through formats TV couldn\'t carry.',
+      calendarIntro: 'As account lead on Colors Cineplex, RSWS 2022 ran as a short, high-intensity broadcast window — with social feeding tune-ins through formats TV couldn\'t carry.',
       calendarPhases: [
         { tag: 'Pre-tournament', body: '<strong>Channel positioning</strong> and content format planning — setting up Colors Cineplex as more than a match-day broadcaster.' },
         { tag: 'During RSWS', body: '<strong>Digital-exclusive player interviews</strong> and <strong>GoPro POV</strong> content from angles television doesn\'t show.' },
@@ -6795,27 +6863,27 @@
     },
     gulfgiants2024: {
       calendarTitle: 'Launch calendar',
-      calendarIntro: 'As account lead for Gulf Giants and Adani Sportsline, the ILT20 2024 mandate moved from brief alignment through to platform rollout.',
+      calendarIntro: 'As account lead for Gulf Giants and Adani Sportsline, the ILT20 2024 mandate moved from brief alignment and stakeholder sign-off through production to platform rollout.',
       calendarPhases: [
-        { tag: 'Brief', body: '<strong>Stakeholder alignment</strong> on the season launch objective — positioning the hero film as the franchise\'s arrival statement.' },
-        { tag: 'Production', body: '<strong>Cinematic hero film</strong> delivered end-to-end — darker, bolder tone set for ILT20 Season 2.' },
+        { tag: 'Brief', body: '<strong>Stakeholder alignment</strong> on the season launch objective — positioning the hero film as the franchise\'s arrival statement for ILT20 Season 2.' },
+        { tag: 'Production', body: '<strong>Cinematic hero film</strong> mandated and steered end-to-end — darker, bolder tone set for the franchise arrival.' },
         { tag: 'Launch', body: '<strong>Season opener asset</strong> published as the anchor creative before the first match.' },
-        { tag: 'Rollout', body: '<strong>Platform adapts</strong> and pre-league social run-up — giving all season content a single narrative base.' }
+        { tag: 'Rollout', body: '<strong>Platform adapts</strong> and pre-league social run-up — managed from the account side to give all season content a single narrative base.' }
       ]
     },
     sobhaarsenal: {
       calendarTitle: 'Partnership calendar',
-      calendarIntro: 'The Sobha × Arsenal announcement was built as a single launch moment — from brief through to the official reveal in Dubai.',
+      calendarIntro: 'As project lead, the Sobha × Arsenal announcement was run as a single launch — from brief and stakeholder alignment through to the official reveal in Dubai.',
       calendarPhases: [
-        { tag: 'Brief', body: '<strong>Partnership narrative</strong> — framing Dubai\'s skyline with Arsenal first-team players as equals, not a standard sponsorship spot.' },
-        { tag: 'Production', body: '<strong>Concept, script and shoot</strong> featuring Ødegaard, Rice and Saka — cinematic weight for both global brands.' },
-        { tag: 'Reveal', body: '<strong>Official announcement event</strong> in Dubai — film premiered as the centrepiece of the partnership launch.' },
-        { tag: 'Distribution', body: '<strong>Press, social and partner channels</strong> — setting the tone for all follow-up partnership content.' }
+        { tag: 'Brief', body: '<strong>Partnership narrative</strong> — aligned stakeholders on framing Dubai\'s skyline with Arsenal first-team players as equals, not a standard sponsorship spot.' },
+        { tag: 'Production', body: '<strong>Concept, script and shoot</strong> — briefed and steered production featuring Ødegaard, Rice and Saka with cinematic weight for both global brands.' },
+        { tag: 'Reveal', body: '<strong>Official announcement event</strong> in Dubai — delivered the film as the centrepiece of the partnership launch.' },
+        { tag: 'Distribution', body: '<strong>Press, social and partner channels</strong> — coordinated rollout and set the tone for all follow-up partnership content.' }
       ]
     },
     vootleagues: {
       calendarTitle: 'Year-round calendar',
-      calendarIntro: 'Voot Select football ran across league seasons, tournament windows and an owned weekly campaign — each with its own content mandate.',
+      calendarIntro: 'As account lead for Voot Select football, the year ran across league seasons, tournament windows and an owned weekly campaign — each with stakeholder sign-off, content mandate and performance reporting.',
       calendarPhases: [
         { tag: 'League season', body: '<strong>Serie A, La Liga and Ligue 1</strong> — week-in/week-out social, match analysis and tune-in creative.' },
         { tag: 'Tournaments', body: '<strong>FIFA WC, U-20 WWC and Carabao Cup</strong> — dedicated coverage windows across the football calendar.' },
@@ -6835,17 +6903,17 @@
     },
     vootatp: {
       calendarTitle: 'Tour calendar',
-      calendarIntro: 'ATP coverage on Voot Select followed the Masters 1000 rhythm — editorial framing, tune-ins and a hero Finals window.',
+      calendarIntro: 'As account lead for Voot Select tennis, ATP coverage spanned the full men\'s tour calendar — major Masters 1000 events through the year and a hero Nitto ATP Finals window.',
       calendarPhases: [
-        { tag: 'Masters 1000', body: '<strong>GOATs vs Future</strong> editorial frame across the ATP calendar — building narrative through the season.' },
-        { tag: 'Build-up', body: '<strong>Match tune-ins</strong>, quizzes and opinion posts driving engagement between fixtures.' },
-        { tag: 'Finals', body: '<strong>Nitto ATP Finals</strong> hero treatment — the biggest window on the tennis calendar given full creative weight.' },
-        { tag: 'Results', body: '<strong>2.5M+ views &amp; interactions</strong> and <strong>+15% engagement rate lift</strong> across the coverage window.' }
+        { tag: 'Masters 1000', body: '<strong>Major ATP Masters tournaments</strong> across the year — Indian Wells, Miami, Cincinnati, Western &amp; Southern Open and more under the <strong>GOATs vs Future</strong> editorial frame.' },
+        { tag: 'Build-up', body: '<strong>Match tune-ins</strong>, quizzes and opinion posts driving engagement between fixtures across the tour calendar.' },
+        { tag: 'Nitto ATP Finals', body: '<strong>Season-ending hero window</strong> in Turin — the biggest finale on the calendar given full creative weight alongside other marquee Masters moments.' },
+        { tag: 'Results', body: '<strong>2.5M+ views &amp; interactions</strong> and <strong>+15% engagement rate lift</strong> across the full ATP coverage window.' }
       ]
     },
     vootbwf: {
       calendarTitle: 'Season calendar',
-      calendarIntro: 'BWF social followed the natural tournament rhythm — draw to final — with India\'s Thomas Cup win as the season\'s defining moment.',
+      calendarIntro: 'As account lead for Voot Select badminton, social followed the natural tournament rhythm — draw to final — with India\'s Thomas Cup win as the season\'s defining moment.',
       calendarPhases: [
         { tag: 'Tour calendar', body: '<strong>BWF World Tour</strong> season-long management — build-up graphics, stats and milestone posts across the year.' },
         { tag: 'Live window', body: '<strong>Quick-turnaround updates</strong> for set wins, key moments and results as matches happened.' },
@@ -6855,7 +6923,7 @@
     },
     vootnba: {
       calendarTitle: 'Season calendar',
-      calendarIntro: 'NBA in India meant building fandom despite the US timezone — regular season presence, playoff storylines and an All-Star tentpole.',
+      calendarIntro: 'As account lead for Voot Select NBA, the season meant building fandom despite the US timezone — regular season presence, playoff storylines and an All-Star tentpole.',
       calendarPhases: [
         { tag: 'Regular season', body: '<strong>Live tweets, highlights</strong> and morning-after graphics — keeping the league present when games aired overnight.' },
         { tag: 'Playoffs', body: '<strong>Finals storylines</strong> and playoff campaigns sustaining narrative through the business end of the season.' },
