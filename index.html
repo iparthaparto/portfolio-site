@@ -1460,6 +1460,10 @@
       animation: fs-pan-ltr 100s ease-in-out infinite alternate;
       will-change: transform, object-position;
     }
+    .page:not(.active) .proj-fs-bg-frame img,
+    .page:not(.active) .clients-fs-bg-frame img {
+      animation-play-state: paused;
+    }
     .proj-fs-overlay {
       position: absolute; inset: 0;
       background: linear-gradient(
@@ -1815,12 +1819,14 @@
       transform: translateY(100%);
       visibility: hidden;
       pointer-events: none;
+      content-visibility: hidden;
       transition: transform 0.55s var(--ease-out), visibility 0s linear 0.55s, background 0.45s var(--ease);
     }
     .proj-detail-panel.open {
       transform: translateY(0);
       visibility: visible;
       pointer-events: auto;
+      content-visibility: visible;
       transition: transform 0.55s var(--ease-out), visibility 0s, background 0.45s var(--ease);
     }
     .proj-detail-header {
@@ -7134,6 +7140,7 @@
     }
     panel.classList.add('open');
     panel.scrollTop = 0;
+    primePanelVideos(panel);
     enhanceProjectCaseStudy(slug, filter || currentAppState.filter || getProjectFilterForSlug(slug));
     if (slug === 'dhlmi2024') {
       requestAnimationFrame(() => {
@@ -7246,6 +7253,19 @@
       video.pause();
       const wrap = video.closest('.pd-wpl-video-wrap');
       if (wrap) updateWplVideoUi(wrap, video);
+    });
+  }
+
+  function primePanelVideos(panel) {
+    if (!panel) return;
+    panel.querySelectorAll('video').forEach(video => {
+      if (video.preload === 'none') video.preload = 'metadata';
+    });
+  }
+
+  function initDeferredPanelVideos() {
+    document.querySelectorAll('.proj-detail-panel video').forEach(video => {
+      video.preload = 'none';
     });
   }
 
@@ -8202,6 +8222,7 @@
   initProjectImageLightbox();
   initDhlMixedRows();
   initDhlHeroVideo();
+  initDeferredPanelVideos();
   initAppRouter();
 </script>
 </body>
