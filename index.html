@@ -11,10 +11,11 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link rel="preconnect" href="https://gkrcjpqlelrxgyanzyrg.supabase.co" crossorigin />
   <link rel="dns-prefetch" href="https://gkrcjpqlelrxgyanzyrg.supabase.co" />
-  <link rel="preload" as="image" href="https://gkrcjpqlelrxgyanzyrg.supabase.co/storage/v1/object/public/portfolio-media/Partha%20Maity.jpeg" fetchpriority="high" />
-  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:wght@400;500;600&family=Playfair+Display:wght@400;600&display=swap" rel="stylesheet" />
+  <link rel="preload" as="image" href="assets/partha-maity-hero.jpg" fetchpriority="high" />
   <link rel="preload" href="styles.css" as="style" />
   <link rel="stylesheet" href="styles.css" />
+  <link rel="preload" href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:wght@400;500;600&family=Playfair+Display:wght@400;600&display=swap" as="style" onload="this.onload=null;this.rel='stylesheet'" />
+  <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:wght@400;500;600&family=Playfair+Display:wght@400;600&display=swap" /></noscript>
 </head>
 <body>
 
@@ -69,7 +70,7 @@
     <div class="home-grid">
 
       <div class="hg-cell hg-photo home-grid-reveal">
-        <img src="https://gkrcjpqlelrxgyanzyrg.supabase.co/storage/v1/object/public/portfolio-media/Partha%20Maity.jpeg" width="600" height="800" decoding="async" fetchpriority="high" alt="Partha Maity" class="hg-photo-img" />
+        <img src="assets/partha-maity-hero.jpg" width="600" height="800" decoding="async" fetchpriority="high" alt="Partha Maity" class="hg-photo-img" />
       </div>
 
       <div class="hg-cell hg-about home-grid-reveal delay-1">
@@ -89,7 +90,7 @@
       <div class="hg-cell hg-stats home-grid-reveal delay-2">
         <div class="hg-stats-bg" aria-hidden="true">
           <div class="hg-stats-bg-frame">
-            <img src="https://gkrcjpqlelrxgyanzyrg.supabase.co/storage/v1/object/public/portfolio-media/HP%20COVER.png" width="1920" height="1078" loading="lazy" decoding="async" alt="" />
+            <img src="assets/hp-cover-home.jpg" width="1400" height="786" loading="lazy" decoding="async" fetchpriority="low" alt="" />
           </div>
           <div class="hg-stats-bg-shade"></div>
         </div>
@@ -518,9 +519,9 @@
               <div class="pd-wpl-video-wrap">
                 <video
                   class="pd-wpl-video-el"
-                  src="https://gkrcjpqlelrxgyanzyrg.supabase.co/storage/v1/object/public/portfolio-media/Videos/Jersey%20Reveal.mp4"
+                  data-src="https://gkrcjpqlelrxgyanzyrg.supabase.co/storage/v1/object/public/portfolio-media/Videos/Jersey%20Reveal.mp4"
                   playsinline
-                  preload="metadata"
+                  preload="none"
                   aria-label="WPL jersey reveal film"
                 ></video>
               </div>
@@ -529,9 +530,9 @@
               <div class="pd-wpl-video-wrap">
                 <video
                   class="pd-wpl-video-el"
-                  src="https://gkrcjpqlelrxgyanzyrg.supabase.co/storage/v1/object/public/portfolio-media/Videos/SkechersXMI.mp4"
+                  data-src="https://gkrcjpqlelrxgyanzyrg.supabase.co/storage/v1/object/public/portfolio-media/Videos/SkechersXMI.mp4"
                   playsinline
-                  preload="metadata"
+                  preload="none"
                   aria-label="Skechers x Mumbai Indians Women partnership film"
                 ></video>
               </div>
@@ -546,9 +547,9 @@
               <div class="pd-wpl-video-wrap">
                 <video
                   class="pd-wpl-video-el"
-                  src="https://gkrcjpqlelrxgyanzyrg.supabase.co/storage/v1/object/public/portfolio-media/Videos/AI%20Player%20Intro.mp4"
+                  data-src="https://gkrcjpqlelrxgyanzyrg.supabase.co/storage/v1/object/public/portfolio-media/Videos/AI%20Player%20Intro.mp4"
                   playsinline
-                  preload="metadata"
+                  preload="none"
                   aria-label="AI Player Intro — Choose Your Fighter creative"
                 ></video>
               </div>
@@ -557,9 +558,9 @@
               <div class="pd-wpl-video-wrap">
                 <video
                   class="pd-wpl-video-el"
-                  src="https://gkrcjpqlelrxgyanzyrg.supabase.co/storage/v1/object/public/portfolio-media/Videos/Lotti%20Vid.mp4"
+                  data-src="https://gkrcjpqlelrxgyanzyrg.supabase.co/storage/v1/object/public/portfolio-media/Videos/Lotti%20Vid.mp4"
                   playsinline
-                  preload="metadata"
+                  preload="none"
                   aria-label="Lotti player arrival fun video"
                 ></video>
               </div>
@@ -568,9 +569,9 @@
               <div class="pd-wpl-video-wrap">
                 <video
                   class="pd-wpl-video-el"
-                  src="https://gkrcjpqlelrxgyanzyrg.supabase.co/storage/v1/object/public/portfolio-media/Videos/MI%20x%20Influencer.mp4"
+                  data-src="https://gkrcjpqlelrxgyanzyrg.supabase.co/storage/v1/object/public/portfolio-media/Videos/MI%20x%20Influencer.mp4"
                   playsinline
-                  preload="metadata"
+                  preload="none"
                   aria-label="Mumbai Indians Women influencer marketing film"
                 ></video>
               </div>
@@ -644,10 +645,10 @@
           <h2 class="pd-wpl-row-title">Jersey Launch Content</h2>
           <div class="pd-mict-jersey-video">
             <video
-              src="https://gkrcjpqlelrxgyanzyrg.supabase.co/storage/v1/object/public/portfolio-media/Videos/MICT%20JR.mp4"
+              data-src="https://gkrcjpqlelrxgyanzyrg.supabase.co/storage/v1/object/public/portfolio-media/Videos/MICT%20JR.mp4"
               controls
               playsinline
-              preload="metadata"
+              preload="none"
               aria-label="MI Cape Town SA20 2024 jersey launch film"
             ></video>
           </div>
@@ -660,9 +661,9 @@
               <div class="pd-wpl-video-wrap">
                 <video
                   class="pd-wpl-video-el"
-                  src="https://gkrcjpqlelrxgyanzyrg.supabase.co/storage/v1/object/public/portfolio-media/Videos/MICTMF.mp4"
+                  data-src="https://gkrcjpqlelrxgyanzyrg.supabase.co/storage/v1/object/public/portfolio-media/Videos/MICTMF.mp4"
                   playsinline
-                  preload="metadata"
+                  preload="none"
                   aria-label="MI Cape Town match footage film"
                 ></video>
               </div>
@@ -671,9 +672,9 @@
               <div class="pd-wpl-video-wrap">
                 <video
                   class="pd-wpl-video-el"
-                  src="https://gkrcjpqlelrxgyanzyrg.supabase.co/storage/v1/object/public/portfolio-media/Videos/MICTConcept1.mp4"
+                  data-src="https://gkrcjpqlelrxgyanzyrg.supabase.co/storage/v1/object/public/portfolio-media/Videos/MICTConcept1.mp4"
                   playsinline
-                  preload="metadata"
+                  preload="none"
                   aria-label="MI Cape Town conceptual video content 1"
                 ></video>
               </div>
@@ -682,9 +683,9 @@
               <div class="pd-wpl-video-wrap">
                 <video
                   class="pd-wpl-video-el"
-                  src="https://gkrcjpqlelrxgyanzyrg.supabase.co/storage/v1/object/public/portfolio-media/Videos/MICTConcept2.mp4"
+                  data-src="https://gkrcjpqlelrxgyanzyrg.supabase.co/storage/v1/object/public/portfolio-media/Videos/MICTConcept2.mp4"
                   playsinline
-                  preload="metadata"
+                  preload="none"
                   aria-label="MI Cape Town conceptual video content 2"
                 ></video>
               </div>
@@ -761,10 +762,10 @@
           <h2 class="pd-jio-group-title">CTV AD</h2>
           <div class="pd-case-video pd-case-video--wide pd-jio-ctv-video">
             <video
-              src="https://gkrcjpqlelrxgyanzyrg.supabase.co/storage/v1/object/public/portfolio-media/Videos/IPL%20Dhoni.mp4"
+              data-src="https://gkrcjpqlelrxgyanzyrg.supabase.co/storage/v1/object/public/portfolio-media/Videos/IPL%20Dhoni.mp4"
               controls
               playsinline
-              preload="metadata"
+              preload="none"
               aria-label="JioCinema IPL 2024 CTV ad — Dhoni"
             ></video>
           </div>
@@ -777,9 +778,9 @@
               <div class="pd-wpl-video-wrap">
                 <video
                   class="pd-wpl-video-el"
-                  src="https://gkrcjpqlelrxgyanzyrg.supabase.co/storage/v1/object/public/portfolio-media/Videos/IPL24vid1.mp4"
+                  data-src="https://gkrcjpqlelrxgyanzyrg.supabase.co/storage/v1/object/public/portfolio-media/Videos/IPL24vid1.mp4"
                   playsinline
-                  preload="metadata"
+                  preload="none"
                   aria-label="JioCinema IPL 2024 influencer shoot film 1"
                 ></video>
               </div>
@@ -788,9 +789,9 @@
               <div class="pd-wpl-video-wrap">
                 <video
                   class="pd-wpl-video-el"
-                  src="https://gkrcjpqlelrxgyanzyrg.supabase.co/storage/v1/object/public/portfolio-media/Videos/IPL24vid2.mp4"
+                  data-src="https://gkrcjpqlelrxgyanzyrg.supabase.co/storage/v1/object/public/portfolio-media/Videos/IPL24vid2.mp4"
                   playsinline
-                  preload="metadata"
+                  preload="none"
                   aria-label="JioCinema IPL 2024 influencer shoot film 2"
                 ></video>
               </div>
@@ -799,9 +800,9 @@
               <div class="pd-wpl-video-wrap">
                 <video
                   class="pd-wpl-video-el"
-                  src="https://gkrcjpqlelrxgyanzyrg.supabase.co/storage/v1/object/public/portfolio-media/Videos/IPL24vid3.mp4"
+                  data-src="https://gkrcjpqlelrxgyanzyrg.supabase.co/storage/v1/object/public/portfolio-media/Videos/IPL24vid3.mp4"
                   playsinline
-                  preload="metadata"
+                  preload="none"
                   aria-label="JioCinema IPL 2024 influencer shoot film 3"
                 ></video>
               </div>
@@ -810,9 +811,9 @@
               <div class="pd-wpl-video-wrap">
                 <video
                   class="pd-wpl-video-el"
-                  src="https://gkrcjpqlelrxgyanzyrg.supabase.co/storage/v1/object/public/portfolio-media/Videos/IPL24vid4.mp4"
+                  data-src="https://gkrcjpqlelrxgyanzyrg.supabase.co/storage/v1/object/public/portfolio-media/Videos/IPL24vid4.mp4"
                   playsinline
-                  preload="metadata"
+                  preload="none"
                   aria-label="JioCinema IPL 2024 influencer shoot film 4"
                 ></video>
               </div>
@@ -827,9 +828,9 @@
               <div class="pd-wpl-video-wrap">
                 <video
                   class="pd-wpl-video-el"
-                  src="https://gkrcjpqlelrxgyanzyrg.supabase.co/storage/v1/object/public/portfolio-media/Videos/IPLCvid.mp4"
+                  data-src="https://gkrcjpqlelrxgyanzyrg.supabase.co/storage/v1/object/public/portfolio-media/Videos/IPLCvid.mp4"
                   playsinline
-                  preload="metadata"
+                  preload="none"
                   aria-label="JioCinema IPL creative video for OEM and CTV platforms"
                 ></video>
               </div>
@@ -865,10 +866,10 @@
 
       <div class="pd-hero pd-hero-wide pd-hero-video pd-dhl-hero-video">
         <video
-          src="https://gkrcjpqlelrxgyanzyrg.supabase.co/storage/v1/object/public/portfolio-media/Videos/DHLWPL5.mp4"
+          data-src="https://gkrcjpqlelrxgyanzyrg.supabase.co/storage/v1/object/public/portfolio-media/Videos/DHLWPL5.mp4"
           controls
           playsinline
-          preload="metadata"
+          preload="none"
           aria-label="DHL x Mumbai Indians WPL 2024 hero film"
         ></video>
       </div>
@@ -898,9 +899,9 @@
               <div class="pd-wpl-video-wrap">
                 <video
                   class="pd-wpl-video-el"
-                  src="https://gkrcjpqlelrxgyanzyrg.supabase.co/storage/v1/object/public/portfolio-media/Videos/DHLIPL2.mp4"
+                  data-src="https://gkrcjpqlelrxgyanzyrg.supabase.co/storage/v1/object/public/portfolio-media/Videos/DHLIPL2.mp4"
                   playsinline
-                  preload="metadata"
+                  preload="none"
                   aria-label="DHL x MI Men IPL match day campaign film"
                 ></video>
               </div>
@@ -915,9 +916,9 @@
               <div class="pd-wpl-video-wrap">
                 <video
                   class="pd-wpl-video-el"
-                  src="https://gkrcjpqlelrxgyanzyrg.supabase.co/storage/v1/object/public/portfolio-media/Videos/DHLWPL1.mp4"
+                  data-src="https://gkrcjpqlelrxgyanzyrg.supabase.co/storage/v1/object/public/portfolio-media/Videos/DHLWPL1.mp4"
                   playsinline
-                  preload="metadata"
+                  preload="none"
                   aria-label="DHL x MI Women WPL campaign film 1"
                 ></video>
               </div>
@@ -926,9 +927,9 @@
               <div class="pd-wpl-video-wrap">
                 <video
                   class="pd-wpl-video-el"
-                  src="https://gkrcjpqlelrxgyanzyrg.supabase.co/storage/v1/object/public/portfolio-media/Videos/DHLWPL2.mp4"
+                  data-src="https://gkrcjpqlelrxgyanzyrg.supabase.co/storage/v1/object/public/portfolio-media/Videos/DHLWPL2.mp4"
                   playsinline
-                  preload="metadata"
+                  preload="none"
                   aria-label="DHL x MI Women WPL campaign film 2"
                 ></video>
               </div>
@@ -940,10 +941,10 @@
           <h2 class="pd-jio-group-title">B2C DHL Campain Video Shoot</h2>
           <div class="pd-case-video pd-case-video--wide pd-dhl-b2c-video">
             <video
-              src="https://gkrcjpqlelrxgyanzyrg.supabase.co/storage/v1/object/public/portfolio-media/Videos/DHLWPL3.mp4"
+              data-src="https://gkrcjpqlelrxgyanzyrg.supabase.co/storage/v1/object/public/portfolio-media/Videos/DHLWPL3.mp4"
               controls
               playsinline
-              preload="metadata"
+              preload="none"
               aria-label="B2C DHL campaign video shoot film"
             ></video>
           </div>
@@ -1054,10 +1055,10 @@
           <h2 class="pd-jio-group-title">CGI Video</h2>
           <div class="pd-case-video pd-case-video--portrait">
             <video
-              src="https://gkrcjpqlelrxgyanzyrg.supabase.co/storage/v1/object/public/portfolio-media/Videos/CGI%20ICT.mp4"
+              data-src="https://gkrcjpqlelrxgyanzyrg.supabase.co/storage/v1/object/public/portfolio-media/Videos/CGI%20ICT.mp4"
               controls
               playsinline
-              preload="metadata"
+              preload="none"
               aria-label="Mumbai Indians CGI welcome film — Team India in Mumbai"
             ></video>
           </div>
@@ -1071,9 +1072,9 @@
                 <div class="pd-wpl-video-wrap">
                   <video
                     class="pd-wpl-video-el"
-                    src="https://gkrcjpqlelrxgyanzyrg.supabase.co/storage/v1/object/public/portfolio-media/Videos/MIGIF.mp4"
+                    data-src="https://gkrcjpqlelrxgyanzyrg.supabase.co/storage/v1/object/public/portfolio-media/Videos/MIGIF.mp4"
                     playsinline
-                    preload="metadata"
+                    preload="none"
                     aria-label="Mumbai Indians GIF pack for 2023 Cricket World Cup"
                   ></video>
                 </div>
@@ -1153,9 +1154,9 @@
                 <div class="pd-wpl-video-wrap">
                   <video
                     class="pd-wpl-video-el"
-                    src="https://gkrcjpqlelrxgyanzyrg.supabase.co/storage/v1/object/public/portfolio-media/Videos/RSWS1.mp4"
+                    data-src="https://gkrcjpqlelrxgyanzyrg.supabase.co/storage/v1/object/public/portfolio-media/Videos/RSWS1.mp4"
                     playsinline
-                    preload="metadata"
+                    preload="none"
                     aria-label="RSWS player interviews with Suresh Raina"
                   ></video>
                 </div>
@@ -1170,9 +1171,9 @@
                 <div class="pd-wpl-video-wrap">
                   <video
                     class="pd-wpl-video-el"
-                    src="https://gkrcjpqlelrxgyanzyrg.supabase.co/storage/v1/object/public/portfolio-media/Videos/RSWS2.mp4"
+                    data-src="https://gkrcjpqlelrxgyanzyrg.supabase.co/storage/v1/object/public/portfolio-media/Videos/RSWS2.mp4"
                     playsinline
-                    preload="metadata"
+                    preload="none"
                     aria-label="RSWS GoPro shoot with players"
                   ></video>
                 </div>
@@ -1187,9 +1188,9 @@
                 <div class="pd-wpl-video-wrap">
                   <video
                     class="pd-wpl-video-el"
-                    src="https://gkrcjpqlelrxgyanzyrg.supabase.co/storage/v1/object/public/portfolio-media/Videos/RSWS3.mp4"
+                    data-src="https://gkrcjpqlelrxgyanzyrg.supabase.co/storage/v1/object/public/portfolio-media/Videos/RSWS3.mp4"
                     playsinline
-                    preload="metadata"
+                    preload="none"
                     aria-label="RSWS influencer content"
                   ></video>
                 </div>
@@ -1261,9 +1262,9 @@
                 <div class="pd-wpl-video-wrap">
                   <video
                     class="pd-wpl-video-el"
-                    src="https://gkrcjpqlelrxgyanzyrg.supabase.co/storage/v1/object/public/portfolio-media/Videos/ADV1.mp4"
+                    data-src="https://gkrcjpqlelrxgyanzyrg.supabase.co/storage/v1/object/public/portfolio-media/Videos/ADV1.mp4"
                     playsinline
-                    preload="metadata"
+                    preload="none"
                     aria-label="Abu Dhabi T10 match footage edit"
                   ></video>
                 </div>
@@ -1278,9 +1279,9 @@
                 <div class="pd-wpl-video-wrap">
                   <video
                     class="pd-wpl-video-el"
-                    src="https://gkrcjpqlelrxgyanzyrg.supabase.co/storage/v1/object/public/portfolio-media/Videos/ADV2.mp4"
+                    data-src="https://gkrcjpqlelrxgyanzyrg.supabase.co/storage/v1/object/public/portfolio-media/Videos/ADV2.mp4"
                     playsinline
-                    preload="metadata"
+                    preload="none"
                     aria-label="Abu Dhabi T10 influencer marketing content"
                   ></video>
                 </div>
@@ -1295,9 +1296,9 @@
                 <div class="pd-wpl-video-wrap">
                   <video
                     class="pd-wpl-video-el"
-                    src="https://gkrcjpqlelrxgyanzyrg.supabase.co/storage/v1/object/public/portfolio-media/Videos/ADV3.mp4"
+                    data-src="https://gkrcjpqlelrxgyanzyrg.supabase.co/storage/v1/object/public/portfolio-media/Videos/ADV3.mp4"
                     playsinline
-                    preload="metadata"
+                    preload="none"
                     aria-label="Abu Dhabi T10 digital exclusive content"
                   ></video>
                 </div>
@@ -1354,10 +1355,10 @@
           <h2 class="pd-jio-group-title">The Film - Gulf Giants</h2>
           <div class="pd-case-video pd-case-video--wide">
             <video
-              src="https://gkrcjpqlelrxgyanzyrg.supabase.co/storage/v1/object/public/portfolio-media/Videos/Gulf%20Giants%20AV.mp4"
+              data-src="https://gkrcjpqlelrxgyanzyrg.supabase.co/storage/v1/object/public/portfolio-media/Videos/Gulf%20Giants%20AV.mp4"
               controls
               playsinline
-              preload="metadata"
+              preload="none"
               aria-label="The Film - Gulf Giants ILT20 2024"
             ></video>
           </div>
@@ -1411,10 +1412,10 @@
           <h2 class="pd-jio-group-title">Clips of the Partnership Film</h2>
           <div class="pd-case-video pd-case-video--wide">
             <video
-              src="https://gkrcjpqlelrxgyanzyrg.supabase.co/storage/v1/object/public/portfolio-media/Videos/Sobha%20x%20Arsenal_%20Official%20Global%20real%20Estate%20Partner.mp4"
+              data-src="https://gkrcjpqlelrxgyanzyrg.supabase.co/storage/v1/object/public/portfolio-media/Videos/Sobha%20x%20Arsenal_%20Official%20Global%20real%20Estate%20Partner.mp4"
               controls
               playsinline
-              preload="metadata"
+              preload="none"
               aria-label="Sobha Realty and Arsenal official global real estate partner film"
             ></video>
           </div>
@@ -1493,10 +1494,10 @@
             <h2 class="pd-jio-group-title">Match Analysis</h2>
             <div class="pd-case-video pd-case-video--wide">
               <video
-                src="https://gkrcjpqlelrxgyanzyrg.supabase.co/storage/v1/object/public/portfolio-media/Videos/ElClasicoVid.mp4"
+                data-src="https://gkrcjpqlelrxgyanzyrg.supabase.co/storage/v1/object/public/portfolio-media/Videos/ElClasicoVid.mp4"
                 controls
                 playsinline
-                preload="metadata"
+                preload="none"
                 aria-label="Voot Select El Clasico match analysis video"
               ></video>
             </div>
@@ -1505,10 +1506,10 @@
             <h2 class="pd-jio-group-title">Match Day Promo</h2>
             <div class="pd-case-video pd-case-video--wide">
               <video
-                src="https://gkrcjpqlelrxgyanzyrg.supabase.co/storage/v1/object/public/portfolio-media/Videos/Match%20Day%20Promo.mp4"
+                data-src="https://gkrcjpqlelrxgyanzyrg.supabase.co/storage/v1/object/public/portfolio-media/Videos/Match%20Day%20Promo.mp4"
                 controls
                 playsinline
-                preload="metadata"
+                preload="none"
                 aria-label="Voot Select match day promo video"
               ></video>
             </div>
@@ -1542,10 +1543,10 @@
           <div class="pd-voot-scs-hero">
             <div class="pd-case-video pd-case-video--wide">
               <video
-                src="https://gkrcjpqlelrxgyanzyrg.supabase.co/storage/v1/object/public/portfolio-media/Videos/SCSP.mp4"
+                data-src="https://gkrcjpqlelrxgyanzyrg.supabase.co/storage/v1/object/public/portfolio-media/Videos/SCSP.mp4"
                 controls
                 playsinline
-                preload="metadata"
+                preload="none"
                 aria-label="Voot Select Supercharged Sunday promo film"
               ></video>
             </div>
@@ -1555,9 +1556,9 @@
               <div class="pd-wpl-video-wrap">
                 <video
                   class="pd-wpl-video-el"
-                  src="https://gkrcjpqlelrxgyanzyrg.supabase.co/storage/v1/object/public/portfolio-media/Videos/SCS.mp4"
+                  data-src="https://gkrcjpqlelrxgyanzyrg.supabase.co/storage/v1/object/public/portfolio-media/Videos/SCS.mp4"
                   playsinline
-                  preload="metadata"
+                  preload="none"
                   aria-label="Voot Select Supercharged Sunday campaign film"
                 ></video>
               </div>
@@ -1566,9 +1567,9 @@
               <div class="pd-wpl-video-wrap">
                 <video
                   class="pd-wpl-video-el"
-                  src="https://gkrcjpqlelrxgyanzyrg.supabase.co/storage/v1/object/public/portfolio-media/Videos/SCSM.mp4"
+                  data-src="https://gkrcjpqlelrxgyanzyrg.supabase.co/storage/v1/object/public/portfolio-media/Videos/SCSM.mp4"
                   playsinline
-                  preload="metadata"
+                  preload="none"
                   aria-label="Voot Select Supercharged Sunday influencer marketing film"
                 ></video>
               </div>
@@ -1686,19 +1687,19 @@
             <div class="pd-atp-video-pair">
               <div class="pd-case-video">
                 <video
-                  src="https://gkrcjpqlelrxgyanzyrg.supabase.co/storage/v1/object/public/portfolio-media/Videos/SaveClip.App_AQNtxXs-0zt5-KFKKakpB4YagKVQ_eIO0vs0XF5wgBVG-jA0ppuM-mMVE-mbeGLIYvGKzs33QMReVWUg4kzZ3Wil.mp4"
+                  data-src="https://gkrcjpqlelrxgyanzyrg.supabase.co/storage/v1/object/public/portfolio-media/Videos/SaveClip.App_AQNtxXs-0zt5-KFKKakpB4YagKVQ_eIO0vs0XF5wgBVG-jA0ppuM-mMVE-mbeGLIYvGKzs33QMReVWUg4kzZ3Wil.mp4"
                   controls
                   playsinline
-                  preload="metadata"
+                  preload="none"
                   aria-label="Nitto ATP Finals tune-in creative for Voot Select"
                 ></video>
               </div>
               <div class="pd-case-video">
                 <video
-                  src="https://gkrcjpqlelrxgyanzyrg.supabase.co/storage/v1/object/public/portfolio-media/Videos/ATP2.mp4"
+                  data-src="https://gkrcjpqlelrxgyanzyrg.supabase.co/storage/v1/object/public/portfolio-media/Videos/ATP2.mp4"
                   controls
                   playsinline
-                  preload="metadata"
+                  preload="none"
                   aria-label="Western and Southern Open tune-in creative for Voot Select ATP coverage"
                 ></video>
               </div>
@@ -1760,10 +1761,10 @@
             </div>
             <div class="pd-case-video pd-case-video--wide">
               <video
-                src="https://gkrcjpqlelrxgyanzyrg.supabase.co/storage/v1/object/public/portfolio-media/Videos/BWS%20Promo.mp4"
+                data-src="https://gkrcjpqlelrxgyanzyrg.supabase.co/storage/v1/object/public/portfolio-media/Videos/BWS%20Promo.mp4"
                 controls
                 playsinline
-                preload="metadata"
+                preload="none"
                 aria-label="Voot Select BWF World Tour promo film"
               ></video>
             </div>
@@ -1777,9 +1778,9 @@
               <div class="pd-wpl-video-wrap">
                 <video
                   class="pd-wpl-video-el"
-                  src="https://gkrcjpqlelrxgyanzyrg.supabase.co/storage/v1/object/public/portfolio-media/Videos/SaveClip.App_AQNE39ppSV1YZnkDoEZ06y-Gxc_Nc7x8xTRSwjD39M6ZuvEUKcWBvCcY7V6H1z5ok3yr7_2A0hg6IoWo36G1zLtNH-FlBAs8Qcnatm8.mp4"
+                  data-src="https://gkrcjpqlelrxgyanzyrg.supabase.co/storage/v1/object/public/portfolio-media/Videos/SaveClip.App_AQNE39ppSV1YZnkDoEZ06y-Gxc_Nc7x8xTRSwjD39M6ZuvEUKcWBvCcY7V6H1z5ok3yr7_2A0hg6IoWo36G1zLtNH-FlBAs8Qcnatm8.mp4"
                   playsinline
-                  preload="metadata"
+                  preload="none"
                   aria-label="Voot Select Thomas and Uber Cup winning moments film"
                 ></video>
               </div>
@@ -1788,9 +1789,9 @@
               <div class="pd-wpl-video-wrap">
                 <video
                   class="pd-wpl-video-el"
-                  src="https://gkrcjpqlelrxgyanzyrg.supabase.co/storage/v1/object/public/portfolio-media/Videos/BWF%20Promo.mp4"
+                  data-src="https://gkrcjpqlelrxgyanzyrg.supabase.co/storage/v1/object/public/portfolio-media/Videos/BWF%20Promo.mp4"
                   playsinline
-                  preload="metadata"
+                  preload="none"
                   aria-label="Voot Select BWF promo film"
                 ></video>
               </div>
@@ -1848,10 +1849,10 @@
           <h2 class="pd-jio-group-title">NBA All-Star</h2>
           <div class="pd-case-video pd-case-video--wide">
             <video
-              src="https://gkrcjpqlelrxgyanzyrg.supabase.co/storage/v1/object/public/portfolio-media/Videos/NBA%20VID2.mp4"
+              data-src="https://gkrcjpqlelrxgyanzyrg.supabase.co/storage/v1/object/public/portfolio-media/Videos/NBA%20VID2.mp4"
               controls
               playsinline
-              preload="metadata"
+              preload="none"
               aria-label="Voot Select NBA All-Star campaign film"
             ></video>
           </div>
@@ -1863,10 +1864,10 @@
             <div class="pd-media-pair-cell">
               <div class="pd-case-video">
                 <video
-                  src="https://gkrcjpqlelrxgyanzyrg.supabase.co/storage/v1/object/public/portfolio-media/Videos/NBA%20VID3.mp4"
+                  data-src="https://gkrcjpqlelrxgyanzyrg.supabase.co/storage/v1/object/public/portfolio-media/Videos/NBA%20VID3.mp4"
                   controls
                   playsinline
-                  preload="metadata"
+                  preload="none"
                   aria-label="Voot Select NBA match day hype film"
                 ></video>
               </div>
@@ -3224,15 +3225,27 @@
     });
   }
 
+  function ensureVideoSource(video) {
+    if (!video || video.src || video.currentSrc) return;
+    const deferred = video.dataset.src;
+    if (deferred) video.src = deferred;
+  }
+
   function primePanelVideos(panel) {
     if (!panel) return;
     panel.querySelectorAll('video').forEach(video => {
+      ensureVideoSource(video);
       if (video.preload === 'none') video.preload = 'metadata';
     });
   }
 
   function initDeferredPanelVideos() {
     document.querySelectorAll('.proj-detail-panel video').forEach(video => {
+      const src = video.getAttribute('src');
+      if (src && !video.dataset.src) {
+        video.dataset.src = src;
+        video.removeAttribute('src');
+      }
       video.preload = 'none';
     });
   }
@@ -3536,7 +3549,8 @@
     const modal = document.getElementById('pd-wpl-video-modal');
     const player = document.getElementById('pd-wpl-video-modal-player');
     if (!modal || !player || !video) return;
-    const src = video.currentSrc || video.src;
+    ensureVideoSource(video);
+    const src = video.currentSrc || video.src || video.dataset.src;
     if (!src) return;
     document.querySelectorAll('#proj-detail-wpl .pd-wpl-video-el, #proj-detail-mict .pd-wpl-video-el, #proj-detail-jioipl2024 .pd-wpl-video-el, #proj-detail-dhlmi2024 .pd-wpl-video-el, #proj-detail-misocial2023 .pd-wpl-video-el, #proj-detail-colorsrsws2022 .pd-wpl-video-el, #proj-detail-colorst102022 .pd-wpl-video-el, #proj-detail-vootleagues .pd-wpl-video-el, #proj-detail-vootbwf .pd-wpl-video-el').forEach(v => v.pause());
     wplVideoModalSource = video;
@@ -4173,6 +4187,8 @@
     });
   }
 
+  initDeferredPanelVideos();
+  initDeferredPageImages();
   initAchMetrics();
   initPageReveals();
   initThemeToggle();
@@ -4184,8 +4200,6 @@
   initProjectImageLightbox();
   initDhlMixedRows();
   initDhlHeroVideo();
-  initDeferredPanelVideos();
-  initDeferredPageImages();
   initNativeCaseStudyVideos();
   initAppRouter();
 </script>
