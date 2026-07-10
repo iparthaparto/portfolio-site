@@ -1,12 +1,15 @@
 .DS_Store
 **/.DS_Store
 
-# Local source files — media is hosted on Supabase
+# Local source archives — not deployed
 P.A rtha/
 *.zip
 *.pptx
 *.pub
+
+# Ignore stray mp4 outside hosted media folder
 *.mp4
+!media/**/*.mp4
 
 # Editor / tooling
 .cursor/
