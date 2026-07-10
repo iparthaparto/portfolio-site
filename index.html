@@ -2476,6 +2476,7 @@
     panel.classList.add('open');
     primePanelImages(panel);
     applyInnerFilter(f || 'all', { fromHistory: true });
+    requestAnimationFrame(prefetchVisibleCaseStudies);
   }
 
   const PROJECT_CASE_ORDER = {
@@ -3131,14 +3132,17 @@
     }
     panel.classList.add('open');
     panel.scrollTop = 0;
-    primePanelVideos(panel);
-    enhanceProjectCaseStudy(slug, filter || currentAppState.filter || getProjectFilterForSlug(slug));
-    if (slug === 'dhlmi2024') {
-      requestAnimationFrame(() => {
-        fitDhlHeroVideo();
-        document.querySelectorAll('.pd-dhl-mixed-row').forEach(syncDhlMixedRowHeights);
-      });
-    }
+    primePanelVideosEager(panel);
+    requestAnimationFrame(() => {
+      primePanelVideosEager(panel);
+      enhanceProjectCaseStudy(slug, filter || currentAppState.filter || getProjectFilterForSlug(slug));
+      if (slug === 'dhlmi2024') {
+        requestAnimationFrame(() => {
+          fitDhlHeroVideo();
+          document.querySelectorAll('.pd-dhl-mixed-row').forEach(syncDhlMixedRowHeights);
+        });
+      }
+    });
   }
 
   function renderAppState(state) {
@@ -3269,42 +3273,83 @@
     });
   }
 
-  function primePanelMedia(panel) {
+  function primePanelVideosEager(panel) {
     if (!panel) return;
+    delete panel.dataset.videoLazy;
     primePanelImages(panel);
-    lazyLoadPanelVideos(panel, panel.querySelectorAll('video'));
-  }
-
-  function lazyLoadPanelVideos(panel, videos) {
-    if (!panel || !videos?.length) return;
-    if (!('IntersectionObserver' in window)) {
-      videos.forEach(video => {
-        ensureVideoSource(video);
-        if (video.preload === 'none') video.preload = 'metadata';
-      });
-      return;
-    }
-    if (panel.dataset.videoLazy === '1') return;
-    panel.dataset.videoLazy = '1';
-    const obs = new IntersectionObserver(entries => {
-      entries.forEach(entry => {
-        if (!entry.isIntersecting) return;
-        const video = entry.target;
-        ensureVideoSource(video);
-        if (video.preload === 'none') video.preload = 'metadata';
-        obs.unobserve(video);
-      });
-    }, { root: panel, rootMargin: '240px 0px', threshold: 0.01 });
-    videos.forEach(video => {
-      if (!video.getAttribute('src') && !video.currentSrc) obs.observe(video);
-      else if (video.preload === 'none') video.preload = 'metadata';
+    panel.querySelectorAll('video').forEach((video, i) => {
+      const justSet = ensureVideoSource(video);
+      video.preload = i < 3 ? 'auto' : 'metadata';
+      if (justSet || video.readyState === 0) video.load();
+    });
+    panel.querySelectorAll('video').forEach((video, i) => {
+      if (i > 1 || !video.dataset.src) return;
+      const href = video.dataset.src;
+      if (!document.querySelector(`link[rel="preload"][href="${href}"]`)) {
+        const link = document.createElement('link');
+        link.rel = 'preload';
+        link.as = 'video';
+        link.href = href;
+        link.type = 'video/mp4';
+        document.head.appendChild(link);
+      }
     });
   }
 
+  function prefetchCaseStudyMedia(slug) {
+    const panel = document.getElementById('proj-detail-' + slug);
+    if (!panel || panel.classList.contains('open')) return;
+    panel.querySelectorAll('img[data-src]').forEach(img => {
+      if (img.getAttribute('src')) return;
+      const link = document.createElement('link');
+      link.rel = 'prefetch';
+      link.as = 'image';
+      link.href = img.dataset.src;
+      if (!document.querySelector(`link[rel="prefetch"][href="${link.href}"]`)) {
+        document.head.appendChild(link);
+      }
+    });
+    panel.querySelectorAll('video').forEach((video, i) => {
+      if (i > 1) return;
+      ensureVideoSource(video);
+      if (video.preload === 'none') video.preload = 'metadata';
+      const href = video.dataset.src;
+      if (href && !document.querySelector(`link[rel="preload"][href="${href}"]`)) {
+        const link = document.createElement('link');
+        link.rel = 'preload';
+        link.as = 'video';
+        link.href = href;
+        link.type = 'video/mp4';
+        document.head.appendChild(link);
+      }
+    });
+  }
+
+  function prefetchVisibleCaseStudies() {
+    const cardsPanel = document.getElementById('proj-cards-panel');
+    if (!cardsPanel?.classList.contains('open')) return;
+    let count = 0;
+    cardsPanel.querySelectorAll('.proj-card[data-detail].visible').forEach(card => {
+      if (count >= 4) return;
+      prefetchCaseStudyMedia(card.dataset.detail);
+      count++;
+    });
+  }
+
+  function primePanelMedia(panel) {
+    primePanelVideosEager(panel);
+  }
+
+  function lazyLoadPanelVideos(panel, videos) {
+    primePanelVideosEager(panel);
+  }
+
   function ensureVideoSource(video) {
-    if (!video || video.src || video.currentSrc) return;
+    if (!video || video.currentSrc) return false;
     const deferred = video.dataset.src;
-    if (deferred) video.src = deferred;
+    if (!deferred) return false;
+    video.src = deferred;
+    return true;
   }
 
   function primePanelVideos(panel) {
@@ -3880,6 +3925,11 @@
       if (!projectCardGesture.dragging) return;
       setTimeout(() => { projectCardGesture.dragging = false; }, 80);
     }, { passive: true });
+
+    panel.addEventListener('pointerover', e => {
+      const card = e.target.closest('.proj-card[data-detail]');
+      if (card?.dataset.detail) prefetchCaseStudyMedia(card.dataset.detail);
+    });
   }
 
   function shouldIgnoreProjectCardClick() {
@@ -3962,6 +4012,7 @@
     if (outerActive) outerActive.classList.add('active');
     setProjectsHint('Select a category to explore the work');
     if (typeof window.refreshDockMagnify === 'function') window.refreshDockMagnify();
+    if (cardsPanel.classList.contains('open')) requestAnimationFrame(prefetchVisibleCaseStudies);
     if (!opts.fromHistory && !historyFromPopstate && cardsPanel.classList.contains('open')) {
       pushAppState({ page: 'projects', overlay: 'cards', filter: f });
     }
