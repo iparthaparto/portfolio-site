@@ -2221,7 +2221,7 @@
     if (!closeTopOverlay()) closeMobileNav();
   });
 
-  const PAGE_TRANSITION_MS = 480;
+  const PAGE_TRANSITION_MS = 300;
 
   function initPageReveals() {
     const selectors = '.sec-header, .sec-wrap > *, .about-grid, .edu-intro, .edu-card, .projects-intro, .ach-layout, .ach-narrative, .ach-data, .home-grid-row2 .hg-tile, .clients-explore-btn-wrap, .contact-page-info, .contact-page-form-wrap, .home-contact-strip';
@@ -2241,8 +2241,13 @@
     const items = page.querySelectorAll('.reveal-on-enter');
     items.forEach(el => el.classList.remove('is-visible'));
     requestAnimationFrame(() => {
+      const cap = window.matchMedia('(max-width: 960px)').matches ? 10 : 14;
       items.forEach((el, i) => {
-        setTimeout(() => el.classList.add('is-visible'), 40 + i * 45);
+        if (i < cap) {
+          setTimeout(() => el.classList.add('is-visible'), 16 + i * 24);
+        } else {
+          el.classList.add('is-visible');
+        }
       });
     });
   }
@@ -2359,8 +2364,16 @@
   }
 
   function bindScrollProgress() {
+    let queued = false;
     document.querySelectorAll('.page, #page-home').forEach(page => {
-      page.addEventListener('scroll', updateScrollProgress, { passive: true });
+      page.addEventListener('scroll', () => {
+        if (queued) return;
+        queued = true;
+        requestAnimationFrame(() => {
+          queued = false;
+          updateScrollProgress();
+        });
+      }, { passive: true });
     });
   }
 
@@ -2396,11 +2409,20 @@
       if (currentPage.id === 'page-milestones') resetAchMetrics();
       currentPage.classList.add('exit');
       const leaving = currentPage;
-      setTimeout(() => {
+      let cleaned = false;
+      const finishLeave = () => {
+        if (cleaned) return;
+        cleaned = true;
+        leaving.removeEventListener('transitionend', onLeaveEnd);
         leaving.classList.remove('active', 'exit');
         leaving.scrollTop = 0;
         leaving.querySelectorAll('.reveal-on-enter.is-visible').forEach(el => el.classList.remove('is-visible'));
-      }, PAGE_TRANSITION_MS);
+      };
+      const onLeaveEnd = e => {
+        if (e.target === leaving && e.propertyName === 'opacity') finishLeave();
+      };
+      leaving.addEventListener('transitionend', onLeaveEnd);
+      setTimeout(finishLeave, PAGE_TRANSITION_MS + 80);
     }
 
     incoming.classList.add('entering');
@@ -4026,7 +4048,11 @@
   }
 
   mountSiteOverlays();
-  initDockMagnify();
+  if ('requestIdleCallback' in window) {
+    requestIdleCallback(() => initDockMagnify(), { timeout: 1800 });
+  } else {
+    setTimeout(initDockMagnify, 600);
+  }
   initProjectCardInteractions();
 
   document.addEventListener('click', e => {

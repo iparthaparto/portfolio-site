@@ -2,7 +2,9 @@
     :root {
       --ease: cubic-bezier(0.25, 0.46, 0.45, 0.94);
       --ease-out: cubic-bezier(0.22, 1, 0.36, 1);
-      --dur-page: 0.48s;
+      --dur-page: 0.3s;
+      --dur-overlay: 0.36s;
+      --dur-reveal: 0.42s;
       --text: #1A1A1A;
       --text-muted: #6B6B6B;
       --text-soft: #4A4A4A;
@@ -176,7 +178,7 @@
       z-index: 2;
       overflow-y: auto;
       overflow-x: hidden;
-      scroll-behavior: smooth;
+      scroll-behavior: auto;
       opacity: 1;
       transform: translateY(0);
       transition: opacity var(--dur-page) var(--ease), transform var(--dur-page) var(--ease);
@@ -187,6 +189,7 @@
     .page:not(.active) {
       content-visibility: hidden;
       contain-intrinsic-size: auto 100vh;
+      contain: layout style paint;
     }
     .page.entering,
     .page.exit {
@@ -194,17 +197,17 @@
     }
     .page.entering {
       opacity: 0;
-      transform: translateY(22px);
+      transform: translateY(12px);
     }
     .page.exit {
       opacity: 0;
-      transform: translateY(-12px);
+      transform: translateY(-8px);
       pointer-events: none;
     }
     .reveal-on-enter {
       opacity: 0;
-      transform: translateY(28px);
-      transition: opacity 0.7s var(--ease), transform 0.7s var(--ease);
+      transform: translateY(16px);
+      transition: opacity var(--dur-reveal) var(--ease), transform var(--dur-reveal) var(--ease);
     }
     .reveal-on-enter.is-visible {
       opacity: 1;
@@ -1523,13 +1526,13 @@
       transform: translateY(100%);
       visibility: hidden;
       pointer-events: none;
-      transition: transform 0.55s var(--ease-out), visibility 0s linear 0.55s, background 0.45s var(--ease);
+      transition: transform var(--dur-overlay) var(--ease-out), visibility 0s linear var(--dur-overlay), background 0.3s var(--ease);
     }
     .proj-cards-panel.open {
       transform: translateY(0);
       visibility: visible;
       pointer-events: auto;
-      transition: transform 0.55s var(--ease-out), visibility 0s, background 0.45s var(--ease);
+      transition: transform var(--dur-overlay) var(--ease-out), visibility 0s, background 0.3s var(--ease);
     }
     .proj-cards-header {
       display: flex; align-items: center;
@@ -1718,7 +1721,7 @@
       transform: translateY(100%);
       visibility: hidden;
       pointer-events: none;
-      transition: transform 0.55s var(--ease-out), visibility 0s linear 0.55s;
+      transition: transform var(--dur-overlay) var(--ease-out), visibility 0s linear var(--dur-overlay);
     }
     [data-theme="dark"] .clients-panel {
       background: linear-gradient(165deg, #1A1816 0%, #141210 48%, #0F0E0C 100%);
@@ -1731,7 +1734,7 @@
       transform: translateY(0);
       visibility: visible;
       pointer-events: auto;
-      transition: transform 0.55s var(--ease-out), visibility 0s;
+      transition: transform var(--dur-overlay) var(--ease-out), visibility 0s;
     }
     .clients-panel-header {
       padding: 1.5rem 5vw;
@@ -1818,14 +1821,14 @@
       pointer-events: none;
       content-visibility: hidden;
       contain-intrinsic-size: auto 100vh;
-      transition: transform 0.55s var(--ease-out), visibility 0s linear 0.55s, background 0.45s var(--ease);
+      transition: transform var(--dur-overlay) var(--ease-out), visibility 0s linear var(--dur-overlay), background 0.3s var(--ease);
     }
     .proj-detail-panel.open {
       transform: translateY(0);
       visibility: visible;
       pointer-events: auto;
       content-visibility: visible;
-      transition: transform 0.55s var(--ease-out), visibility 0s, background 0.45s var(--ease);
+      transition: transform var(--dur-overlay) var(--ease-out), visibility 0s, background 0.3s var(--ease);
     }
     .proj-detail-header {
       padding: 1.5rem 5vw;
@@ -4033,6 +4036,23 @@
     [data-theme="dark"] .logo-name { color: var(--text-muted); }
     [data-theme="dark"] .logo-cell:hover .logo-name { color: var(--text); }
     [data-theme="dark"] .client-cat-label { color: var(--accent); border-bottom-color: var(--border); }
+
+    @media (max-width: 960px), (hover: none) {
+      .site-aurora { display: none; }
+      .hg-stats-bg-frame img,
+      .proj-fs-bg-frame img,
+      .clients-fs-bg-frame img {
+        animation: none !important;
+        will-change: auto;
+      }
+      .page.entering { transform: translateY(8px); }
+      .page.exit { transform: translateY(-6px); }
+      .reveal-on-enter {
+        transform: translateY(10px);
+        transition-duration: 0.32s;
+      }
+      .marquee-track { animation-duration: 48s; }
+    }
 
     @media (prefers-reduced-motion: reduce) {
       .page,
