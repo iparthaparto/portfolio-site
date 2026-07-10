@@ -1027,7 +1027,7 @@
       </div>
 
       <div class="pd-hero pd-hero-wide">
-        <img loading="lazy" data-src="assets/mi-social-cover-polished.png" width="1107" height="2019" decoding="async" alt="Mumbai Indians social media campaign cover" />
+        <img loading="lazy" data-src="media/mi-social-cover-polished.jpg" width="1107" height="2019" decoding="async" alt="Mumbai Indians social media campaign cover" />
       </div>
 
       <div class="pd-section pd-section-spaced">
@@ -1444,7 +1444,7 @@
       </div>
 
       <div class="pd-hero pd-hero-wide">
-        <img loading="lazy" data-src="media/Football%20League%20Cover.png" width="900" height="560" decoding="async" alt="Voot Select football leagues and tournaments case study cover" />
+        <img loading="lazy" data-src="media/Football%20League%20Cover.jpg" width="900" height="560" decoding="async" alt="Voot Select football leagues and tournaments case study cover" />
       </div>
 
       <div class="pd-section pd-section-spaced">
@@ -1519,7 +1519,7 @@
             <div class="pd-jio-group">
               <h2 class="pd-jio-group-title">FIFA WC22</h2>
               <div class="pd-jio-grid pd-jio-grid-2">
-                <div class="pd-jio-cell pd-jio-cell-contain"><img decoding="async" data-src="assets/media-clean/FIFA-WC.png" loading="lazy" alt="Voot Select FIFA World Cup Qatar 2022 creative" /></div>
+                <div class="pd-jio-cell pd-jio-cell-contain"><img decoding="async" data-src="media/FIFA-WC.jpg" loading="lazy" alt="Voot Select FIFA World Cup Qatar 2022 creative" /></div>
               </div>
             </div>
             <div class="pd-jio-group">
@@ -1656,7 +1656,7 @@
       </div>
 
       <div class="pd-hero pd-hero-wide">
-        <img data-src="images/Tennis/Tennis%20all.png" width="900" height="560" loading="lazy" decoding="async" alt="Voot Select ATP tennis campaign creative" />
+        <img data-src="media/Tennis%20all.jpg" width="900" height="560" loading="lazy" decoding="async" alt="Voot Select ATP tennis campaign creative" />
       </div>
 
       <div class="pd-section pd-section-spaced">
@@ -1995,7 +1995,7 @@
     </div>
 
     <div class="pd-hero pd-hero-his-logo">
-      <img loading="lazy" data-src="media/HIS-final%20logo.png" width="640" height="360" decoding="async" alt="Human In Sports logo" />
+      <img loading="lazy" data-src="media/HIS-final%20logo.jpg" width="640" height="360" decoding="async" alt="Human In Sports logo" />
     </div>
 
     <div class="pd-section pd-section-spaced">
@@ -2439,6 +2439,7 @@
 
     currentPage = incoming;
     updateScrollProgress();
+    if (name === 'projects') prefetchAllCaseStudyHeroes();
     if (name === 'home') playHomeIntro();
     if (name === 'milestones') {
       resetAchMetrics();
@@ -3132,6 +3133,7 @@
     }
     panel.classList.add('open');
     panel.scrollTop = 0;
+    delete panel.dataset.prefetching;
     primePanelVideosEager(panel);
     requestAnimationFrame(() => {
       primePanelVideosEager(panel);
@@ -3253,15 +3255,30 @@
     });
   }
 
-  function ensureImageSource(img) {
-    if (!img || img.getAttribute('src')) return;
+  function ensureImageSource(img, { eager = true } = {}) {
+    if (!img || img.getAttribute('src')) return false;
     const deferred = img.dataset.src;
-    if (deferred) img.src = deferred;
+    if (!deferred) return false;
+    if (eager) {
+      img.loading = 'eager';
+      img.decoding = 'async';
+      if (img.closest('.pd-hero, .pd-hero-wide, .proj-card-imgs')) {
+        img.fetchPriority = 'high';
+      }
+    }
+    img.src = deferred;
+    return true;
   }
 
   function primePanelImages(container) {
     if (!container) return;
-    container.querySelectorAll('img[data-src]').forEach(ensureImageSource);
+    const imgs = Array.from(container.querySelectorAll('img[data-src]'));
+    imgs
+      .sort((a, b) => {
+        const score = el => (el.closest('.pd-hero, .pd-hero-wide') ? 0 : el.closest('.pd-atp-hero-image, .pd-jio-cell') ? 1 : 2);
+        return score(a) - score(b);
+      })
+      .forEach(img => ensureImageSource(img));
   }
 
   function deferOverlayImages() {
@@ -3277,14 +3294,15 @@
     if (!panel) return;
     delete panel.dataset.videoLazy;
     primePanelImages(panel);
-    panel.querySelectorAll('video').forEach((video, i) => {
+    const videos = Array.from(panel.querySelectorAll('video'));
+    videos.forEach((video, i) => {
       const justSet = ensureVideoSource(video);
-      video.preload = i < 3 ? 'auto' : 'metadata';
+      video.preload = i < 6 ? 'auto' : 'metadata';
       if (justSet || video.readyState === 0) video.load();
     });
-    panel.querySelectorAll('video').forEach((video, i) => {
-      if (i > 1 || !video.dataset.src) return;
-      const href = video.dataset.src;
+    videos.slice(0, 4).forEach(video => {
+      const href = video.dataset.src || video.getAttribute('src');
+      if (!href) return;
       if (!document.querySelector(`link[rel="preload"][href="${href}"]`)) {
         const link = document.createElement('link');
         link.rel = 'preload';
@@ -3299,22 +3317,27 @@
   function prefetchCaseStudyMedia(slug) {
     const panel = document.getElementById('proj-detail-' + slug);
     if (!panel || panel.classList.contains('open')) return;
+    if (panel.dataset.prefetching === '1') return;
+    panel.dataset.prefetching = '1';
     panel.querySelectorAll('img[data-src]').forEach(img => {
       if (img.getAttribute('src')) return;
-      const link = document.createElement('link');
-      link.rel = 'prefetch';
-      link.as = 'image';
-      link.href = img.dataset.src;
-      if (!document.querySelector(`link[rel="prefetch"][href="${link.href}"]`)) {
+      const href = img.dataset.src;
+      if (!href) return;
+      if (!document.querySelector(`link[rel="prefetch"][href="${href}"]`)) {
+        const link = document.createElement('link');
+        link.rel = 'prefetch';
+        link.as = 'image';
+        link.href = href;
         document.head.appendChild(link);
       }
     });
     panel.querySelectorAll('video').forEach((video, i) => {
-      if (i > 1) return;
       ensureVideoSource(video);
-      if (video.preload === 'none') video.preload = 'metadata';
-      const href = video.dataset.src;
-      if (href && !document.querySelector(`link[rel="preload"][href="${href}"]`)) {
+      if (video.preload === 'none') video.preload = i < 4 ? 'auto' : 'metadata';
+      if (video.readyState === 0) video.load();
+      const href = video.dataset.src || video.getAttribute('src');
+      if (!href) return;
+      if (!document.querySelector(`link[rel="preload"][href="${href}"]`)) {
         const link = document.createElement('link');
         link.rel = 'preload';
         link.as = 'video';
@@ -3325,12 +3348,25 @@
     });
   }
 
+  function prefetchAllCaseStudyHeroes() {
+    document.querySelectorAll('.proj-detail-panel .pd-hero img[data-src], .proj-detail-panel .pd-hero-wide img[data-src]').forEach(img => {
+      if (img.getAttribute('src')) return;
+      const href = img.dataset.src;
+      if (!href || document.querySelector(`link[rel="prefetch"][href="${href}"]`)) return;
+      const link = document.createElement('link');
+      link.rel = 'prefetch';
+      link.as = 'image';
+      link.href = href;
+      document.head.appendChild(link);
+    });
+  }
+
   function prefetchVisibleCaseStudies() {
     const cardsPanel = document.getElementById('proj-cards-panel');
     if (!cardsPanel?.classList.contains('open')) return;
     let count = 0;
     cardsPanel.querySelectorAll('.proj-card[data-detail].visible').forEach(card => {
-      if (count >= 4) return;
+      if (count >= 8) return;
       prefetchCaseStudyMedia(card.dataset.detail);
       count++;
     });
@@ -3929,6 +3965,14 @@
     panel.addEventListener('pointerover', e => {
       const card = e.target.closest('.proj-card[data-detail]');
       if (card?.dataset.detail) prefetchCaseStudyMedia(card.dataset.detail);
+    });
+  }
+
+  function initSportTabPrefetch() {
+    document.querySelector('.proj-fs-bottom')?.addEventListener('pointerover', e => {
+      const tab = e.target.closest('.pfbtn[data-f]');
+      if (!tab?.dataset.f || tab.dataset.f === 'all') return;
+      (PROJECT_CASE_ORDER[tab.dataset.f] || []).slice(0, 4).forEach(prefetchCaseStudyMedia);
     });
   }
 
