@@ -10,8 +10,8 @@
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link rel="preload" as="image" href="assets/partha-maity-hero.jpg" fetchpriority="high" />
-  <link rel="preload" href="styles.css?v=d0126e8" as="style" />
-  <link rel="stylesheet" href="styles.css?v=d0126e8" />
+  <link rel="preload" href="styles.css?v=6cd5ae4" as="style" />
+  <link rel="stylesheet" href="styles.css?v=6cd5ae4" />
   <style id="ach-kpi-strip-fix">
     #page-milestones .ach-kpi-row {
       display: grid !important;
@@ -20,23 +20,33 @@
     }
     #page-milestones .ach-kpi {
       display: flex !important;
-      flex-direction: row !important;
-      flex-wrap: nowrap !important;
       align-items: center !important;
-      justify-content: flex-start !important;
-      gap: 0.65rem;
+      justify-content: center !important;
       width: 100% !important;
       box-sizing: border-box;
-      padding: 0.55rem 1.25rem !important;
-      text-align: left !important;
+      padding: 0.7rem 1.25rem !important;
+      text-align: center !important;
     }
-    #page-milestones .ach-kpi-num {
-      font-size: clamp(1.2rem, 2.2vw, 1.4rem) !important;
-      margin: 0 !important;
-      line-height: 1 !important;
+    #page-milestones .ach-kpi-headline {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.55rem;
+      width: 100%;
+      margin: 0;
     }
+    #page-milestones .ach-kpi-num,
     #page-milestones .ach-kpi-label {
       margin: 0 !important;
+      font-family: "Bebas Neue", sans-serif !important;
+      font-weight: 700 !important;
+      font-size: clamp(1.35rem, 2.6vw, 1.75rem) !important;
+      letter-spacing: 0.12em !important;
+      line-height: 1 !important;
+      text-transform: uppercase !important;
+      color: var(--accent) !important;
+    }
+    #page-milestones .ach-kpi-label {
       white-space: nowrap;
     }
   </style>
@@ -1863,8 +1873,10 @@
       <div class="ach-data dock-item">
         <div class="ach-kpi-row">
           <div class="ach-kpi">
-            <div class="ach-kpi-num" data-ach-count="100" data-ach-suffix="%" data-ach-zero="0%" data-ach-final="100%">0%</div>
-            <div class="ach-kpi-label">Client Retention</div>
+            <div class="ach-kpi-headline">
+              <span class="ach-kpi-num" data-ach-count="100" data-ach-suffix="%" data-ach-zero="0%" data-ach-final="100%">0%</span>
+              <span class="ach-kpi-label">Client Retention</span>
+            </div>
           </div>
         </div>
 
