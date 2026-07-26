@@ -1331,7 +1331,7 @@
     .ach-data { min-width: 0; }
     .ach-kpi-row {
       display: grid;
-      grid-template-columns: repeat(3, minmax(0, 1fr));
+      grid-template-columns: minmax(140px, 220px);
       gap: 12px;
       margin-bottom: 2rem;
     }
@@ -3692,7 +3692,7 @@
       .hero-body { grid-template-columns: 1fr; padding: 2rem 5vw 1rem; gap: 2rem; }
       .hero-photo-wrap { justify-content: flex-start; }
       .about-grid { grid-template-columns: 1fr; gap: 3rem; }
-      .proj-grid:not(.proj-grid--single):not(.proj-grid--double), .ach-kpi-row { grid-template-columns: repeat(2, 1fr); }
+      .proj-grid:not(.proj-grid--single):not(.proj-grid--double) { grid-template-columns: repeat(2, 1fr); }
       .proj-grid.proj-grid--double { grid-template-columns: repeat(2, minmax(0, 1fr)); }
       .home-contact-bar { grid-template-columns: repeat(2, 1fr); }
       .contact-page-grid { grid-template-columns: 1fr; gap: 3rem; }
