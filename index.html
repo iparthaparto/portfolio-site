@@ -7,14 +7,14 @@
   <meta name="color-scheme" content="light dark" />
   <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
   <meta http-equiv="Pragma" content="no-cache" />
-  <meta name="pm-build" content="5e171f8-his-logo-fix" />
+  <meta name="pm-build" content="7ff9e26-smooth" />
   <title>Partha Maity — Sports Marketing</title>
   <link rel="canonical" href="https://parthamaity.com/" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link rel="preload" as="image" href="assets/partha-maity-hero.jpg" fetchpriority="high" />
-  <link rel="preload" href="styles.css?v=ab589bd" as="style" />
-  <link rel="stylesheet" href="styles.css?v=ab589bd" />
+  <link rel="preload" href="styles.css?v=7ff9e26" as="style" />
+  <link rel="stylesheet" href="styles.css?v=7ff9e26" />
   <style id="ach-kpi-strip-fix">
     #page-milestones .ach-kpi-row {
       display: grid !important;
@@ -101,7 +101,7 @@
 </div>
 
 <!-- HOME PAGE -->
-<div class="page" id="page-home">
+<div class="page active is-ready" id="page-home">
 
   <!-- Top nav border strip -->
   <div class="home-grid-wrap">
@@ -388,7 +388,7 @@
   <div class="clients-fullscreen">
     <div class="clients-fs-bg" aria-hidden="true">
       <div class="clients-fs-bg-frame">
-        <img data-src="assets/img-749ef3c603e0.png" loading="lazy" decoding="async" alt="" loading="lazy" decoding="async" />
+        <img data-src="assets/img-749ef3c603e0.png" loading="lazy" decoding="async" alt="" />
       </div>
     </div>
     <div class="clients-fs-overlay"></div>
@@ -2180,7 +2180,9 @@
     if (!closeTopOverlay()) closeMobileNav();
   });
 
-  const PAGE_TRANSITION_MS = 300;
+  const PAGE_TRANSITION_MS = 380;
+  const pageScrollMemory = Object.create(null);
+  let pageTransitionGen = 0;
 
   function initPageReveals() {
     const selectors = '.sec-header, .sec-wrap > *, .about-grid, .edu-intro, .edu-card, .projects-intro, .ach-layout, .ach-narrative, .ach-data, .home-grid-row2 .hg-tile, .clients-explore-btn-wrap, .contact-page-info, .contact-page-form-wrap, .home-contact-strip';
@@ -2358,14 +2360,20 @@
   function switchToPage(name) {
     const incoming = document.getElementById('page-' + name);
     if (!incoming) return false;
-    if (currentPage && currentPage.id === 'page-' + name) return true;
+    if (currentPage && currentPage.id === 'page-' + name) {
+      setNavActive(name);
+      return true;
+    }
 
+    const gen = ++pageTransitionGen;
+    const bootstrapping = !currentPage && incoming.classList.contains('active');
     pauseAllPortfolioVideos();
     closeMobileNav();
     setNavActive(name);
 
     if (currentPage) {
       if (currentPage.id === 'page-milestones') resetAchMetrics();
+      pageScrollMemory[currentPage.id] = currentPage.scrollTop;
       currentPage.classList.add('exit');
       const leaving = currentPage;
       let cleaned = false;
@@ -2374,7 +2382,6 @@
         cleaned = true;
         leaving.removeEventListener('transitionend', onLeaveEnd);
         leaving.classList.remove('active', 'exit');
-        leaving.scrollTop = 0;
         leaving.querySelectorAll('.reveal-on-enter.is-visible').forEach(el => el.classList.remove('is-visible'));
       };
       const onLeaveEnd = e => {
@@ -2384,13 +2391,14 @@
       setTimeout(finishLeave, PAGE_TRANSITION_MS + 80);
     }
 
-    incoming.classList.add('entering');
+    if (!bootstrapping) incoming.classList.add('entering');
     incoming.classList.add('active');
-    incoming.scrollTop = 0;
+    if (!bootstrapping) incoming.scrollTop = pageScrollMemory[incoming.id] || 0;
     primePageMedia(incoming);
 
     requestAnimationFrame(() => {
       requestAnimationFrame(() => {
+        if (gen !== pageTransitionGen) return;
         incoming.classList.remove('entering');
         animatePageReveals(incoming);
       });
@@ -2399,7 +2407,14 @@
     currentPage = incoming;
     updateScrollProgress();
     if (name === 'projects') prefetchAllCaseStudyHeroes();
-    if (name === 'home') playHomeIntro();
+    if (name === 'home') {
+      if (bootstrapping) {
+        incoming.classList.add('is-ready');
+        incoming.dataset.introPlayed = '1';
+      } else {
+        playHomeIntro();
+      }
+    }
     if (name === 'milestones') {
       resetAchMetrics();
       requestAnimationFrame(() => {
@@ -2424,6 +2439,28 @@
     document.getElementById('clients-panel')?.classList.remove('open');
     document.querySelectorAll('.proj-fs-bottom .pfbtn').forEach(b => b.classList.remove('active'));
     setProjectsHint('Select a category to explore the work');
+  }
+
+  function closeOverlaysForState(next) {
+    const keepDetailSlug = (next.overlay === 'detail' || next.overlay === 'academic') ? next.slug : null;
+    const keepCards = next.page === 'projects' && next.overlay === 'cards';
+    const keepClients = next.page === 'clients' && next.overlay === 'panel';
+
+    document.querySelectorAll('.proj-detail-panel.open').forEach(panel => {
+      const slug = getDetailSlugFromPanel(panel);
+      if (keepDetailSlug && slug === keepDetailSlug) return;
+      pauseVideosInPanel(panel);
+      panel.classList.remove('open');
+      delete panel.dataset.returnTo;
+    });
+
+    if (!keepCards) {
+      document.getElementById('proj-cards-panel')?.classList.remove('open');
+      document.querySelectorAll('.proj-fs-bottom .pfbtn').forEach(b => b.classList.remove('active'));
+      setProjectsHint('Select a category to explore the work');
+    }
+    if (!keepClients) document.getElementById('clients-panel')?.classList.remove('open');
+    if (!keepDetailSlug && !keepCards && !keepClients) closePdImageModal();
   }
 
   function openProjectCardsUI(f) {
@@ -2920,27 +2957,63 @@
       setDetailBackLabel(panel, 'Back to ' + getProjectFilterLabel(sportFilter));
       document.getElementById('proj-cards-panel')?.classList.remove('open');
     }
-    panel.classList.add('open');
+
     panel.scrollTop = 0;
     delete panel.dataset.prefetching;
-    primePanelVideosEager(panel);
-    requestAnimationFrame(() => {
-      primePanelVideosEager(panel);
+    primePanelImages(panel);
+    const heroes = panel.querySelectorAll('.pd-hero img[data-src], .pd-hero-wide img[data-src], .pd-img-eager, .pd-hero img[src], .pd-hero-wide img[src]');
+    heroes.forEach(img => ensureImageSource(img, { eager: true }));
+
+    const finishOpen = () => {
+      if (!panel.classList.contains('open')) panel.classList.add('open');
       enhanceProjectCaseStudy(slug, filter || currentAppState.filter || getProjectFilterForSlug(slug));
+      schedulePanelVideoLazy(panel);
       if (slug === 'dhlmi2024') {
         requestAnimationFrame(() => {
           fitDhlHeroVideo();
           document.querySelectorAll('.pd-dhl-mixed-row').forEach(syncDhlMixedRowHeights);
         });
       }
+    };
+
+    const decodes = Array.from(heroes).slice(0, 2).map(img => {
+      if (!img.getAttribute('src')) return Promise.resolve();
+      return img.decode ? img.decode().catch(() => {}) : Promise.resolve();
     });
+    Promise.race([
+      Promise.all(decodes),
+      new Promise(resolve => setTimeout(resolve, 120))
+    ]).then(finishOpen);
   }
 
   function renderAppState(state) {
     const next = normalizeAppState(state);
+    const prev = currentAppState || {};
     const targetPage = next.page || PM_HOME;
 
-    hardCloseAllOverlays();
+    const sameCards = prev.page === 'projects' && next.page === 'projects'
+      && prev.overlay === 'cards' && next.overlay === 'cards';
+    const sameDetail = (prev.overlay === 'detail' || prev.overlay === 'academic')
+      && prev.overlay === next.overlay && prev.slug && prev.slug === next.slug;
+    const sameClients = prev.page === 'clients' && next.page === 'clients'
+      && prev.overlay === 'panel' && next.overlay === 'panel';
+
+    if (sameCards) {
+      switchToPage(targetPage);
+      applyInnerFilter(next.filter || 'all', { fromHistory: true });
+      currentAppState = next;
+      syncOverlayBodyState();
+      return;
+    }
+
+    if (sameDetail || sameClients) {
+      switchToPage(targetPage);
+      currentAppState = next;
+      syncOverlayBodyState();
+      return;
+    }
+
+    closeOverlaysForState(next);
     switchToPage(targetPage);
 
     if (next.page === 'projects') {
@@ -3080,28 +3153,36 @@
     });
   }
 
+  let panelVideoObserver = null;
+
+  function schedulePanelVideoLazy(panel) {
+    if (!panel) return;
+    if (!panelVideoObserver) {
+      panelVideoObserver = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if (!entry.isIntersecting) return;
+          const video = entry.target;
+          ensureVideoSource(video);
+          if (video.preload === 'none') video.preload = 'metadata';
+          if (video.readyState === 0) video.load();
+          panelVideoObserver.unobserve(video);
+        });
+      }, { root: null, rootMargin: '220px 0px', threshold: 0.01 });
+    }
+    panel.querySelectorAll('video').forEach((video, i) => {
+      if (i === 0) {
+        ensureVideoSource(video);
+        video.preload = 'metadata';
+      }
+      panelVideoObserver.observe(video);
+    });
+  }
+
   function primePanelVideosEager(panel) {
     if (!panel) return;
     delete panel.dataset.videoLazy;
     primePanelImages(panel);
-    const videos = Array.from(panel.querySelectorAll('video'));
-    videos.forEach((video, i) => {
-      const justSet = ensureVideoSource(video);
-      video.preload = i < 6 ? 'auto' : 'metadata';
-      if (justSet || video.readyState === 0) video.load();
-    });
-    videos.slice(0, 4).forEach(video => {
-      const href = video.dataset.src || video.getAttribute('src');
-      if (!href) return;
-      if (!document.querySelector(`link[rel="preload"][href="${href}"]`)) {
-        const link = document.createElement('link');
-        link.rel = 'preload';
-        link.as = 'video';
-        link.href = href;
-        link.type = 'video/mp4';
-        document.head.appendChild(link);
-      }
-    });
+    schedulePanelVideoLazy(panel);
   }
 
   function prefetchCaseStudyMedia(slug) {
@@ -3109,7 +3190,9 @@
     if (!panel || panel.classList.contains('open')) return;
     if (panel.dataset.prefetching === '1') return;
     panel.dataset.prefetching = '1';
+    let imageCount = 0;
     panel.querySelectorAll('img[data-src]').forEach(img => {
+      if (imageCount >= 4) return;
       if (img.getAttribute('src')) return;
       const href = img.dataset.src;
       if (!href) return;
@@ -3120,21 +3203,7 @@
         link.href = href;
         document.head.appendChild(link);
       }
-    });
-    panel.querySelectorAll('video').forEach((video, i) => {
-      ensureVideoSource(video);
-      if (video.preload === 'none') video.preload = i < 4 ? 'auto' : 'metadata';
-      if (video.readyState === 0) video.load();
-      const href = video.dataset.src || video.getAttribute('src');
-      if (!href) return;
-      if (!document.querySelector(`link[rel="preload"][href="${href}"]`)) {
-        const link = document.createElement('link');
-        link.rel = 'preload';
-        link.as = 'video';
-        link.href = href;
-        link.type = 'video/mp4';
-        document.head.appendChild(link);
-      }
+      imageCount += 1;
     });
   }
 
@@ -3686,11 +3755,19 @@
     if (!home) return;
     if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
       home.classList.add('is-ready');
+      home.dataset.introPlayed = '1';
+      return;
+    }
+    if (home.classList.contains('is-ready') && !home.dataset.introPlayed) {
+      home.dataset.introPlayed = '1';
       return;
     }
     home.classList.remove('is-ready');
     requestAnimationFrame(() => {
-      requestAnimationFrame(() => home.classList.add('is-ready'));
+      requestAnimationFrame(() => {
+        home.classList.add('is-ready');
+        home.dataset.introPlayed = '1';
+      });
     });
   }
 
@@ -3966,19 +4043,29 @@
       document.querySelectorAll('.dock-zone').forEach(bindZone);
     }
 
+    let dockRaf = 0;
+    let pendingPointer = null;
     document.addEventListener('mousemove', e => {
-      pointer.x = e.clientX;
-      pointer.y = e.clientY;
-      document.querySelectorAll('.dock-zone').forEach(zone => {
-        const cfg = zoneConfig(zone);
-        const rect = zone.getBoundingClientRect();
-        const pad = cfg.range;
-        if (e.clientX >= rect.left - pad && e.clientX <= rect.right + pad
-            && e.clientY >= rect.top - pad && e.clientY <= rect.bottom + pad) {
-          updateZone(zone, e.clientX, e.clientY, false);
-        } else {
-          resetZone(zone);
-        }
+      pendingPointer = e;
+      if (dockRaf) return;
+      dockRaf = requestAnimationFrame(() => {
+        dockRaf = 0;
+        const ev = pendingPointer;
+        pendingPointer = null;
+        if (!ev) return;
+        pointer.x = ev.clientX;
+        pointer.y = ev.clientY;
+        document.querySelectorAll('.dock-zone').forEach(zone => {
+          const cfg = zoneConfig(zone);
+          const rect = zone.getBoundingClientRect();
+          const pad = cfg.range;
+          if (ev.clientX >= rect.left - pad && ev.clientX <= rect.right + pad
+              && ev.clientY >= rect.top - pad && ev.clientY <= rect.bottom + pad) {
+            updateZone(zone, ev.clientX, ev.clientY, false);
+          } else {
+            resetZone(zone);
+          }
+        });
       });
     }, { passive: true });
 
