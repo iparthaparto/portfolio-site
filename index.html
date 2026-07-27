@@ -7,7 +7,7 @@
   <meta name="color-scheme" content="light dark" />
   <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
   <meta http-equiv="Pragma" content="no-cache" />
-  <meta name="pm-build" content="ab589bd-his-logo" />
+  <meta name="pm-build" content="5e171f8-his-logo-fix" />
   <title>Partha Maity — Sports Marketing</title>
   <link rel="canonical" href="https://parthamaity.com/" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -1977,7 +1977,7 @@
     </div>
 
     <div class="pd-hero pd-hero-his-logo">
-      <img loading="lazy" data-src="media/HIS-final%20logo.png" width="310" height="453" decoding="async" alt="Human In Sports logo" />
+      <img class="pd-img-eager" src="media/HIS-final-logo.png" width="310" height="453" loading="eager" decoding="async" fetchpriority="high" alt="Human In Sports logo" data-no-defer />
     </div>
 
     <div class="pd-section pd-section-spaced">
@@ -3072,6 +3072,7 @@
 
   function deferOverlayImages() {
     document.querySelectorAll('.proj-detail-panel img, #proj-cards-panel img, #clients-panel img, .clients-fs-bg-frame img, .proj-fs-bg-frame img').forEach(img => {
+      if (img.hasAttribute('data-no-defer') || img.classList.contains('pd-img-eager')) return;
       const src = img.getAttribute('src');
       if (!src || img.dataset.src) return;
       img.dataset.src = src;
