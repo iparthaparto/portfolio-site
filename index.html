@@ -2090,8 +2090,7 @@
     if (historyFromPopstate) return;
     const next = normalizeAppState(state);
     if (statesEqual(next, currentAppState)) return;
-    currentAppState = next;
-    history.pushState({ pm: currentAppState }, '', buildHash(currentAppState));
+    history.pushState({ pm: next }, '', buildHash(next));
   }
 
   function replaceAppState(state) {
@@ -2395,14 +2394,17 @@
     incoming.classList.add('active');
     if (!bootstrapping) incoming.scrollTop = pageScrollMemory[incoming.id] || 0;
     primePageMedia(incoming);
-
-    requestAnimationFrame(() => {
+    if (!bootstrapping) {
+      // Force style flush so the opacity transition always runs.
+      void incoming.offsetWidth;
       requestAnimationFrame(() => {
         if (gen !== pageTransitionGen) return;
         incoming.classList.remove('entering');
         animatePageReveals(incoming);
       });
-    });
+    } else {
+      animatePageReveals(incoming);
+    }
 
     currentPage = incoming;
     updateScrollProgress();
@@ -2961,42 +2963,36 @@
     panel.scrollTop = 0;
     delete panel.dataset.prefetching;
     primePanelImages(panel);
-    const heroes = panel.querySelectorAll('.pd-hero img[data-src], .pd-hero-wide img[data-src], .pd-img-eager, .pd-hero img[src], .pd-hero-wide img[src]');
-    heroes.forEach(img => ensureImageSource(img, { eager: true }));
-
-    const finishOpen = () => {
-      if (!panel.classList.contains('open')) panel.classList.add('open');
-      enhanceProjectCaseStudy(slug, filter || currentAppState.filter || getProjectFilterForSlug(slug));
-      schedulePanelVideoLazy(panel);
-      if (slug === 'dhlmi2024') {
-        requestAnimationFrame(() => {
-          fitDhlHeroVideo();
-          document.querySelectorAll('.pd-dhl-mixed-row').forEach(syncDhlMixedRowHeights);
-        });
-      }
-    };
-
-    const decodes = Array.from(heroes).slice(0, 2).map(img => {
-      if (!img.getAttribute('src')) return Promise.resolve();
-      return img.decode ? img.decode().catch(() => {}) : Promise.resolve();
+    panel.querySelectorAll('.pd-hero img[data-src], .pd-hero-wide img[data-src], .pd-img-eager').forEach(img => {
+      ensureImageSource(img, { eager: true });
     });
-    Promise.race([
-      Promise.all(decodes),
-      new Promise(resolve => setTimeout(resolve, 120))
-    ]).then(finishOpen);
+
+    panel.classList.add('open');
+    enhanceProjectCaseStudy(slug, filter || currentAppState.filter || getProjectFilterForSlug(slug));
+    schedulePanelVideoLazy(panel);
+    if (slug === 'dhlmi2024') {
+      requestAnimationFrame(() => {
+        fitDhlHeroVideo();
+        document.querySelectorAll('.pd-dhl-mixed-row').forEach(syncDhlMixedRowHeights);
+      });
+    }
   }
 
   function renderAppState(state) {
     const next = normalizeAppState(state);
-    const prev = currentAppState || {};
     const targetPage = next.page || PM_HOME;
+    const cardsPanel = document.getElementById('proj-cards-panel');
+    const clientsPanel = document.getElementById('clients-panel');
+    const openDetail = document.querySelector('.proj-detail-panel.open');
+    const openDetailSlug = openDetail ? getDetailSlugFromPanel(openDetail) : '';
 
-    const sameCards = prev.page === 'projects' && next.page === 'projects'
-      && prev.overlay === 'cards' && next.overlay === 'cards';
-    const sameDetail = (prev.overlay === 'detail' || prev.overlay === 'academic')
-      && prev.overlay === next.overlay && prev.slug && prev.slug === next.slug;
-    const sameClients = prev.page === 'clients' && next.page === 'clients'
-      && prev.overlay === 'panel' && next.overlay === 'panel';
+    const cardsAlreadyOpen = !!cardsPanel?.classList.contains('open');
+    const clientsAlreadyOpen = !!clientsPanel?.classList.contains('open');
+
+    const sameCards = next.page === 'projects' && next.overlay === 'cards' && cardsAlreadyOpen;
+    const sameDetail = (next.overlay === 'detail' || next.overlay === 'academic')
+      && next.slug && openDetailSlug === next.slug;
+    const sameClients = next.page === 'clients' && next.overlay === 'panel' && clientsAlreadyOpen;
 
     if (sameCards) {
       switchToPage(targetPage);
@@ -3024,7 +3020,6 @@
         openProjectCardsUI(next.filter || 'all');
       }
     } else if (next.page === 'clients' && next.overlay === 'panel') {
-      const clientsPanel = document.getElementById('clients-panel');
       clientsPanel?.classList.add('open');
       primePanelImages(clientsPanel);
     } else if (next.page === 'education' && next.overlay === 'academic' && next.slug) {
