@@ -1984,13 +1984,18 @@
       color: var(--pd-accent, var(--accent));
     }
     #proj-detail-humaninsports .pd-hero-his-logo {
-      max-width: min(100%, 420px);
-      margin-bottom: 2.5rem;
+      max-width: min(100%, 280px);
+      margin: 0.5rem 0 2rem;
+      background: transparent;
+      box-shadow: none;
+      border: none;
     }
     #proj-detail-humaninsports .pd-hero-his-logo img {
       width: 100%;
       height: auto;
       object-fit: contain;
+      background: transparent;
+      display: block;
     }
     #proj-detail-humaninsports .pd-his-collage {
       max-width: 680px;
