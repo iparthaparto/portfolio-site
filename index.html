@@ -7,14 +7,14 @@
   <meta name="color-scheme" content="light dark" />
   <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
   <meta http-equiv="Pragma" content="no-cache" />
-  <meta name="pm-build" content="7ff9e26-smooth" />
+  <meta name="pm-build" content="nav-fix-2" />
   <title>Partha Maity — Sports Marketing</title>
   <link rel="canonical" href="https://parthamaity.com/" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link rel="preload" as="image" href="assets/partha-maity-hero.jpg" fetchpriority="high" />
-  <link rel="preload" href="styles.css?v=7ff9e26" as="style" />
-  <link rel="stylesheet" href="styles.css?v=7ff9e26" />
+  <link rel="preload" href="styles.css?v=nav-fix-2" as="style" />
+  <link rel="stylesheet" href="styles.css?v=nav-fix-2" />
   <style id="ach-kpi-strip-fix">
     #page-milestones .ach-kpi-row {
       display: grid !important;
@@ -2102,7 +2102,7 @@
   function mountSiteOverlays() {
     const host = document.getElementById('site-overlays');
     if (!host || host.dataset.mounted === '1') return;
-    const selectors = '#proj-cards-panel, .proj-detail-panel';
+    const selectors = '#proj-cards-panel, #clients-panel, .proj-detail-panel';
     document.querySelectorAll(selectors).forEach(el => {
       if (el.parentElement !== host) host.appendChild(el);
     });
@@ -2370,11 +2370,20 @@
     closeMobileNav();
     setNavActive(name);
 
-    if (currentPage) {
+    // Clear any stray active pages (deep links / interrupted transitions).
+    document.querySelectorAll('.page.active, .page.entering, .page.exit').forEach(p => {
+      if (p === incoming || p === currentPage) return;
+      p.classList.remove('active', 'entering', 'exit');
+    });
+
+    if (currentPage && currentPage !== incoming) {
       if (currentPage.id === 'page-milestones') resetAchMetrics();
       pageScrollMemory[currentPage.id] = currentPage.scrollTop;
-      currentPage.classList.add('exit');
       const leaving = currentPage;
+      // Keep the leaving page visible underneath while the incoming page
+      // paints immediately — avoids a blank opacity-0 frame.
+      leaving.classList.add('exit');
+      leaving.classList.remove('entering');
       let cleaned = false;
       const finishLeave = () => {
         if (cleaned) return;
@@ -2390,25 +2399,26 @@
       setTimeout(finishLeave, PAGE_TRANSITION_MS + 80);
     }
 
-    if (!bootstrapping) incoming.classList.add('entering');
+    // Show the incoming page immediately (no entering fade-to-black).
+    incoming.classList.remove('entering', 'exit');
     incoming.classList.add('active');
     if (!bootstrapping) incoming.scrollTop = pageScrollMemory[incoming.id] || 0;
-    primePageMedia(incoming);
-    if (!bootstrapping) {
-      // Force style flush so the opacity transition always runs.
-      void incoming.offsetWidth;
-      requestAnimationFrame(() => {
-        if (gen !== pageTransitionGen) return;
-        incoming.classList.remove('entering');
-        animatePageReveals(incoming);
-      });
-    } else {
+    // Defer media priming so the page paint isn't blocked.
+    requestAnimationFrame(() => {
+      if (gen !== pageTransitionGen) return;
+      primePageMedia(incoming);
       animatePageReveals(incoming);
-    }
+    });
 
     currentPage = incoming;
     updateScrollProgress();
-    if (name === 'projects') prefetchAllCaseStudyHeroes();
+    if (name === 'projects') {
+      const idle = window.requestIdleCallback || (cb => setTimeout(cb, 200));
+      idle(() => {
+        if (gen !== pageTransitionGen) return;
+        prefetchAllCaseStudyHeroes();
+      });
+    }
     if (name === 'home') {
       if (bootstrapping) {
         incoming.classList.add('is-ready');
@@ -3267,7 +3277,10 @@
 
   function primePageMedia(page) {
     if (!page) return;
-    primePanelImages(page);
+    // Only page-level heroes/backgrounds — never nested overlay panels.
+    page.querySelectorAll(
+      '.clients-fs-bg img[data-src], .proj-fs-bg img[data-src], .hg-stats-bg-frame img[data-src], img.page-bg[data-src]'
+    ).forEach(img => ensureImageSource(img, { eager: true }));
   }
 
   function pauseAllPortfolioVideos() {

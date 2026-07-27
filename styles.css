@@ -185,7 +185,7 @@
       background: var(--bg);
       color: var(--text);
     }
-    .page.active { display: block; }
+    .page.active { display: block; z-index: 3; }
     .page.active.entering,
     .page.active.exit { display: block; }
     .page:not(.active) {
@@ -201,6 +201,7 @@
       opacity: 0;
       z-index: 3;
     }
+    /* Leaving page stays opaque under the new page, then fades — no blank frame. */
     .page.exit {
       opacity: 0;
       pointer-events: none;
