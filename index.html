@@ -7,14 +7,14 @@
   <meta name="color-scheme" content="light dark" />
   <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
   <meta http-equiv="Pragma" content="no-cache" />
-  <meta name="pm-build" content="nav-fix-2" />
+  <meta name="pm-build" content="visitor-location-1" />
   <title>Partha Maity — Sports Marketing</title>
   <link rel="canonical" href="https://parthamaity.com/" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link rel="preload" as="image" href="assets/partha-maity-hero.jpg" fetchpriority="high" />
-  <link rel="preload" href="styles.css?v=nav-fix-2" as="style" />
-  <link rel="stylesheet" href="styles.css?v=nav-fix-2" />
+  <link rel="preload" href="styles.css?v=visitor-location-1" as="style" />
+  <link rel="stylesheet" href="styles.css?v=visitor-location-1" />
   <style id="ach-kpi-strip-fix">
     #page-milestones .ach-kpi-row {
       display: grid !important;
@@ -225,7 +225,7 @@
             <svg viewBox="0 0 24 24" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 014 10 15.3 15.3 0 01-4 10 15.3 15.3 0 01-4-10 15.3 15.3 0 014-10z"/></svg>
           </span>
           <span class="hcb-label">Location</span>
-          <span class="hcb-value">Dubai, United Arab Emirates</span>
+          <span class="hcb-value js-visitor-location">Dubai, United Arab Emirates</span>
         </div>
       </div>
     </div>
@@ -358,7 +358,7 @@
           </a>
           <span class="contact-page-chip contact-page-chip--static dock-item">
             <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 014 10 15.3 15.3 0 01-4 10 15.3 15.3 0 01-4-10 15.3 15.3 0 014-10z"/></svg>
-            Dubai, United Arab Emirates
+            <span class="js-visitor-location">Dubai, United Arab Emirates</span>
           </span>
         </div>
       </div>
@@ -4184,6 +4184,47 @@
     openProjectDetail(card.dataset.detail);
   });
 
+  function initVisitorLocation() {
+    const DEFAULT_LABEL = 'Dubai, United Arab Emirates';
+    const BY_COUNTRY = {
+      GB: 'London, United Kingdom',
+      UK: 'London, United Kingdom',
+      AE: 'Dubai, United Arab Emirates',
+      IN: 'Mumbai, India'
+    };
+    const CACHE_KEY = 'pm-visitor-location';
+
+    function applyLabel(label) {
+      document.querySelectorAll('.js-visitor-location').forEach(el => {
+        el.textContent = label;
+      });
+    }
+
+    try {
+      const cached = sessionStorage.getItem(CACHE_KEY);
+      if (cached) {
+        applyLabel(cached);
+        return;
+      }
+    } catch (_) {}
+
+    const controller = typeof AbortController !== 'undefined' ? new AbortController() : null;
+    const timer = setTimeout(() => controller?.abort(), 4000);
+
+    fetch('https://ipwho.is/', controller ? { signal: controller.signal } : undefined)
+      .then(res => (res.ok ? res.json() : Promise.reject()))
+      .then(data => {
+        const code = data && data.success !== false && data.country_code
+          ? String(data.country_code).toUpperCase()
+          : '';
+        const label = BY_COUNTRY[code] || DEFAULT_LABEL;
+        try { sessionStorage.setItem(CACHE_KEY, label); } catch (_) {}
+        applyLabel(label);
+      })
+      .catch(() => applyLabel(DEFAULT_LABEL))
+      .finally(() => clearTimeout(timer));
+  }
+
   function initContactForm() {
     const form = document.getElementById('contact-enquiry-form');
     if (!form) return;
@@ -4266,6 +4307,7 @@
   initDhlMixedRows();
   initDhlHeroVideo();
   initNativeCaseStudyVideos();
+  initVisitorLocation();
   initAppRouter();
 </script>
 </body>
