@@ -7,14 +7,14 @@
   <meta name="color-scheme" content="light dark" />
   <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
   <meta http-equiv="Pragma" content="no-cache" />
-  <meta name="pm-build" content="visitor-geo-3" />
+  <meta name="pm-build" content="visitor-geo-4" />
   <title>Partha Maity — Sports Marketing</title>
   <link rel="canonical" href="https://parthamaity.com/" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link rel="preload" as="image" href="assets/partha-maity-hero.jpg" fetchpriority="high" />
-  <link rel="preload" href="styles.css?v=visitor-geo-3" as="style" />
-  <link rel="stylesheet" href="styles.css?v=visitor-geo-3" />
+  <link rel="preload" href="styles.css?v=visitor-geo-4" as="style" />
+  <link rel="stylesheet" href="styles.css?v=visitor-geo-4" />
   <style id="ach-kpi-strip-fix">
     #page-milestones .ach-kpi-row {
       display: grid !important;
@@ -4186,22 +4186,9 @@
 
   function initVisitorLocation() {
     const DEFAULT_LABEL = 'London, United Kingdom';
-    const CACHE_KEY = 'pm-visitor-location-v3';
 
     function cleanPart(value) {
       return String(value || '').replace(/\s+/g, ' ').trim();
-    }
-
-    function labelFromGeo(data) {
-      if (!data || data.success === false) return '';
-      const city = cleanPart(data.city);
-      const region = cleanPart(data.region);
-      const country = cleanPart(data.country);
-      const place = city || region;
-      if (place && country && place.toLowerCase() !== country.toLowerCase()) {
-        return place + ', ' + country;
-      }
-      return place || country || '';
     }
 
     function applyLabel(label) {
@@ -4210,25 +4197,57 @@
       });
     }
 
-    try {
-      const cached = sessionStorage.getItem(CACHE_KEY);
-      if (cached) {
-        applyLabel(cached);
-        return;
+    function timezoneHint() {
+      const tz = (Intl.DateTimeFormat().resolvedOptions().timeZone || '');
+      if (tz === 'Europe/London') return { code: 'GB', label: DEFAULT_LABEL };
+      if (tz === 'Asia/Dubai') return { code: 'AE', label: 'Dubai, United Arab Emirates' };
+      if (tz === 'Asia/Kolkata' || tz === 'Asia/Calcutta') return { code: 'IN', label: 'Mumbai, India' };
+      return null;
+    }
+
+    function labelFromGeo(data) {
+      if (!data || data.success === false) return { label: '', code: '' };
+      const city = cleanPart(data.city);
+      const region = cleanPart(data.region);
+      const country = cleanPart(data.country);
+      const code = String(data.country_code || '').toUpperCase();
+      const place = city || region;
+      let label = '';
+      if (place && country && place.toLowerCase() !== country.toLowerCase()) {
+        label = place + ', ' + country;
+      } else {
+        label = place || country || '';
       }
+      return { label, code };
+    }
+
+    try {
+      ['pm-visitor-location', 'pm-visitor-location-v2', 'pm-visitor-location-v3'].forEach(key => {
+        sessionStorage.removeItem(key);
+      });
     } catch (_) {}
 
+    applyLabel(DEFAULT_LABEL);
+
+    const hint = timezoneHint();
     const controller = typeof AbortController !== 'undefined' ? new AbortController() : null;
     const timer = setTimeout(() => controller?.abort(), 4000);
 
     fetch('https://ipwho.is/', controller ? { signal: controller.signal } : undefined)
       .then(res => (res.ok ? res.json() : Promise.reject()))
       .then(data => {
-        const label = labelFromGeo(data) || DEFAULT_LABEL;
-        try { sessionStorage.setItem(CACHE_KEY, label); } catch (_) {}
+        const geo = labelFromGeo(data);
+        let label = DEFAULT_LABEL;
+        if (hint && geo.code && geo.code !== hint.code) {
+          label = hint.label;
+        } else if (geo.label) {
+          label = geo.label;
+        } else if (hint) {
+          label = hint.label;
+        }
         applyLabel(label);
       })
-      .catch(() => applyLabel(DEFAULT_LABEL))
+      .catch(() => applyLabel(hint ? hint.label : DEFAULT_LABEL))
       .finally(() => clearTimeout(timer));
   }
 
